@@ -1,0 +1,27 @@
+{% extends 'front.html.twig' %}
+{% block logout %}
+ <header>
+
+     <ul class="navbar-nav ml-auto mt-10">
+         <li class="nav-item">
+             <a class="nav-link login-button" href="{{ path('app_logout') }}">Logout</a>
+         </li>
+
+     </ul>
+ </header>
+
+{% endblock %}
+{% block body %}
+    {% if app.user %}
+        <div class="mb-3">
+            Welcome {{ app.user.getNom() }} {{ app.user.getPrenom() }}
+        </div>
+
+        <h2>Your Products</h2>
+        <ul>
+            {% for product in products %}
+                <li>{{ product.getNomProduct() }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
