@@ -13,7 +13,6 @@ class HomeController extends AbstractController
     {
         return $this->render('home.html.twig');
     }
-
     // this route will render when the user login successfully ;)
     #[Route('/', name: 'homeOn')]
     public function homeOn(): Response
@@ -25,13 +24,13 @@ class HomeController extends AbstractController
             // kif yo9res logout traj3k homeOff
             return $this->redirectToRoute('homeOff');
         }
-        /*  hdhi juste test b session nhez lid client w naffichi liste mtaa3 product mtaah , manuellement zithom
+
         $products = $user->getProducts();
 
         return $this->render('homeOn.html.twig', [
             'products' => $products,
         ]);
-        */
-        return $this->render('homeOn.html.twig');
+
+        /*return $this->render('homeOn.html.twig');*/
     }
 }
