@@ -20,9 +20,7 @@ class UserAddType extends AbstractType
         $builder
             ->add('nom', TextType::class)
             ->add('prenom', TextType::class)
-            ->add('mail', TextType::class, [
-                'constraints' => [new Assert\Email()],
-            ])
+            ->add('mail', TextType::class)
             ->add('date_birthday', DateType::class) // Use DateType from Symfony form component
             ->add('tel', TextType::class, [
                 'constraints' => [
