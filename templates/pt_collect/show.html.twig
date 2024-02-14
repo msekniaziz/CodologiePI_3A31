@@ -1,0 +1,38 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}PtCollect{% endblock %}
+
+{% block body %}
+    <h1>PtCollect</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ pt_collect.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom_pc</th>
+                <td>{{ pt_collect.NomPc }}</td>
+            </tr>
+            <tr>
+                <th>Adresse_pc</th>
+                <td>{{ pt_collect.adressePc }}</td>
+            </tr>
+            <tr>
+                <th>Latitude_pc</th>
+                <td>{{ pt_collect.latitudePc }}</td>
+            </tr>
+            <tr>
+                <th>Longitude_pc</th>
+                <td>{{ pt_collect.longitudePc }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_pt_collect_index') }}">back to list</a>
+
+    <a href="{{ path('app_pt_collect_edit', {'id': pt_collect.id}) }}">edit</a>
+
+    {{ include('pt_collect/_delete_form.html.twig') }}
+{% endblock %}

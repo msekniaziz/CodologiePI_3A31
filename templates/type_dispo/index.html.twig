@@ -1,0 +1,35 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}TypeDispo index{% endblock %}
+
+{% block body %}
+    <h1>TypeDispo index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for type_dispo in type_dispos %}
+            <tr>
+                <td>{{ type_dispo.id }}</td>
+                <td>{{ type_dispo.nom }}</td>
+                <td>
+                    <a href="{{ path('app_type_dispo_show', {'id': type_dispo.id}) }}">show</a>
+                    <a href="{{ path('app_type_dispo_edit', {'id': type_dispo.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_type_dispo_new') }}">Create new</a>
+{% endblock %}

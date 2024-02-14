@@ -1,0 +1,41 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}ProdR index{% endblock %}
+
+{% block body %}
+    <h1>ProdR index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Statut</th>
+                <th>Description</th>
+                <th>NomP</th>
+                <th>Justificatif</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for prod_r in prod_rs %}
+            <tr>
+                <td>{{ prod_r.id }}</td>
+                <td>{{ prod_r.statut ? 'Yes' : 'No' }}</td>
+                <td>{{ prod_r.description }}</td>
+                <td>{{ prod_r.nomP }}</td>
+                <td>{{ prod_r.justificatif }}</td>
+                <td>
+                    <a href="{{ path('app_prod_r_show', {'id': prod_r.id}) }}">show</a>
+                    <a href="{{ path('app_prod_r_edit', {'id': prod_r.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_prod_r_new') }}">Create new</a>
+{% endblock %}

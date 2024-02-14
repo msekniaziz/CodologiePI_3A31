@@ -1,0 +1,26 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}TypeDispo{% endblock %}
+
+{% block body %}
+    <h1>TypeDispo</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ type_dispo.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ type_dispo.nom }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_type_dispo_index') }}">back to list</a>
+
+    <a href="{{ path('app_type_dispo_edit', {'id': type_dispo.id}) }}">edit</a>
+
+    {{ include('type_dispo/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}New PtCollect{% endblock %}
+
+{% block body %}
+    <h1>Create new PtCollect</h1>
+
+    {{ include('pt_collect/_form.html.twig') }}
+
+    <a href="{{ path('app_pt_collect_index') }}">back to list</a>
+{% endblock %}
