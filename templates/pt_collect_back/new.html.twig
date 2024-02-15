@@ -1,0 +1,57 @@
+{# {% extends 'front.html.twig' %}
+
+{% block title %}New PtCollect{% endblock %}
+
+{% block body %}
+    <h1>Create new PtCollect</h1>
+
+    {{ include('pt_collect/_form.html.twig') }}
+
+    <a href="{{ path('app_pt_collect_index') }}">back to list</a>
+{% endblock %} #}
+{# {% extends 'front.html.twig' %}
+
+{% block title %}New ProdR{% endblock %}
+
+{% block body %}
+    <h1>Create new ProdR</h1>
+
+    {{ include('prod_r/_form.html.twig') }}
+
+    <a href="{{ path('app_prod_r_index') }}">back to list</a>
+{% endblock %} #}
+{% extends 'back.html.twig' %}
+
+{% block title %}New collect point{% endblock %}
+
+{% block body %}
+{{ parent() }}
+{% endblock %}
+{% block ptCollect %}
+{# {{ parent() }} #}
+    <h1>Create new cp</h1>
+
+    <form method="post" action="{{ path('app_pt_collect_back_new') }}">
+        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+                    <fieldset class="p-3">      
+        {{ form_row(form.Nom_pc, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.Nom_pc) }}
+       
+        {{ form_row(form.adresse_pc, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.adresse_pc) }}
+
+        {{ form_row(form.latitude_pc, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.latitude_pc) }} {# Afficher les erreurs de validation du champ description #}
+        
+        {{ form_row(form.longitude_pc, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.longitude_pc) }} {# Afficher les erreurs de validation du champ description #}
+        
+        {{ form_row(form.type, {'attr': {'class': 'form-control'}}) }}
+        {# {{ form_errors(form.nomP) }} Afficher les erreurs de validation du champ nomP #}
+        {{ form_row(form.save, {'attr': {'class': 'btn'}}) }}
+        {{ form_end(form) }}
+
+        <a href="{{ path('app_pt_collect_back_index') }}">back to list</a>
+    </form>
+{% endblock  %}
+

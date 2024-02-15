@@ -1,0 +1,45 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}PtCollect index{% endblock %}
+
+
+{% block body %}
+{{ parent() }}
+{% endblock %}
+{% block ptCollect %}  
+  <h1>PtCollect index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom_pc</th>
+                <th>Adresse_pc</th>
+                <th>Latitude_pc</th>
+                <th>Longitude_pc</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pt_collect in pt_collects %}
+            <tr>
+                <td>{{ pt_collect.id }}</td>
+                <td>{{ pt_collect.NomPc }}</td>
+                <td>{{ pt_collect.adressePc }}</td>
+                <td>{{ pt_collect.latitudePc }}</td>
+                <td>{{ pt_collect.longitudePc }}</td>
+                <td>
+                    <a href="{{ path('app_pt_collect_back_show', {'id': pt_collect.id}) }}">show</a>
+                    <a href="{{ path('app_pt_collect_back_edit', {'id': pt_collect.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_pt_collect_back_new') }}">Create new</a>
+{% endblock %}
