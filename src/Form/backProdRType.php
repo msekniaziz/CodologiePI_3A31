@@ -20,14 +20,14 @@ class backProdRType extends AbstractType
     {
         $builder
             ->add('statut')
-            ->add('description', TextType::class, [
+            ->add('description', null, [
                 'constraints' => [
                     new NotBlank([
                         'message' => 'La description ne peut pas être vide',
                     ]),
                 ],
             ])
-            ->add('nomP', TextType::class, [
+            ->add('nomP', null, [
                 'constraints' => [
                     new Assert\NotBlank(['message' => 'Le champ nomP ne doit pas être vide.']),
                     new Assert\Regex([
@@ -36,7 +36,7 @@ class backProdRType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('user_id')
+            // ->add('user_id')
             ->add('ptc_id')
             ->add('typeProd_id', null, [
                 'constraints' => [

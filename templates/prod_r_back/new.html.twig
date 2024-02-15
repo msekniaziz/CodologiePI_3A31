@@ -15,19 +15,23 @@
 
 {% block body %}
 {{ parent() }}
-{% endblock %}
+{% endblock %}           
 {% block recyclage %}
-    <h1>Create new ProdR</h1>
-
+    {# <h1>Create new ProdR</h1> #}
+ <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h2>Ajouter un produit à recycler</h2>
+                <br>
     <form method="post" action="{{ path('app_prod_r_back_new') }}">
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
-                    <fieldset class="p-3">        {# {{ form_row(form.statut, {'attr': {'class': 'form-control'}}) }} #}
+                    {# <fieldset class="p-3">  #}
+                           {# {{ form_row(form.statut, {'attr': {'class': 'form-control'}}) }} #}
         {# {{ form_errors(form.statut) }} Afficher les erreurs de validation du champ statut #}
     
   {# {{ form_row(form.user_id, {'attr': {'class': 'form-control'}}) }} #}
         {# {{ form_errors(form.user_id) }} #}
-          {{ form_row(form.user_id, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.user_id) }}
+        
         {{ form_row(form.statut, {'attr': {'class': 'form-control'}}) }}
         {# {{ form_errors(form.statut) }} #}
         {{ form_row(form.ptc_id, {'attr': {'class': 'form-control'}}) }}
@@ -43,4 +47,7 @@
 
         <a href="{{ path('app_prod_r_back_index') }}">back to list</a>
     </form>
+    </div>
+        </div>
+    </div>
 {% endblock %}

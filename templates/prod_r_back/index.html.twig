@@ -17,6 +17,7 @@
                 {# <th>Justificatif</th> #}
                 <th>Verified?</th>
                 <th>actions</th>
+                <th>Delete?</th>
             </tr>
         </thead>
         <tbody>
@@ -31,7 +32,11 @@
                 <td>
                     <a href="{{ path('app_prod_r_back_show', {'id': prod_r.id}) }}">show</a>
                     <a href="{{ path('app_prod_r_back_edit', {'id': prod_r.id}) }}">edit</a>
-                </td>
+                </td> 
+                <td> 
+                       {{ include('prod_r_back/_delete_form.html.twig') }}
+                </td> 
+                       
             </tr>
         {% else %}
             <tr>

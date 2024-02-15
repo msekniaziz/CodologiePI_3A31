@@ -14,6 +14,8 @@
                 <th>Id</th>
                 <th>Nom</th>
                 <th>actions</th>
+                                <th>Delete</th>
+
             </tr>
         </thead>
         <tbody>
@@ -22,7 +24,7 @@
                 <td>{{ type_dispo.id }}</td>
                 <td>{{ type_dispo.nom }}</td>
                 <td>
-                    <a href="{{ path('app_type_dispo_show', {'id': type_dispo.id}) }}">show</a>
+                    <a href="{{ path('app_type_dispo_show', {'id': type_dispo.id}) }}">show</a> 
                     <a href="{{ path('app_type_dispo_edit', {'id': type_dispo.id}) }}">edit</a>
                 </td>
             </tr>

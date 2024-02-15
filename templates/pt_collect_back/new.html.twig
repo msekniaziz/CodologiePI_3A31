@@ -29,8 +29,12 @@
 {% endblock %}
 {% block ptCollect %}
 {# {{ parent() }} #}
-    <h1>Create new cp</h1>
-
+<div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+            <div class="border rounded p-4 form-container">
+                <h2>Create new collection point</h2>
+                <br>
     <form method="post" action="{{ path('app_pt_collect_back_new') }}">
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
                     <fieldset class="p-3">      
@@ -53,5 +57,9 @@
 
         <a href="{{ path('app_pt_collect_back_index') }}">back to list</a>
     </form>
+     </div>
+        </div>
+    </div>
+    </div>
 {% endblock  %}
 
