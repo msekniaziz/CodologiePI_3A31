@@ -1,8 +1,11 @@
-{% extends 'front.html.twig' %}
+{% extends 'back.html.twig' %}
 
 {% block title %}Edit TypeDispo{% endblock %}
 
 {% block body %}
+{{ parent() }}
+{% endblock %}
+{% block typeDispo %}
     <h1>Edit TypeDispo</h1>
 
     {{ include('type_dispo/_form.html.twig', {'button_label': 'Update'}) }}

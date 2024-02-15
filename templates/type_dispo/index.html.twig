@@ -1,8 +1,11 @@
-{% extends 'front.html.twig' %}
+{% extends 'back.html.twig' %}
 
 {% block title %}TypeDispo index{% endblock %}
 
 {% block body %}
+{{ parent() }}
+{% endblock %}
+{% block typeDispo %}
     <h1>TypeDispo index</h1>
 
     <table class="table">

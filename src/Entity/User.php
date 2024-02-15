@@ -102,17 +102,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->donBienMateriels = new ArrayCollection();
         $this->donArgents = new ArrayCollection();
     }
-
+    public function __toString()
+    {
+        return $this->id; // ou toute autre propriété à afficher
+    }
     public function getId(): ?int
     {
         return $this->id;
     }
 
 
-    public function __toString()
-    {
-        return $this->id; // ou toute autre propriété à afficher
-    }
+
     public function getNom(): ?string
     {
         return $this->nom;

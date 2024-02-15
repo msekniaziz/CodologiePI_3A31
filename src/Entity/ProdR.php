@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ProdRRepository;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Integer;
 
 #[ORM\Entity(repositoryClass: ProdRRepository::class)]
 class ProdR
@@ -60,12 +61,22 @@ class ProdR
         return $this->user_id;
     }
 
-    public function setUserId(?User $user_id): static
+    public function setUserId(?User $user): static
     {
-        $this->user_id = $user_id;
+        $this->user_id = $user;
 
         return $this;
     }
+    // public function setUserId(?User $user_id): static
+    // {
+    //     $this->user_id = $user_id;
+
+    //     return $this;
+    // }
+    // public function setUserId($userId)
+    // {
+    //     $this->user_id = $userId;
+    // }
 
     public function getPtcId(): ?PtCollect
     {

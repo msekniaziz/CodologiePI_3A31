@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ProdR;
+use App\Entity\User;
 use App\Form\ProdRType;
 use App\Repository\ProdRRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,15 +22,19 @@ class ProdRController extends AbstractController
             'prod_rs' => $prodRRepository->findAll(),
         ]);
     }
-
     #[Route('/new', name: 'app_prod_r_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $prodR = new ProdR();
         $form = $this->createForm(ProdRType::class, $prodR);
         $form->handleRequest($request);
+        $user = $this->getUser();
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $prodR->setUserId($user);
+
+            // Persist et flush l'entité
             $entityManager->persist($prodR);
             $entityManager->flush();
 
@@ -38,9 +43,11 @@ class ProdRController extends AbstractController
 
         return $this->renderForm('prod_r/new.html.twig', [
             'prod_r' => $prodR,
+            // 'user' => $user,
             'form' => $form,
         ]);
     }
+
 
     #[Route('/{id}', name: 'app_prod_r_show', methods: ['GET'])]
     public function show(ProdR $prodR): Response
@@ -71,11 +78,85 @@ class ProdRController extends AbstractController
     #[Route('/{id}', name: 'app_prod_r_delete', methods: ['POST'])]
     public function delete(Request $request, ProdR $prodR, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$prodR->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $prodR->getId(), $request->request->get('_token'))) {
             $entityManager->remove($prodR);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('app_prod_r_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    // _______________________________________________________________________________
+    // _______________________________________________________________________________
+    // _______________________________________________________________________________
+    #[Route('/back', name: 'app_prod_r_back_index', methods: ['GET'])]
+    public function index1(ProdRRepository $prodRRepository): Response
+    {
+        return $this->render('prod_r_back/index.html.twig', [
+            'prod_rs' => $prodRRepository->findAll(),
+        ]);
+    }
+    #[Route('/back/new', name: 'app_prod_r_back_new', methods: ['GET', 'POST'])]
+    public function new1(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $prodR = new ProdR();
+        $form = $this->createForm(ProdRType::class, $prodR);
+        $form->handleRequest($request);
+        $user = $this->getUser();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $prodR->setUserId($user);
+
+            // Persist et flush l'entité
+            $entityManager->persist($prodR);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_prod_r_back_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('prod_r_back/new.html.twig', [
+            'prod_r' => $prodR,
+            // 'user' => $user,
+            'form' => $form,
+        ]);
+    }
+
+
+    #[Route('/back/{id}', name: 'app_prod_r_back_show', methods: ['GET'])]
+    public function show1(ProdR $prodR): Response
+    {
+        return $this->render('prod_r_back/show.html.twig', [
+            'prod_r' => $prodR,
+        ]);
+    }
+
+    #[Route('/back/{id}/edit', name: 'app_prod_r_back_edit', methods: ['GET', 'POST'])]
+    public function edit1(Request $request, ProdR $prodR, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(ProdRType::class, $prodR);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_prod_r_back_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('prod_r_back/edit.html.twig', [
+            'prod_r' => $prodR,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/back/{id}', name: 'app_prod_r_back_delete', methods: ['POST'])]
+    public function delete1(Request $request, ProdR $prodR, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $prodR->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($prodR);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_prod_r_back_index', [], Response::HTTP_SEE_OTHER);
     }
 }

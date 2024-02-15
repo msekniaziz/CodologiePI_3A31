@@ -9,7 +9,7 @@
 
     <a href="{{ path('app_prod_r_index') }}">back to list</a>
 {% endblock %} #}
-{% extends 'front.html.twig' %}
+{% extends 'HomeOn.html.twig' %}
 
 {% block title %}New ProdR{% endblock %}
 
@@ -20,8 +20,9 @@
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
                     <fieldset class="p-3">        {# {{ form_row(form.statut, {'attr': {'class': 'form-control'}}) }} #}
         {# {{ form_errors(form.statut) }} Afficher les erreurs de validation du champ statut #}
-  {{ form_row(form.user_id, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.user_id) }}
+    
+  {# {{ form_row(form.user_id, {'attr': {'class': 'form-control'}}) }} #}
+        {# {{ form_errors(form.user_id) }} #}
         {{ form_row(form.ptc_id, {'attr': {'class': 'form-control'}}) }}
         {{ form_errors(form.ptc_id) }}
         {{ form_row(form.typeProd_id, {'attr': {'class': 'form-control'}}) }}

@@ -6,18 +6,50 @@ use App\Entity\PtCollect;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class PtCollectType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Nom_pc')
+            ->add('Nom_pc', null, [
+                'constraints' => [
+                    new NotBlank(),
+                    new Regex([
+                        'pattern' => '/^[^\d]+$/',
+                        'message' => 'Le nom du point de collecte ne doit pas contenir de chiffres.',
+                    ]),
+                ],
+            ])
             ->add('adresse_pc')
-            ->add('latitude_pc')
-            ->add('longitude_pc')
-            ->add('type')
-        ;
+            ->add('latitude_pc', null, [
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^\d+(\.\d+)?$/',
+                        'message' => 'La latitude_pc ne doit contenir que des nombres et un point.'
+                    ]),
+                ],
+            ])
+            ->add('longitude_pc', null, [
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^\d+(\.\d+)?$/',
+                        'message' => 'La longitude_pc ne doit contenir que des nombres et un point.'
+                    ]),
+                ],
+            ])
+            ->add('type', null, [
+                'constraints' => [
+                    new NotBlank(['message' => 'Veuillez choisir un type.']),
+                ],
+            ])
+            ->add('save', SubmitType::class, [
+                'label' => 'Save',
+                'attr' => ['class' => 'btn  btn-primary mt-3']
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

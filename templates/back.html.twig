@@ -325,6 +325,30 @@
                             <span class="menu-title">User</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_prod_r_back_index') }}">
+                            <i class="icon-grid menu-icon"></i>
+                            <span class="menu-title">Recycling products</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_pt_collect_back_index') }}">
+                            <i class="icon-grid menu-icon"></i>
+                            <span class="menu-title">Collect points</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_type_dispo_index') }}">
+                            <i class="icon-grid menu-icon"></i>
+                            <span class="menu-title"> Types available</span>
+                        </a>
+                    </li>
+                    {# <li class="nav-item">
+                        <a class="nav-link" href="{{ path('user_display') }}">
+                            <i class="icon-grid menu-icon"></i>
+                            <span class="menu-title">Recycling</span>
+                        </a>
+                    </li> #}
                 </ul>
             </nav>
             <!-- partial -->
@@ -340,6 +364,15 @@
                             </div>
                         </div>
                         {% block user %}
+
+                        {% endblock %}
+                        {% block recyclage %}
+
+                        {% endblock %}
+                        {% block typeDispo %}
+
+                        {% endblock %}
+                        {% block ptCollect %}
 
                         {% endblock %}
                     </div>

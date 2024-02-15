@@ -42,9 +42,15 @@ class ProdRType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('user_id')
+            // ->add('user_id')
             ->add('ptc_id')
-            ->add('typeProd_id')
+            ->add('typeProd_id', null, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'La description ne peut pas être vide',
+                    ]),
+                ],
+            ])
             ->add('save', SubmitType::class, [
                 'label' => 'Save',
                 'attr' => ['class' => 'btn  btn-primary mt-3']

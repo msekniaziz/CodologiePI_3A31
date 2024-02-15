@@ -1,4 +1,4 @@
-{% extends 'front.html.twig' %}
+{% extends 'HomeOn.html.twig' %}
 
 {% block title %}ProdR index{% endblock %}
 
@@ -9,10 +9,11 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Statut</th>
-                <th>Description</th>
                 <th>NomP</th>
-                <th>Justificatif</th>
+                <th>Type</th>
+                <th>Description</th>
+                {# <th>Justificatif</th> #}
+                <th>Verified?</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -20,10 +21,11 @@
         {% for prod_r in prod_rs %}
             <tr>
                 <td>{{ prod_r.id }}</td>
-                <td>{{ prod_r.statut ? 'Yes' : 'No' }}</td>
-                <td>{{ prod_r.description }}</td>
                 <td>{{ prod_r.nomP }}</td>
-                <td>{{ prod_r.justificatif }}</td>
+                <td>{{ prod_r.getTypeProdId() }}</td>
+                <td>{{ prod_r.description }}</td>
+                {# <td>{{ prod_r.justificatif }}</td> #}
+                <td>{{ prod_r.statut ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('app_prod_r_show', {'id': prod_r.id}) }}">show</a>
                     <a href="{{ path('app_prod_r_edit', {'id': prod_r.id}) }}">edit</a>

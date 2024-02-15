@@ -1,4 +1,4 @@
-{% extends 'front.html.twig' %}
+{% extends 'HomeOn.html.twig' %}
 
 {% block title %}ProdR{% endblock %}
 
@@ -22,6 +22,10 @@
             <tr>
                 <th>NomP</th>
                 <td>{{ prod_r.nomP }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ prod_r.getTypeProdId()}}</td>
             </tr>
             <tr>
                 <th>Justificatif</th>
