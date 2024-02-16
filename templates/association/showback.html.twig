@@ -1,0 +1,43 @@
+ {% extends 'back.html.twig' %}
+
+
+{% block body %}
+<title>Association</title>
+    <h1>Association</h1>
+
+    <table class="w3-table w3-striped">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ association.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom Association</th>
+                <td>{{ association.nomAssociation }}</td>
+            </tr>
+             <tr>
+                <th>Logo Association</th>
+                <td>{{ association.logoAssociation }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ association.descriptionAsso}}</td>
+            </tr>
+            <tr>
+                <th>Adresse Association</th>
+                <td>{{ association.adresseAssociation }}</td>
+            </tr>
+            <tr>
+                <th>RIB</th>
+                <td>{{ association.RIB }}</td>
+            </tr>
+           
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_association_indexback') }}">back to list</a>
+
+     <a href="{{ path('app_association_edit', {'id': association.id}) }}">edit</a> 
+
+    {{ include('association/_delete_form.html.twig') }} 
+ {% endblock %} 

@@ -1,0 +1,89 @@
+{% extends 'homeOn.html.twig' %}
+
+{% block body %}
+    <title>Association index</title>
+    <style>
+          
+
+            {# style lel affichage linda #}
+            .association-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.association {
+    width: 300px; /* Adjust width as needed */
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    display: inline-block; /* Display associations side by side */
+    vertical-align: top; /* Align associations at the top of the container */
+}
+
+
+        </style>
+    <h1>Association index</h1>
+
+    <div class="association-container">
+        {% for association in associations %}
+            <div class="association">
+                <h2>{{ association.nomAssociation }}</h2>
+                <p> yet7at logo{{ association.logoAssociation }}</p>
+                <p> See the details if you want to donate</p>
+                {# <p>Description: {{ association.descriptionAsso }}</p> #}
+                {# <p>Adresse: {{ association.adresseAssociation }}</p> #}
+                <!-- Add more information as needed -->
+
+                <a href="{{ path('app_association_show', {'id': association.id}) }}">Show details</a>
+            </div>
+        {% else %}
+            <p>No records found</p>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{# bech nestaamelhafel back #}
+{# {% extends 'back.html.twig' %} #}
+
+
+{# {% block body %} #}
+{# <title>Association index</title>
+    <h1>Association index</h1>
+
+    <table class="w3-table w3-striped">
+        <thead class="w3-dark-grey">
+            <tr>
+                <th>Id</th>
+                <th>Nom Association</th>
+                <th>Logo Association</th>
+                <th>Adresse Association</th>
+                <th>RIB</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for association in associations %}
+            <tr>
+                <td>{{ association.id }}</td>
+                <td>{{ association.nomAssociation }}</td>
+                <td>{{ association.logoAssociation }}</td>
+                <td>{{ association.adresseAssociation }}</td>
+                <td>{{ association.RIB }}</td>
+                
+                <td>
+                    <a href="{{ path('app_association_show', {'id': association.id}) }}">show</a>
+                    {# <a href="{{ path('app_association_edit', {'id': association.id}) }}">edit</a> #}
+                {# </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table> #}
+
+    {# <a href="{{ path('app_association_new') }}">Create new</a> #}
+{# {% endblock %} #} 

@@ -1,0 +1,43 @@
+{% extends 'HomeOn.html.twig' %}
+
+
+
+{% block body %}
+<title>DonBienMateriel index</title>
+    <h1>DonBienMateriel index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>DescriptionDon</th>
+                <th>PhotoDon</th>
+                <th>StatutDon</th>
+                <th>DateDonBienMateriel</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for don_bien_materiel in don_bien_materiels %}
+            <tr>
+                <td>{{ don_bien_materiel.id }}</td>
+                <td>{{ don_bien_materiel.descriptionDon }}</td>
+                <td>{{ don_bien_materiel.photoDon }}</td>
+                <td>{{ don_bien_materiel.statutDon ? 'Checked' : 'Not checked' }}</td>
+                <td>{{ don_bien_materiel.dateDonBienMateriel ? don_bien_materiel.dateDonBienMateriel|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_don_bien_materiel_show', {'id': don_bien_materiel.id}) }}">show</a>
+                    <a href="{{ path('app_don_bien_materiel_edit', {'id': don_bien_materiel.id}) }}">edit</a>
+                    {# <a href="{{ path('app_don_bien_materiel_delete', {'id': don_bien_materiel.id}) }}">delete</a> #}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_don_bien_materiel_new') }}">Create new</a>
+{% endblock %}

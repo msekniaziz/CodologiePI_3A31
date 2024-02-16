@@ -1,0 +1,39 @@
+
+{% extends 'HomeOn.html.twig' %}
+
+
+{% block body %}
+<title>DonBienMateriel</title>
+    <h1>DonBienMateriel</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ don_bien_materiel.id }}</td>
+            </tr>
+            <tr>
+                <th>DescriptionDon</th>
+                <td>{{ don_bien_materiel.descriptionDon }}</td>
+            </tr>
+            <tr>
+                <th>PhotoDon</th>
+                <td>{{ don_bien_materiel.photoDon }}</td>
+            </tr>
+            <tr>
+                <th>StatutDon</th>
+                <td>{{ don_bien_materiel.statutDon ? 'Checked' : 'Not checked' }}</td>
+            </tr>
+            <tr>
+                <th>DateDonBienMateriel</th>
+                <td>{{ don_bien_materiel.dateDonBienMateriel ? don_bien_materiel.dateDonBienMateriel|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_don_bien_materiel_index') }}">back to list</a>
+
+    <a href="{{ path('app_don_bien_materiel_edit', {'id': don_bien_materiel.id}) }}">edit</a>
+
+    {{ include('don_bien_materiel/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'front.html.twig' %}
+
+{% block body %}
+    <section class="login py-5 border-top-1">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-8 align-item-center">
+                    <div class="border">
+                        <h3 class="bg-gray p-4">Login Now</h3>
+                        <form method="post">
+                            <fieldset class="p-4">
+                                <label for="username">Mail</label>
+                                <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control mb-3" >
+                                <label for="password">Password</label>
+                                <input type="password" name="_password" id="password" class="form-control mb-3" >
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                                {#
+                                Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                                See https://symfony.com/doc/current/security/remember_me.html
+
+                                <div class="checkbox mb-3">
+                                    <label>
+                                        <input type="checkbox" name="_remember_me"> Remember me
+                                    </label>
+                                </div>
+                                #}
+
+                                <button class="btn btn-primary font-weight-bold mt-3" type="submit" href="{{path('app_don_bien_materiel_new')}}">
+                                    Log in
+                                </button>
+                                <br>
+                                <a class="mt-3 d-inline-block text-primary" href="{{ path('new_user') }}">Register Now</a>
+                                <br>
+                                <a class="mt-3 d-inline-block text-primary" href="{{ path('forgot_password_user') }}">Forgot Password</a>
+
+                            </fieldset>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

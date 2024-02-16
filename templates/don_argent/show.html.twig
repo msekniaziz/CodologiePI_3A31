@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<title>DonArgent</title>
+
+{% block body %}
+    <h1>DonArgent</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ don_argent.id }}</td>
+            </tr>
+            <tr>
+                <th>Montant</th>
+                <td>{{ don_argent.montant }}</td>
+            </tr>
+            <tr>
+                <th>DateDonArgent</th>
+                <td>{{ don_argent.dateDonArgent ? don_argent.dateDonArgent|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_don_argent_index') }}">back to list</a>
+
+    <a href="{{ path('app_don_argent_edit', {'id': don_argent.id}) }}">edit</a>
+
+    {{ include('don_argent/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'home.html.twig' %}
+
+{% block body %}
+    <title>Association</title>
+    <style>
+        .association-details-container {
+            width: 40%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .association-details-container table {
+            display: inline-block;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 5px 10px; /* Réduire la taille des boutons */
+            margin: 0 5px; /* Réduire l'espace entre les boutons */
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .button-text {
+            margin: 0 5px; /* Réduire l'espace entre le texte et les boutons */
+            color: #333;
+        }
+
+    </style>
+    
+    <div class="association-details-container">
+        <h1>Association</h1>
+
+        <table class="w3-table w3-striped">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ association.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nom Association</th>
+                    <td>{{ association.nomAssociation }}</td>
+                </tr>
+                <tr>
+                    <th>Logo Association</th>
+                    <td>{{ association.logoAssociation }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ association.descriptionAsso }}</td>
+                </tr>
+                <tr>
+                    <th>Adresse Association</th>
+                    <td>{{ association.adresseAssociation }}</td>
+                </tr>
+                <tr>
+                    <th>RIB</th>
+                    <td>{{ association.RIB }}</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="button-container">
+            <a href="{{ path('app_login') }}" class="button">Donate goods</a>
+            <span class="button-text">or</span>
+            <a href="#" class="button">Donate money</a>
+        </div>
+        
+       
+    </div>
+     <div class="button-container">
+            <a href="{{ path('app_association_index') }}" class="button">Back to list</a>
+        </div>
+{% endblock %}
