@@ -1,0 +1,37 @@
+{% extends 'back.html.twig' %}
+
+{% block user %}
+    <table class="w3-table w3-striped">
+
+        <thead class="w3-dark-grey">
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Mail</th>
+            <th>Phone Number</th>
+            <th>Gender</th>
+            <th>Points</th>
+            <th>Age</th>
+            <th>Birthday</th>
+            <th>Access</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for u in user %}
+            <tr>
+                <td>{{ u.getId() }}</td>
+                <td>{{ u.getNom() }}</td>
+                <td>{{ u.getPrenom() }}</td>
+                <td>{{ u.getMail() }}</td>
+                <td>{{ u.getTel() }}</td>
+                <td>{{ u.getGender() }}</td>
+                <td>{{ u.getNbPoints() }}</td>
+                <td>{{ u.getAge() }}</td>
+                <td>{{ u.getDateBirthday()|date('Y-m-d') }}</td>
+                <td><a href="{{ path('user_delete', {'id': u.getId()}) }}"><i class="fa fa-trash"></i></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
