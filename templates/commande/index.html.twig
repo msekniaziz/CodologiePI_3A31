@@ -1,0 +1,28 @@
+{% extends 'front.html.twig' %}
+
+{% block body %}
+    <div>
+        {% if annonce is not null %}
+            <h1>Détails de l'annonce</h1>
+            <h2>{{ annonce.Title }}</h2>
+            <p>Description: {{ annonce.Description }}</p>
+            <p>Prix: {{ annonce.Prix }}</p>
+
+        {% if annonce.Status == 1 %}
+            <script>
+                window.location.href = "{{ path('aff_annonces') }}";
+                alert("Cette annonce n'est plus disponible.");
+            </script>
+        {% endif %}
+
+            <a href="{{ path('newcommande', {'id': annonce.id}) }}">Commander</a>
+        {% if app.request.query.get('commande_success') %}
+            <script>
+                alert("La commande a été effectuée avec succès !");
+            </script>
+        {% endif %}
+        {% else %}
+            <p>Aucune annonce trouvée.</p>
+        {% endif %}
+    </div>
+{% endblock %}

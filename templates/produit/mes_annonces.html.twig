@@ -1,0 +1,85 @@
+{% extends 'front.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">My adds</h1>
+        <Br>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="tableac">
+                <script src="{{ asset('/assets/js/jquery.min.js') }}"></script>
+                <input type="text" class="form-control" placeholder="Chercher" id="search">
+                <br>
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Prix(dt)</th>
+                    <th>Negociable</th>
+                    <th>Supprimer</th>
+                    <th>Modifier</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for annonce in annonces %}
+                    <tr>
+                        <td>{{ annonce.Title }}</td>
+                        <td>{{ annonce.Category }}</td>
+                        <td>{{ annonce.Description }}</td>
+                        <td style="height: 100px;width: 100px;">
+                            <img src="{{ asset('uploads/images/' ~ annonce.image) }}" style="height: 100px;width: 100px;">
+                        </td>
+                        <td>{{ annonce.Prix }}</td>
+                        <td>
+                            {% if annonce.Negociable == 1 %}
+                                Oui
+                            {% else %}
+                                Non
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('deleteannonce',{'id':annonce.id}) }} ">
+                                <img src="{{ asset('7133351.png') }}"  style="width:42px;height:42px;border:0">
+                            </a>                        </td>
+                        <td>
+                            <a href="{{ path('updateannonce',{'id':annonce.id}) }}">
+                                <img src="{{ asset('3597075.png') }}"  style="width:42px;height:42px;border:0">
+                            </a>                        </td>
+                    </tr>
+                {% endfor %}
+                <script>
+                    $(document).ready(function(){
+                        $('#search').keyup(function(){
+                            search_table($(this).val());
+                        });
+                        function search_table(value){
+                            $('#tableac tbody tr').each(function(){
+                                var found = 'false';
+                                $(this).each(function(){
+                                    if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+                                    {
+                                        found = 'true';
+                                    }
+                                });
+                                if(found == 'true')
+                                {
+                                    $(this).show();
+
+                                }
+                                else
+                                {
+                                    $(this).hide();
+
+                                }
+                            });
+                        }
+                    });
+                </script>
+                </tbody>
+            </table>
+            <Br>
+            <Br>
+        </div>
+    </div>
+{% endblock %}

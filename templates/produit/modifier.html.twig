@@ -1,0 +1,73 @@
+{% extends 'front.html.twig' %}
+
+{% block body %}
+    <section class="advt-post bg-gray py-5">
+        <div class="container">
+            <!-- Post Your ad start -->
+            <fieldset class="border border-gary px-3 px-md-4 py-4 mb-5">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3>Post Your ad</h3>
+                    </div>
+                    <div class="col-lg-6">
+                        <h6 class="font-weight-bold pt-4 pb-1">Title Of Ad:</h6>
+
+                        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+                        {{ form_row(form.Title, {'label': 'Title Of Ad:', 'attr': {'class': 'form-control bg-white', 'placeholder': 'Ad title go There', 'required': true}}) }}
+
+                        <h6 class="font-weight-bold pt-4 pb-1">Description:</h6>
+                        {{ form_row(form.Description, {'label': 'Description:', 'attr': {'class': 'form-control bg-white', 'placeholder': 'Write details about your product', 'rows': '7', 'required': true}}) }}
+                    </div>
+                    <div class="col-lg-6">
+                        <h6 class="font-weight-bold pt-4 pb-1">Select Ad Category:</h6>
+                        {{ form_row(form.Category, {'label': 'Select Ad Category:', 'attr': {'class': 'form-control w-100 bg-white', 'id': 'inputGroupSelect'}}) }}
+
+                        <div class="price">
+                            <h6 class="font-weight-bold pt-4 pb-1">Item Price (TN):</h6>
+                            <div class="row px-3">
+                                <div class="col-lg-4 rounded my-2 px-0">
+                                    {{ form_row(form.Prix, {'label': 'Item Price (TN):', 'attr': {'class': 'form-control bg-white', 'placeholder': 'Price', 'id': 'price'}}) }}
+                                </div>
+                                <div class="col-lg-4 ml-lg-4 my-2 pt-2 pb-1 rounded bg-white">
+                                    {{ form_label(form.Negociable, 'Negotiable', {'label_attr': {'class': 'font-weight-bold pt-4 pb-1'}}) }}
+                                    {{ form_widget(form.Negociable, {'attr': {'class': 'py-2'}}) }}
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                        <div class="choose-file text-center my-4 py-4 rounded bg-white">
+                            <label for="file-upload">
+                                <span class="d-block font-weight-bold text-dark">Drop files anywhere to upload</span>
+                                <span class="d-block">or</span>
+                                <span class="d-block btn bg-primary text-white my-3 select-files">
+
+                                   {{ form_label(form.image, 'Image', {'label_attr': {'class': 'btn btn-primary font-weight-bold mt-3'}}) }}
+                                    {{ form_widget(form.image, {'attr': {'class': 'form-control-file d-none', 'id': 'file-upload'}}) }}
+                                    {% if form_errors(form.image) %}
+                                        <div class="alert alert-danger mt-3">
+                                        {{ form_errors(form.image) }}
+                                    </div>
+                                    {% endif %}
+
+
+                                </span>
+
+                                <span class="d-block">Maximum upload file size: 500 KB</span>
+
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+                {{ form_end(form) }}
+                {% if form_errors(form) %}
+                    <div class="alert alert-danger mt-3">
+                        {{ form_errors(form) }}
+                    </div>
+                {% endif %}
+            </fieldset>
+        </div>
+    </section>
+{% endblock %}
