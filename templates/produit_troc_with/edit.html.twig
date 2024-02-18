@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<title>Edit ProduitTrocWith</title>
+
+{% block body %}
+    <h1>Edit ProduitTrocWith</h1>
+
+    {{ include('produit_troc_with/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_produit_troc_with_index') }}">back to list</a>
+
+    {{ include('produit_troc_with/_delete_form.html.twig') }}
+{% endblock %}

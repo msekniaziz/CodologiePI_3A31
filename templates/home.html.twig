@@ -1,5 +1,10 @@
 {% extends 'front.html.twig' %}
 
+{% block home %}
+    <li class="nav-item @@home">
+        <a class="nav-link" href="{{ path('homeOff') }}">Home</a>
+    </li>
+{% endblock %}
 
 {% block login %}
     <header>
@@ -9,27 +14,6 @@
             </li>
 
         </ul>
-         <li class="nav-item dropdown dropdown-slide @@pages">
-
-                                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Pages <span><i class="fa fa-angle-down"></i></span>
-                                    </a>
-                                    <!-- Dropdown list -->
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item @@about" href="about-us.html">About Us</a></li>
-                                        <li><a class="dropdown-item @@contact" href="contact-us.html">Contact Us</a></li>
-                                        <li><a class="dropdown-item @@profile" href="user-profile.html">User Profile</a></li>
-                                        <li><a class="dropdown-item @@404" href="404.html">404 Page</a></li>
-                                        <li><a class="dropdown-item @@package" href="package.html">Package</a></li>
-                                        <li><a class="dropdown-item @@singlePage" href="single.html">Single Page</a></li>
-                                        <li><a class="dropdown-item @@store" href="store.html">Store Single</a></li>
-                                        <li><a class="dropdown-item @@blog" href="blog.html">Blog</a></li>
-                                        <li><a class="dropdown-item @@singleBlog" href="single-blog.html">Blog Details</a></li>
-                                        <li><a class="dropdown-item @@terms" href="terms-condition.html">Terms &amp; Conditions</a></li>
-                                    </ul>
-                                </li>
-                                          
-        
     </header>
 {% endblock %}
 

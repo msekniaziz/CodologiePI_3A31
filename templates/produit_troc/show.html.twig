@@ -36,8 +36,10 @@
             </tr>
             <tr>
                 <th>Image</th>
-                <td>{{ produit_troc.image }}</td>
-            </tr>
+{% if produit_troc.image %}
+    <img src="{{ asset('path/to/images_directory/' ~ produit_troc.image) }}" alt="Product Image">
+
+{% endif %}            </tr>
             <tr>
                 <th>Product searched for</th>
                 <td>{{ produit_troc.nomProduitRecherche }}</td>

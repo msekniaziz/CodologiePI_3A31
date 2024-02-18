@@ -31,7 +31,12 @@
     {% else %}
         Checked
     {% endif %}
-</td>                <td>{{ produit_troc.image }}</td>
+</td>         <td>     {% if produit_troc.image %}
+    <img src="{{ asset('/uploads/images/' ~ produit_troc.image) }}" alt="Product Image">
+{% else %}
+
+    <p>No image available</p>
+{% endif %}</td>
                 <td>{{ produit_troc.nomProduitRecherche }}</td>
                 <td>
                     <a href="{{ path('app_produit_troc_show', {'id': produit_troc.id}) }}">show</a>

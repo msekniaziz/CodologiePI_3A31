@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<title>ProduitTrocWith index</title>
+
+{% block body %}
+    <h1>ProduitTrocWith index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for produit_troc_with in produit_troc_withs %}
+            <tr>
+                <td>{{ produit_troc_with.id }}</td>
+                <td>{{ produit_troc_with.nom }}</td>
+                <td>{{ produit_troc_with.category }}</td>
+                <td>{{ produit_troc_with.description }}</td>
+                <td>{{ produit_troc_with.image }}</td>
+                <td>
+                    <a href="{{ path('app_produit_troc_with_show', {'id': produit_troc_with.id}) }}">show</a>
+                    <a href="{{ path('app_produit_troc_with_edit', {'id': produit_troc_with.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_produit_troc_with_new') }}">Create new</a>
+{% endblock %}

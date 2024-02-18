@@ -10,11 +10,11 @@
         <div class="border border">
     <h1 class="bg-gray p-4">Submit your exchange</h1>
    
-          <form method="post" action="{{ path('app_produit_troc_new') }}">
+          <form method="post" action="{{ path('app_produit_troc_new') }}" enctype="multipart/form-data">
     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
  
-{{ form_row(form.nom, {'attr': {'class': 'form-control'}, 'help_attr': {'style': 'color: red;'}}) }}
-{{ form_errors(form.nom) }}
+   {{ form_row(form.nom, {'attr': {'class': 'form-control'}, 'help_attr': {'style': 'color: red;'}}) }}
+          {{ form_errors(form.nom) }}
 
 
 
