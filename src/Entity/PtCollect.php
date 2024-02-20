@@ -6,6 +6,8 @@ use App\Repository\PtCollectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: PtCollectRepository::class)]
 class PtCollect
@@ -16,15 +18,19 @@ class PtCollect
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Add  a name")]
     private ?string $Nom_pc = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Add  it's an address")]
     private ?string $adresse_pc = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\NotBlank(message: "Add  a latitude")]
     private ?float $latitude_pc = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\NotBlank(message: "Add  a longitude")]
     private ?float $longitude_pc = null;
 
     #[ORM\ManyToMany(targetEntity: TypeDispo::class, inversedBy: 'ptC')]

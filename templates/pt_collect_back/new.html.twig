@@ -24,31 +24,49 @@
 
 {% block title %}New collect point{% endblock %}
 
-{% block body %}
+{# {% block body %}
 {{ parent() }}
-{% endblock %}
+{% endblock %} #}
 {% block ptCollect %}
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+    {% endfor %}
 {# {{ parent() }} #}
+
 <div class="container">
-        <div class="row">
+        <div class="row ">
             <div class="col-md-8 offset-md-2">
             <div class="border rounded p-4 form-container">
-                <h2>Create new collection point</h2>
-                <br>
+                <h3 class="bg-gray p-4">Create new collection point</h3>
+
+                <br> 
+               
+                {# <section class="login py-5 border-top-1">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-8 align-item-center">
+                    <div class="border border">
+                        <h3 class="bg-gray p-4">Add a material goods donation</h3> #}
+                
     <form method="post" action="{{ path('app_pt_collect_back_new') }}">
+    {# {{ form_row(form.description, {'attr': {'class': 'form-control'}, 'help_attr': {'style': 'color: red;'}}) }} #}
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
-                    <fieldset class="p-3">      
+                    <fieldset class="p-4">      
         {{ form_row(form.Nom_pc, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.Nom_pc) }}
+        {# {{ form_errors(form.Nom_pc) }} #}
        
         {{ form_row(form.adresse_pc, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.adresse_pc) }}
+        {# {{ form_errors(form.adresse_pc) }} #}
 
         {{ form_row(form.latitude_pc, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.latitude_pc) }} {# Afficher les erreurs de validation du champ description #}
+        {# {{ form_errors(form.latitude_pc) }}  #}
+        {# Afficher les erreurs de validation du champ description #}
         
         {{ form_row(form.longitude_pc, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.longitude_pc) }} {# Afficher les erreurs de validation du champ description #}
+        {# {{ form_errors(form.longitude_pc) }} #}
+         {# Afficher les erreurs de validation du champ description #}
         
         {{ form_row(form.type, {'attr': {'class': 'form-control'}}) }}
         {# {{ form_errors(form.nomP) }} Afficher les erreurs de validation du champ nomP #}
@@ -61,5 +79,6 @@
         </div>
     </div>
     </div>
+
 {% endblock  %}
 

@@ -16,16 +16,18 @@ class PtCollectType extends AbstractType
     {
         $builder
             ->add('Nom_pc', null, [
+                'required' => false,
                 'constraints' => [
-                    new NotBlank(),
+                    // new NotBlank(),
                     new Regex([
                         'pattern' => '/^[^\d]+$/',
                         'message' => 'Le nom du point de collecte ne doit pas contenir de chiffres.',
                     ]),
                 ],
             ])
-            ->add('adresse_pc')
+            ->add('adresse_pc', null, ['required' => false])
             ->add('latitude_pc', null, [
+                'required' => false,
                 'constraints' => [
                     new Regex([
                         'pattern' => '/^\d+(\.\d+)?$/',
@@ -34,6 +36,7 @@ class PtCollectType extends AbstractType
                 ],
             ])
             ->add('longitude_pc', null, [
+                'required' => false,
                 'constraints' => [
                     new Regex([
                         'pattern' => '/^\d+(\.\d+)?$/',
@@ -42,9 +45,11 @@ class PtCollectType extends AbstractType
                 ],
             ])
             ->add('type', null, [
+                'required' => false,
                 'constraints' => [
-                    new NotBlank(['message' => 'Veuillez choisir un type.']),
+                    // new NotBlank(['message' => 'Veuillez choisir un type.']),
                 ],
+                // 'required' => false,
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Save',

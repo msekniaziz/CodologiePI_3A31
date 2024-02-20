@@ -3,9 +3,9 @@
 {% block title %}Edit PtCollect{% endblock %}
 
 
-{% block body %}
+{# {% block body %}
 {{ parent() }}
-{% endblock %}
+{% endblock %} #}
 {# {% block ptCollect %}
     <h1>Edit PtCollect</h1>
 
@@ -27,16 +27,18 @@
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
                     <fieldset class="p-3">      
         {{ form_row(form.Nom_pc, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.Nom_pc) }}
+        {# {{ form_errors(form.Nom_pc) }} #}
        
         {{ form_row(form.adresse_pc, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.adresse_pc) }}
+        {# {{ form_errors(form.adresse_pc) }} #}
 
         {{ form_row(form.latitude_pc, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.latitude_pc) }} {# Afficher les erreurs de validation du champ description #}
+        {# {{ form_errors(form.latitude_pc) }}  #}
+        {# Afficher les erreurs de validation du champ description #}
         
         {{ form_row(form.longitude_pc, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.longitude_pc) }} {# Afficher les erreurs de validation du champ description #}
+        {# {{ form_errors(form.longitude_pc) }}  #}
+        {# Afficher les erreurs de validation du champ description #}
         
         {{ form_row(form.type, {'attr': {'class': 'form-control'}}) }}
         {# {{ form_errors(form.nomP) }} Afficher les erreurs de validation du champ nomP #}

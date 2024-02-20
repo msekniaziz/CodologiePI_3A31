@@ -2,10 +2,10 @@
 
 {% block title %}PtCollect index{% endblock %}
 
-
+{# 
 {% block body %}
 {{ parent() }}
-{% endblock %}
+{% endblock %} #}
 {% block ptCollect %}  
   <h1>PtCollect index</h1>
 
@@ -17,8 +17,8 @@
                 <th>Adresse_pc</th>
                 <th>Latitude_pc</th>
                 <th>Longitude_pc</th>
-                <th>actions</th>
-                                <th>Delete</th>
+                <th> Actions </th>
+                 <th>Delete</th>
 
             </tr>
         </thead>
@@ -30,12 +30,23 @@
                 <td>{{ pt_collect.adressePc }}</td>
                 <td>{{ pt_collect.latitudePc }}</td>
                 <td>{{ pt_collect.longitudePc }}</td>
+               <td>
+<button class="btn" style="color: blue;" onclick="window.location.href='{{ path('app_pt_collect_back_show', {'id': pt_collect.id}) }}'">
+        <i class="fa fa-eye"></i> show
+    </button>
+   
+    
+<button class="btn" style="color: green;" onclick="window.location.href='{{ path('app_pt_collect_back_edit', {'id': pt_collect.id}) }}'">
+        <i class="fa fa-edit"></i> Edit
+    </button>
+
+     </td>
+ {# 
                 <td>
                     <a href="{{ path('app_pt_collect_back_show', {'id': pt_collect.id}) }}">show</a>
                     <a href="{{ path('app_pt_collect_back_edit', {'id': pt_collect.id}) }}">edit</a>
-{# <td><a href="{{ path('user_delete', {'id': u.getId()}) }}"><i class="fa fa-trash"></i></a></td> #}
-<td> 
-                       {{ include('pt_collect_back/_delete_form.html.twig') }}
+<td>  #}
+                <td>       {{ include('pt_collect_back/_delete_form.html.twig') }} </td>
                 </td> 
                 </td>
             </tr>

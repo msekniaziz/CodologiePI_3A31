@@ -2,9 +2,9 @@
 
 {% block title %}New TypeDispo{% endblock %}
 
-{% block body %}
+{# {% block body %}
 {{ parent() }}
-{% endblock %}
+{% endblock %} #}
 {% block typeDispo %}
     <h1>Create new TypeDispo</h1>
 
@@ -25,7 +25,15 @@
         {{ form_end(form) }}
 
         {# <a href="{{ path('app_type_dispo_index') }}">save</a> #}
-        <a href="{{ path('app_type_dispo_index') }}">back to list</a>
+     
+    
+<button class="btn" style="color: blue;" onclick="window.location.href='{{ path('app_type_dispo_index') }}'">
+        <i class="fa fa-list"></i> Back to list
+    </button>
+    
+    
+
+        {# <a href="{{ path('app_type_dispo_index') }}">back to list</a> #}
     </form>
 {% endblock %}
      {# {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}

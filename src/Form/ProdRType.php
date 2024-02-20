@@ -27,6 +27,7 @@ class ProdRType extends AbstractType
             //     ],
             // ])
             ->add('description', TextType::class, [
+                'required' => false,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'La description ne peut pas être vide',
@@ -34,6 +35,7 @@ class ProdRType extends AbstractType
                 ],
             ])
             ->add('nomP', TextType::class, [
+                'required' => false,
                 'constraints' => [
                     new Assert\NotBlank(['message' => 'Le champ nomP ne doit pas être vide.']),
                     new Assert\Regex([

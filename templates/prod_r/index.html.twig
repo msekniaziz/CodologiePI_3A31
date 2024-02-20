@@ -28,8 +28,19 @@
                 {# <td>{{ prod_r.justificatif }}</td> #}
                 <td>{{ prod_r.statut ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('app_prod_r_show', {'id': prod_r.id}) }}">show</a>
-                    <a href="{{ path('app_prod_r_edit', {'id': prod_r.id}) }}">edit</a>
+
+
+     </td>
+                <td>
+                <button class="btn" style="color: blue;" onclick="window.location.href='{{ path('app_prod_r_show', {'id': prod_r.id}) }}'">
+        <i class="fa fa-edit"></i> show
+    </button>
+    
+<button class="btn" style="color: green;" onclick="window.location.href='{{ path('app_prod_r_edit', {'id': prod_r.id}) }}'">
+        <i class="fa fa-edit"></i> Edit
+    </button>
+                    {# <a href="{{ path('app_prod_r_show', {'id': prod_r.id}) }}">show</a>
+                    <a href="{{ path('app_prod_r_edit', {'id': prod_r.id}) }}">edit</a> #}
                 </td>
                 <td> 
                        {{ include('prod_r/_delete_form.html.twig') }}
