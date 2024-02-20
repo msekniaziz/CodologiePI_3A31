@@ -30,7 +30,7 @@ class PtCollectType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Regex([
-                        'pattern' => '/^\d+(\.\d+)?$/',
+                        'pattern' => '/^-?\d+(\.\d+)?$/',
                         'message' => 'La latitude_pc ne doit contenir que des nombres et un point.'
                     ]),
                 ],

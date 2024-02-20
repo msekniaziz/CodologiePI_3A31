@@ -43,13 +43,27 @@
         {% endblock %}
 {% block header %}
 
+{# <style>
+    .navigation {
+        background-color: black;
+                width: 100%; /* Largeur de 100% */
+
+    }
+    .navigation .navbar-nav .nav-link {
+        color: white;
+    }
+     
+    .navbar-nav .nav-link:hover {
+        color: white; /* Changement de couleur du texte au survol */
+    }
+</style> #}
     <header>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <nav class="navbar navbar-expand-lg navbar-light navigation">
                         <a class="navbar-brand" href="{{ path('homeOff') }}">
-                            <img src="{{ asset('assets/images/logo_site.png') }}" width="100">
+                            <img src="{{ asset('assets/images/logos.png') }}" width="100">
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,15 +87,15 @@
                                     </a>
                                     <!-- Dropdown list -->
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item @@about" href="about-us.html">About Us</a></li>
-                                        <li><a class="dropdown-item @@contact" href="contact-us.html">Contact Us</a></li>
                                         <li><a class="dropdown-item @@profile" href="user-profile.html">User Profile</a></li>
-                                        <li><a class="dropdown-item @@404" href="404.html">404 Page</a></li>
-                                        <li><a class="dropdown-item @@package" href="package.html">Package</a></li>
-                                        <li><a class="dropdown-item @@singlePage" href="single.html">Single Page</a></li>
-                                        <li><a class="dropdown-item @@store" href="store.html">Store Single</a></li>
-                                        <li><a class="dropdown-item @@blog" href="blog.html">Blog</a></li>
-                                        <li><a class="dropdown-item @@singleBlog" href="single-blog.html">Blog Details</a></li>
+                                        <li><a class="dropdown-item @@contact" href="{{ path('app_prod_r_index') }}">Recycling Products</a></li>
+                                        {# <li><a class="dropdown-item @@404" href="404.html">404 Page</a></li> #}
+                                        {# <li><a class="dropdown-item @@package" href="package.html">Package</a></li> #}
+                                        {# <li><a class="dropdown-item @@singlePage" href="single.html">Single Page</a></li> #}
+                                        {# <li><a class="dropdown-item @@store" href="store.html">Store Single</a></li> #}
+                                        {# <li><a class="dropdown-item @@blog" href="blog.html">Blog</a></li> #}
+                                        {# <li><a class="dropdown-item @@singleBlog" href="single-blog.html">Blog Details</a></li> #}
+                                        <li><a class="dropdown-item @@about" href="about-us.html">About Us</a></li>
                                         <li><a class="dropdown-item @@terms" href="terms-condition.html">Terms &amp; Conditions</a></li>
                                     </ul>
                                 </li>
@@ -111,7 +125,7 @@
                             {% block edit_account %}
 
                             {% endblock %}
-                            {% block logout %}
+                            {% block logosut %}
 
                             {% endblock %}
 
@@ -136,8 +150,8 @@
                         <div class="col-lg-3 col-md-7 offset-md-1 offset-lg-0 mb-4 mb-lg-0">
                             <!-- About -->
                             <div class="block about">
-                                <!-- footer logo -->
-                                <img src="{{ asset('assets/images/logo_site.png') }}" alt="logo" width="130" height="100">
+                                <!-- footer logos -->
+                                <img src="{{ asset('assets/images/logos.png') }}" alt="logos" width="130" height="100">
                                 <!-- description -->
                                 <p class="alt-color">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
                                     incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco

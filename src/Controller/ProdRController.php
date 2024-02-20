@@ -18,8 +18,21 @@ class ProdRController extends AbstractController
     #[Route('/', name: 'app_prod_r_index', methods: ['GET'])]
     public function index(ProdRRepository $prodRRepository): Response
     {
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur est authentifié
+        if ($user) {
+            // Récupérer les dons de l'utilisateur authentifié
+            $prodR = $prodRRepository->findBy(['user_id' => $user]);
+        } else {
+            // Gérer le cas où aucun utilisateur n'est authentifié
+            // Par exemple, rediriger vers la page de connexion
+            return $this->redirectToRoute('app_login');
+        }
+
+
         return $this->render('prod_r/index.html.twig', [
-            'prod_rs' => $prodRRepository->findAll(),
+            'prod_rs' => $prodRRepository->findBy(['user_id' => $user]),
         ]);
     }
     #[Route('/new', name: 'app_prod_r_new', methods: ['GET', 'POST'])]
