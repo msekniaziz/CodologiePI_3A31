@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use App\Repository\ProduitTrocRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,4 +30,12 @@ class HomeController extends AbstractController
 
         /*return $this->render('homeOn.html.twig');*/
     }
+    #[Route('/l', name: 'app_produit_troc_indexES', methods: ['GET'])]
+    public function indexEd(ProduitTrocRepository $produitTrocRepository): Response
+    {
+        return $this->render('indexES.html.twig', [
+            'produit_trocs' => $produitTrocRepository->findAll(),
+        ]);
+    }
+
 }

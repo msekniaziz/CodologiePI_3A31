@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use App\Entity\ProduitTrocWith;
 
 use App\Entity\ProduitTroc;
 use App\Form\ProduitTroc1Type;
@@ -24,7 +25,14 @@ class ProduitTrocController extends AbstractController
     #[Route('/', name: 'app_produit_troc_index', methods: ['GET'])]
     public function index(ProduitTrocRepository $produitTrocRepository): Response
     {
-        return $this->render('produit_troc/index1.html.twig', [
+        return $this->render('index1.html.twig', [
+            'produit_trocs' => $produitTrocRepository->findAll(),
+        ]);
+    }
+    #[Route('/l', name: 'app_produit_troc_indexES', methods: ['GET'])]
+    public function indexEd(ProduitTrocRepository $produitTrocRepository): Response
+    {
+        return $this->render('indexES.html.twig', [
             'produit_trocs' => $produitTrocRepository->findAll(),
         ]);
     }
@@ -144,5 +152,13 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
         }
 
         return $this->redirectToRoute('app_produit_troc_index', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('produit_troc_with/{id}', name: 'app_produit_ajoutpttocw', methods: ['POST'])]
+    public function affichajout(Request $request, ProduitTrocWith $produitTroc, EntityManagerInterface $entityManager): Response
+    {
+        return $this->render('produit_troc_with/new.html.twig', [
+            'produit_troc_with' => $produitTroc,
+        ]); 
+
     }
 }

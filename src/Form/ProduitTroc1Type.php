@@ -3,6 +3,9 @@
 namespace App\Form;
 
 use App\Entity\ProduitTroc;
+use App\Entity\ProduitTrocWith;
+
+use PHPUnit\TextUI\Help;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -26,6 +29,7 @@ class ProduitTroc1Type extends AbstractType
         $builder
         ->add('nom', null, [
             'attr' => ['class' => 'form-control'],
+            'help'=>'add name please',
             'required' => false,
           
         ])
@@ -58,7 +62,6 @@ class ProduitTroc1Type extends AbstractType
         
    ->add('image', FileType::class, [
       'label' => 'Image',
-        'mapped' => false, // Set mapped to false to prevent binding to entity property
     'required' => false, // Allow the field to be optional
    ])
         ->add('nom_produit_recherche',null,[

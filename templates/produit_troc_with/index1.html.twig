@@ -1,7 +1,7 @@
 {% extends 'HomeOn.html.twig' %}
 
 {% block titreprod %}
-    <title>ProduitTroc index</title>
+    <title>Produit Troc with </title>
 {% endblock %}
 
 {% block body %}
@@ -17,18 +17,20 @@
                 <div class="col-lg-8">
                     <!-- Recently Favorited -->
                     <div class="widget dashboard-container my-adslist">
-                        <h3 class="widget-header">All the product available for exchange </h3>
+                        <h3 class="widget-header">All the product available for exchange  </h3>
                         <table class="table table-responsive product-dashboard-table">
                             <thead>
                                 <tr>
                                     <th>Image</th>
                                     <th>Product Title</th>
-                                    <th class="text-center">Category</th>
+                                    <th class="text-center">Actions</th>
+                            <th class="text-center">description</th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 <!-- Loop through your product_trocs here -->
-                                {% for produit_troc in produit_trocs %}
+                                {% for   produit_troc in produit_troc_withs %}
                                     <tr>
                                         <!-- Include the content for each product_troc here -->
                                         <td>
@@ -39,22 +41,20 @@
                                             {% endif %}
                                         </td>
                                        
-                                        <td class="product-category"><span class="categories">{{ produit_troc.category }}</span></td>
+                                        <td class="product-category"><span class="categories">{{ produit_troc.nom }}</span></td>
                                         <td class="action" data-title="Action">
                                             <div class="">
                                                 <ul class="list-inline justify-content-center">
                                                     <li class="list-inline-item">
-                                                        <a data-toggle="tooltip" data-placement="top" title="View" class="view" href="{{ path('app_produit_troc_show', {'id': produit_troc.id}) }}">
+                                                        <a data-toggle="tooltip" data-placement="top" title="View" class="view" href="{{ path('app_produit_troc_with_show', {'id': produit_troc.id}) }}">
                                                             <i class="fa fa-eye"></i>
                                                         </a>
                                                     </li>
                                                     <li class="list-inline-item">
-                                                        <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit" href="{{ path('app_produit_troc_edit', {'id': produit_troc.id}) }}">
+                                                        <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit" href="{{ path('app_produit_troc_with_edit', {'id': produit_troc.id}) }}">
                                                             <i class="fa fa-pencil"></i>
                                                         </a>
-                                                    </li>
-                                                    <li class="list-inline-item">
-    <a data-toggle="tooltip" data-placement="top" title="Exchange" class="edit" href="{{ path('app_produit_troc_edit', {'id': produit_troc.id}) }}">
+                                                 
         <div class="logo-container">
             <i class="fa fa-pencil overlay-icon"></i>
         </div>
@@ -65,6 +65,14 @@
                                                 </ul>
                                             </div>
                                         </td>
+                                        	<td class="product-details">
+									<h3 class="title">Description</h3>
+									<span class="add-id"><strong>Category:</strong>{{ produit_troc.category }}</span>
+                                    <span class="add-id"><strong>nom:</strong>{{ produit_troc.nom }}</span>
+							<span class="add-id"><strong>Description:</strong>{{ produit_troc.description }}</span>
+
+                                   
+								</td>
                                     </tr>
                                 {% else %}
                                     <tr>

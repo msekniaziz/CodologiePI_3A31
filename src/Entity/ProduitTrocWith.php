@@ -28,8 +28,8 @@ class ProduitTrocWith
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?ProduitTroc $prod_idTroc = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?User $user_id_Tchange = null;
+   // #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    //private ?User $user_id_Tchange = null;
 
     public function getId(): ?int
     {
@@ -96,15 +96,5 @@ class ProduitTrocWith
         return $this;
     }
 
-    public function getUserIdTchange(): ?User
-    {
-        return $this->user_id_Tchange;
-    }
-
-    public function setUserIdTchange(?User $user_id_Tchange): static
-    {
-        $this->user_id_Tchange = $user_id_Tchange;
-
-        return $this;
-    }
+   
 }

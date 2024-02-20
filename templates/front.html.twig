@@ -8,7 +8,14 @@
     <link href="{{ asset('assets/plugins/slick/slick-theme.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/plugins/jquery-nice-select/css/nice-select.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-Gm4pICksV1iNwg9/0bFlpJGzoMO9vEx6Zc+rMXVPLR5F7uehRgXfFM/N3bbQtx8/KM3Ib2Bl7xry0HqdW1NtSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="{{ asset('assets/plugins/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/plugins/font-awesome/fonts/fontawesome-webfont.svg') }}" rel="stylesheet">
+    <link href="{{ asset('assets/plugins/font-awesome/fonts/fontawesome-webfont.eot') }}" rel="stylesheet">
+    <link href="{{ asset('assets/plugins/font-awesome/fonts/fontawesome-webfont.ttf') }}" rel="stylesheet">
+    <link href="{{ asset('assets/plugins/font-awesome/fonts/fontawesome-webfont.woff') }}" rel="stylesheet">
+    <link href="{{ asset('assets/plugins/font-awesome/fonts/fontawesome-webfont.woff2') }}" rel="stylesheet">
+
 
 {% endblock %}
 
@@ -91,23 +98,22 @@
                                 </li>
                                                                    <!-- Dropdown list Echange -->
 <li class="nav-item dropdown dropdown-slide @@listing">
-                                    <a class="nav-link dropdown-toggle" href="#!" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Echange <span><i class="fa fa-angle-down"></i></span>
+                                    <a class="nav-link dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Echange <span><i class="fa fa-angle-down"></i></span>
                                     </a>
                                     <!-- Dropdown list -->
                                     <ul class="dropdown-menu">
 
-                                        <li><a class="dropdown-item @@category" href="{{path('app_produit_troc_new')}}" >Ajouter des Echange</a></li>
+                                        <li><a class="dropdown-item @@category" href="{{path('app_produit_troc_indexES')}}" >All product available for exchange</a></li>
 
-                                        <li class="dropdown dropdown-submenu dropleft">
-                                            <a class="dropdown-item dropdown-toggle" href="#!" id="dropdown0201" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sub Menu</a>
-
-                                            <ul class="dropdown-menu" aria-labelledby="dropdown0201">
-                                                <li><a class="dropdown-item" href="index.html">Submenu 01</a></li>
-                                                <li><a class="dropdown-item" href="index.html">Submenu 02</a></li>
-                                            </ul>
-                                        </li>
+{% block addechange %}
+{% endblock %}
                                 
                                     </ul>
+
+
+                                       
+                                
+                                
                                 </li>
                             </ul>
                            {% block login %}

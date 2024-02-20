@@ -1,13 +1,13 @@
 {% extends 'HomeOn.html.twig' %}
 
-{% block titreprod %}<title>New ProduitTroc</title>{% endblock %}
+{% block titreprod %}<title>Edit ProduitTroc</title>{% endblock %}
 
 {% block body %}
 <body class="body-wrapper">
     <section class="advt-post bg-gray py-5">
         <div class="container">
-            <form method="post" action="{% if produit_troc is defined %}
-                            {{ path('app_produit_troc_edit', {'id': produit_troc.id}) }}
+            <form method="post" action="{% if produit_troc_with is defined %}
+                            {{ path('app_produit_troc_with_edit', {'id': produit_troc_with.id}) }}
                         {% else %}
                             {{ path('/') }}
                         {% endif %}">
@@ -18,7 +18,7 @@
                 <fieldset class="border border-gary px-3 px-md-4 py-4 mb-5">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h3>Edit Your Echange</h3>
+                            <h3>Edit Your Product</h3>
                         </div>
                         <div class="col-lg-6">
                             {{ form_row(form.nom, {'attr': {'class': 'form-control'}, 'help_attr': {'style': 'color: red;'}}) }}
@@ -29,11 +29,6 @@
                         <div class="col-lg-6">
                             {{ form_row(form.category, {'attr': {'class': 'form-control'}}) }}
                             {{ form_errors(form.category) }}
-
-                            {{ form_row(form.nom_produit_recherche, {'attr': {'class': 'form-control'} }) }}
-                            {{ form_errors(form.nom_produit_recherche) }}
-
-                            {{ form_row(form.statut, {'attr': {'style': 'display: none;'}}) }}
 
                             <div class="choose-file text-center my-4 py-4 rounded bg-white">
                                 <label for="file-upload">

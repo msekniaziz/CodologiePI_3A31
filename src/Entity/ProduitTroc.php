@@ -52,6 +52,10 @@ class ProduitTroc
     {
         return $this->id;
     }
+    public function __toString(): string
+    {
+        return $this->getId(); 
+    }
 
     public function getNom(): ?string
     {

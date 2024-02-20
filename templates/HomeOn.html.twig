@@ -1,4 +1,12 @@
 {% extends 'front.html.twig' %}
+{% block addechange %}
+                         <li><a class="dropdown-item @@category" href="{{path('app_produit_troc_index')}}" >Show all exchanges now that you login</a></li>
+
+                         <li><a class="dropdown-item @@category" href="{{path('app_produit_troc_new')}}" >Add a product you want to get rid off</a></li>
+
+{% endblock %}
+
+
 
 {% block logout %}
 

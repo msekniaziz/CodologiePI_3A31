@@ -1,0 +1,72 @@
+{% extends 'front.html.twig' %}
+
+{% block titreprod %}
+    <title>ProduitTroc index</title>
+{% endblock %}
+
+{% block body %}
+    <!--==================================
+    =            User Profile            =
+    ===================================-->
+    <section class="dashboard section">
+        <!-- Container Start -->
+        <div class="container">
+            <!-- Row Start -->
+            <div class="row">
+              
+                <div class="col-lg-17">
+                    <!-- Recently Favorited -->
+                    <div class="widget dashboard-container my-adslist">
+                        <h3 class="widget-header">All the product available for exchange </h3>
+                        <table class="table table-responsive product-dashboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Product Title</th>
+                            <th class="text-center">description</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Loop through your product_trocs here -->
+                                {% for produit_troc in produit_trocs %}
+                                    <tr>
+                                        <!-- Include the content for each product_troc here -->
+                                        <td>
+                                            {% if produit_troc.image %}
+                                                <img width="80px" height="auto" src="{{ asset('/uploads/images/' ~ produit_troc.image) }}" alt="Product Image">
+                                            {% else %}
+                                                <p>No image available</p>
+                                            {% endif %}
+                                        </td>
+                                       
+                                        <td class="product-category"><span class="categories">{{ produit_troc.nom }}</span></td>
+                               
+                                        	<td class="product-details">
+									<h3 class="title">Description</h3>
+									<span class="add-id"><strong>Category:</strong>{{ produit_troc.category }}</span>
+                                    <span class="add-id"><strong>nom:</strong>{{ produit_troc.nom }}</span>
+							<span class="add-id"><strong>Description:</strong>{{ produit_troc.description }}</span>
+
+                                   
+								</td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="8">no records found</td>
+                                    </tr>
+                                {% endfor %}
+                                <!-- End of loop -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- pagination -->
+                    <!-- Include pagination if needed -->
+                    <!-- pagination -->
+                </div>
+            </div>
+            <!-- Row End -->
+        </div>
+        <!-- Container End -->
+    </section>
+{% endblock %}

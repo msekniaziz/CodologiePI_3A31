@@ -1,0 +1,68 @@
+{% extends 'HomeOn.html.twig' %}
+
+{% block titreprod %}
+    <title>ProduitTroc index</title>
+{% endblock %}
+
+{% block body %}
+    <section class="dashboard section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-17"> <!-- Increased column width to 10 -->
+                    <div class="widget dashboard-container my-adslist">
+                        <h3 class="widget-header">All the products available for exchange</h3>
+                        <table class="table table-responsive product-dashboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Product Title</th>
+                                    <th class="text-center">Actions</th>
+                                    <th class="text-center">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for produit_troc in produit_trocs %}
+                                    <tr>
+                                        <td>
+                                            {% if produit_troc.image %}
+                                                <img width="100px" height="auto" src="{{ asset('/uploads/images/' ~ produit_troc.image) }}" alt="Product Image">
+                                            {% else %}
+                                                <p>No image available</p>
+                                            {% endif %}
+                                        </td>
+                                        <td class="product-category">
+                                            <span class="categories">{{ produit_troc.nom }}</span>
+                                        </td>
+                                        <td class="action" data-title="Action">
+                                            <div class="d-flex justify-content-center">
+                                                <a data-toggle="tooltip" data-placement="top" title="View" class="view mx-2" href="{{ path('app_produit_troc_show', {'id': produit_troc.id}) }}">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                                <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit mx-2" href="{{ path('app_produit_troc_edit', {'id': produit_troc.id}) }}">
+                                                    <i rel="stylesheet"class="fa fa-eye""></i>
+                                                </a>
+                                                <a data-toggle="tooltip" data-placement="top" title="Exchange" class="edit mx-2" href="{{ path('app_produit_troc_with_new', {'id': produit_troc.id}) }}">
+                                                    <i rel="stylesheet"class="fa fa-eye""></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="product-details">
+                                            <h3 class="title">Description</h3>
+                                            <span class="add-id"><strong>Category:</strong> {{ produit_troc.category }}</span>
+                                            <span class="add-id"><strong>Nom:</strong> {{ produit_troc.nom }}</span>
+                                            <span class="add-id"><strong>Description:</strong> {{ produit_troc.description }}</span>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="4">No records found</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
