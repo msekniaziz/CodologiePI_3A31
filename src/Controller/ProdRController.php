@@ -51,7 +51,7 @@ class ProdRController extends AbstractController
             $entityManager->persist($prodR);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_prod_r_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_prod_r_index');
         }
 
         return $this->renderForm('prod_r/new.html.twig', [
@@ -96,7 +96,7 @@ class ProdRController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_prod_r_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_prod_r_index');
     }
 
     // _______________________________________________________________________________

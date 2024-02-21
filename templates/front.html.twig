@@ -75,7 +75,13 @@
                                     <a class="nav-link" href="{{ path('homeOff') }}">Home</a>
                                 </li>
                                 <li class="nav-item @@home">
-                                    <a class="nav-link" href="{{ path('app_prod_r_new') }}">Recycling</a>
+                                    <a class="nav-link" href="{{ path('app_prod_r_index') }}">Recycling</a>
+                                </li>
+                                <li class="nav-item @@home">
+                                    <a class="nav-link" href="{{ path('app_pt_collect_index') }}">Our collect points</a>
+                                </li>
+                                <li class="nav-item @@home">
+                                    <a class="nav-link" href="{{ path('example_index') }}">Our  points</a>
                                 </li>
 {% block ajouterannonce %}
 
@@ -125,7 +131,7 @@
                             {% block edit_account %}
 
                             {% endblock %}
-                            {% block logosut %}
+                            {% block logout %}
 
                             {% endblock %}
 
