@@ -22,6 +22,7 @@
                         </div>
                         <div class="col-lg-6">
                             {{ form_row(form.nom, {'attr': {'class': 'form-control'}, 'help_attr': {'style': 'color: red;'}}) }}
+                            {{ form_errors(form.nom) }}
 
                             {{ form_row(form.description, {'attr': {'class': 'form-control'}, 'help_attr': {'style': 'color: red;'}}) }}
                             {{ form_errors(form.description) }}

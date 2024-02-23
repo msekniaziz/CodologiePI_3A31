@@ -39,11 +39,12 @@
                                                     <i class="fa fa-eye"></i>
                                                 </a>
                                                 <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit mx-2" href="{{ path('app_produit_troc_edit', {'id': produit_troc.id}) }}">
-                                                    <i rel="stylesheet"class="fa fa-eye""></i>
+                                                    <i rel="stylesheet"class="fa fa-edit""></i>
                                                 </a>
-                                                <a data-toggle="tooltip" data-placement="top" title="Exchange" class="edit mx-2" href="{{ path('app_produit_troc_with_new', {'id': produit_troc.id}) }}">
-                                                    <i rel="stylesheet"class="fa fa-eye""></i>
-                                                </a>
+                                              <a data-toggle="tooltip" data-placement="top" title="Exchange"  class="delete mx-2"  href="{{ path('app_produit_troc_with_new', {'id': produit_troc.id}) }}"> 
+                                              <i class="fas fa-exchange-alt" ></i> 
+                                              </a>
+
                                             </div>
                                         </td>
                                         <td class="product-details">

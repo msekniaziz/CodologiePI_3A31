@@ -9,8 +9,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use App\Entity\ProduitTroc;
-
+use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\HttpFoundation\File\File;
 use PHPUnit\TextUI\Help;
+
 
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -24,7 +26,10 @@ class ProduitTrocWithType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
+        ->add('nom', null, [
+            'required' => false,
+        ])
+        
      
             ->add('category', ChoiceType::class, [
                 'choices' => [
@@ -36,10 +41,14 @@ class ProduitTrocWithType extends AbstractType
                 'required' => false, // Mark as required
     
                 ])
-            ->add('description')
-            ->add('image', FileType::class, [
+
+                ->add('description', null, [
+                    'required' => false,
+                ])
+                
+                ->add('image', FileType::class, [
                 'label' => 'Image',
-                'mapped' => false, // This field is not mapped to any entity property
+          'mapped' => false, // This field is not mapped to any entity property
                 'required' => false, // This field is not required
                 'data_class' => null, // Set data_class to null to avoid binding to a specific class
             ])
@@ -50,6 +59,7 @@ class ProduitTrocWithType extends AbstractType
             'label'=>'Save',
             'attr'=> ['class'=> 'btn btn-primary mt-3']
           ]);
+          $builder->get('image')->addModelTransformer(new FileToViewTransformer1());     
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -57,5 +67,26 @@ class ProduitTrocWithType extends AbstractType
         $resolver->setDefaults([
             'data_class' => ProduitTrocWith::class,
         ]);
+    }
+
+    
+}
+class FileToViewTransformer1 implements DataTransformerInterface
+{
+    public function transform($value)
+    {
+        // Lors de l'affichage du formulaire, retournez null pour éviter les erreurs
+        return null;
+    }
+
+    public function reverseTransform($value)
+    {
+        // Transformez le chemin de fichier en instance de Symfony\Component\HttpFoundation\File\File
+        // Si $value est null, retournez null
+        if (!$value) {
+            return null;
+        }
+
+        return new File($value);
     }
 }

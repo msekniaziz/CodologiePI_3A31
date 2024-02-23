@@ -1,0 +1,38 @@
+{% extends 'back.html.twig' %}
+
+{% block user %}
+    <table class="w3-table w3-striped">
+
+        <thead class="w3-dark-grey">
+        <tr>
+            <th>ID</th>
+            <th>Name of the product</th>
+            <th>Category</th>
+            <th>description</th>
+            <th>Status</th>
+            <th>Image</th>
+            <th>Name of the product searched for</th>
+            <th>Actions</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for u in produit_trocs %}
+            <tr>
+                <td>{{ u.getId() }}</td>
+                <td>{{ u.getNom() }}</td>
+                <td>{{ u.getCategory() }}</td>
+                <td>{{ u.getDescription() }}</td>
+                <td>{{ u.getStatut() }}</td>
+                <td>  {% if u.getImage %}
+                                                <img width="100px" height="auto" src="{{ asset('/uploads/images/' ~ u.image) }}" alt="Product Image">
+                                            {% else %}
+                                                <p>No image available</p>
+                                            {% endif %}</td>
+                <td>{{ u.getNomProduitRecherche() }}</td>
+                <td><a href="{{ path('app_produit_troc_deleteback', {'id': u.getId()}) }}"><i>confirm</i></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

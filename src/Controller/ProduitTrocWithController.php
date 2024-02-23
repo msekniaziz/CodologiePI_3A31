@@ -26,11 +26,24 @@ class ProduitTrocWithController extends AbstractController
             'produit_troc_withs' => $produitTrocWithRepository->findAll(),
         ]);
     }
+    #[Route('/si', name: 'app_produit_troc_with_404', methods: ['GET'])]
+    public function index404(ProduitTrocWithRepository $produitTrocWithRepository): Response
+    {
+        return $this->render('produit_troc_with/404Exg.html.twig');
+    }
 
+    #[Route('/ba', name: 'app_produit_troc_with_index_back', methods: ['GET'])]
+    public function indexback(ProduitTrocWithRepository $produitTrocWithRepository): Response
+    {
+        return $this->render('prod_troc_w.html.twig', [
+            'produit_trocs' => $produitTrocWithRepository->findAll(),
+        ]);
+    }
     #[Route('/new/{id}', name: 'app_produit_troc_with_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, ProduitTrocRepository $produitTrocRepository): Response
     {
         $user = $this->getUser();
+        
         
         // Retrieve the ID of the produit troc from the request
         $produitTrocId = $request->attributes->get('id');
@@ -63,10 +76,7 @@ class ProduitTrocWithController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // Handle file upload error
-                    // You may want to log the error or display a user-friendly message
-                    // and return a response indicating failure
-                    // For example:
+                   
                     $this->addFlash('error', 'Failed to upload image.');
                     return $this->redirectToRoute('app_produit_troc_with_new', ['id' => $produitTrocId]);
                 }
@@ -90,6 +100,8 @@ class ProduitTrocWithController extends AbstractController
             'id' => $produitTrocId,
         ]);
     }
+
+
     #[Route('/{id}/edit', name: 'app_produit_troc_with_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ProduitTrocWith $produitTrocWith, EntityManagerInterface $entityManager): Response
     {
@@ -97,8 +109,7 @@ class ProduitTrocWithController extends AbstractController
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
-            // Handle form submission
-            // Handle file upload
+          
             $imageFile = $form->get('image')->getData();
             if ($imageFile) {
                 $newFilename = uniqid().'.'.$imageFile->guessExtension();
@@ -108,14 +119,10 @@ class ProduitTrocWithController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // Handle file upload error
-                    // You may want to log the error or display a user-friendly message
-                    // and return a response indicating failure
-                    // For example:
+                   
                     $this->addFlash('error', 'Failed to upload image.');
                     return $this->redirectToRoute('app_produit_troc_with_edit', ['id' => $produitTrocWith->getId()]);
                 }
-                // Set the image filename in the entity
                 $produitTrocWith->setImage($newFilename);
             }
     
@@ -150,7 +157,7 @@ public function show(ProduitTrocWith $produitTrocWith): Response
             $entityManager->remove($produitTrocWith);
             $entityManager->flush();
         }
-        return $this->redirectToRoute('        app_produit_troc_with_index        ', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_produit_troc_with_index', [], Response::HTTP_SEE_OTHER);
 
     }
 

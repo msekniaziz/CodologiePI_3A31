@@ -29,6 +29,37 @@ class ProduitTrocController extends AbstractController
             'produit_trocs' => $produitTrocRepository->findAll(),
         ]);
     }
+    #[Route('/m', name: 'app_produit_troc_mine', methods: ['GET'])]
+    public function indexmi(ProduitTrocRepository $produitTrocRepository): Response
+    { $user = $this->getUser();
+
+
+        // Vérifier si l'utilisateur est authentifié
+        if ($user) {
+            // Récupérer les dons de l'utilisateur authentifié
+            $don_bien_materiels = $produitTrocRepository->findBy(['id_user' => $user]);
+        } else {
+            // Gérer le cas où aucun utilisateur n'est authentifié
+            // Par exemple, rediriger vers la page de connexion
+            return $this->redirectToRoute('app_login');
+        }
+
+        return $this->render('index1.html.twig', [
+            'produit_trocs' => $don_bien_materiels,
+        ]);
+        
+    }
+
+
+    
+    
+    #[Route('/b', name: 'app_produit_troc_index_back', methods: ['GET'])]
+    public function indexback(ProduitTrocRepository $produitTrocRepository): Response
+    {
+        return $this->render('prod_troc.html.twig', [
+            'produit_trocs' => $produitTrocRepository->findAll(),
+        ]);
+    }
     #[Route('/l', name: 'app_produit_troc_indexES', methods: ['GET'])]
     public function indexEd(ProduitTrocRepository $produitTrocRepository): Response
     {
@@ -88,6 +119,7 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
         ]);
     }
 
+    
     #[Route('/{id}/edit', name: 'app_produit_troc_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ProduitTroc $produitTroc, EntityManagerInterface $entityManager): Response
     {
@@ -153,6 +185,18 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
 
         return $this->redirectToRoute('app_produit_troc_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/1/{id}', name: 'app_produit_troc_deleteback', methods: ['POST'])]
+    public function deleteback(Request $request, ProduitTroc $produitTroc, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$produitTroc->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($produitTroc);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_produit_troc_index_back', [], Response::HTTP_SEE_OTHER);
+    }
+
     #[Route('produit_troc_with/{id}', name: 'app_produit_ajoutpttocw', methods: ['POST'])]
     public function affichajout(Request $request, ProduitTrocWith $produitTroc, EntityManagerInterface $entityManager): Response
     {

@@ -3,7 +3,8 @@
 namespace App\Form;
 
 use App\Entity\ProduitTroc;
-use App\Entity\ProduitTrocWith;
+use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\HttpFoundation\File\File;
 
 use PHPUnit\TextUI\Help;
 use Symfony\Component\Form\AbstractType;
@@ -61,10 +62,14 @@ class ProduitTroc1Type extends AbstractType
        //])
         
    ->add('image', FileType::class, [
-      'label' => 'Image',
+      'label' => 'Image ',
+      'mapped' => false, // This field is not mapped to any entity property
+
     'required' => false, // Allow the field to be optional
    ])
         ->add('nom_produit_recherche',null,[
+            'label' => 'Product you are searching for :',
+
             'required' => false,
         ])
         // ->add('id_user')
@@ -74,11 +79,10 @@ class ProduitTroc1Type extends AbstractType
       ])
 
     ;
+    $builder->get('image')->addModelTransformer(new FileToViewTransformer());     
+
     }
 
-
-
-    
 
     
     public function configureOptions(OptionsResolver $resolver)
@@ -87,5 +91,26 @@ class ProduitTroc1Type extends AbstractType
             // Adjust the entity class if needed
             'data_class' => ProduitTroc::class,
         ]);
+    }
+    
+}
+
+class FileToViewTransformer implements DataTransformerInterface
+{
+    public function transform($value)
+    {
+        // Lors de l'affichage du formulaire, retournez null pour éviter les erreurs
+        return null;
+    }
+
+    public function reverseTransform($value)
+    {
+        // Transformez le chemin de fichier en instance de Symfony\Component\HttpFoundation\File\File
+        // Si $value est null, retournez null
+        if (!$value) {
+            return null;
+        }
+
+        return new File($value);
     }
 }

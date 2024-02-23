@@ -1,0 +1,33 @@
+{% extends 'back.html.twig' %}
+
+{% block user %}
+    <table class="w3-table w3-striped">
+
+        <thead class="w3-dark-grey">
+        <tr>
+            <th>ID</th>
+            <th>Name of the product</th>
+            <th>Category</th>
+            <th>description</th>
+            <th>Id prod to troc with</th>
+            <th>Image</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for u in produit_trocs %}
+            <tr>
+                <td>{{ u.getId() }}</td>
+                <td>{{ u.getNom() }}</td>
+                <td>{{ u.getCategory() }}</td>
+                <td>{{ u.getDescription() }}</td>
+                <td>{{ u.getCategory() }}</td>
+  <td>  {% if u.getImage %}
+                                                <img width="100px" height="auto" src="{{ asset('/uploads/images/' ~ u.image) }}" alt="Product Image">
+                                            {% else %}
+                                                <p>No image available</p>
+                                            {% endif %}</td>            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -35,7 +35,6 @@ class ProduitTroc
     private ?int $statut = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:  "You should insert the image of your product")]
     private ?string $image = null;
     
 
