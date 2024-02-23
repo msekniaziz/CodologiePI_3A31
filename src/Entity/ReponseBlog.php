@@ -1,10 +1,14 @@
 <?php
 
 namespace App\Entity;
+use Doctrine\Common\Collections\Collection;
 
 use App\Repository\ReponseBlogRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: ReponseBlogRepository::class)]
 class ReponseBlog
@@ -24,6 +28,8 @@ class ReponseBlog
     private ?int $nb_likes = null;
 
     #[ORM\ManyToOne(inversedBy: 'reponseBlogs')]
+    #[Assert\NotBlank(message:  "You should insert the content of your response")]
+
     private ?Blog $blog = null;
 
     #[ORM\ManyToOne(inversedBy: 'reponseBlogs')]

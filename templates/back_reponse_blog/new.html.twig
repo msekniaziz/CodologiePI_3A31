@@ -1,0 +1,59 @@
+{% extends 'back.html.twig' %}
+
+{% block content %}
+  <h1 style="text-align: center;">Ajouter une réponse</h1>
+  <div class="form-add">
+    {{ form_start(form,{'attr':{'novalidate':'novalidate'}})}}
+    <div class="form-group">
+      {{ form_label(form.contenu,"Réponse", {'label_attr': {'class': 'form-label'}}) }}
+      {{ form_widget(form.contenu, {'attr': {'class': 'form-control'}}) }}
+      {% if form_errors(form.contenu) %}
+      <div class="alert alert-danger mt-2 mb-0" role="alert">
+       
+          {{ form_errors(form.contenu) }}
+        
+      </div>
+    {% endif %}
+    </div>
+    <div style="padding-top: 10px;"></div>
+    <div class="form-group">
+      {{ form_widget(form.contenu, {'attr': {'class': 'btn btn-success'}}) }}
+    </div>
+  
+    {{form_end(form)}}
+  </div>
+  </div>
+{% endblock %}
+{% block stylesheet %}
+
+<style>
+        .form-add {
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            align: center;
+        }
+        form {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            max-width: 600px;
+            width: 100%;
+        }
+        input, textarea {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+{% endblock %}

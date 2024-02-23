@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<title>ReponseBlog</title>
+
+{% block body %}
+    <h1>ReponseBlog</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ reponse_blog.id }}</td>
+            </tr>
+            <tr>
+                <th>Contenu</th>
+                <td>{{ reponse_blog.contenu }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ reponse_blog.date ? reponse_blog.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Nb_likes</th>
+                <td>{{ reponse_blog.nbLikes }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_back_reponse_blog_index') }}">back to list</a>
+
+    <a href="{{ path('app_back_reponse_blog_edit', {'id': reponse_blog.id}) }}">edit</a>
+
+    {{ include('back_reponse_blog/_delete_form.html.twig') }}
+{% endblock %}

@@ -6,6 +6,7 @@ use App\Repository\BlogRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BlogRepository::class)]
 class Blog
@@ -16,12 +17,20 @@ class Blog
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "You should insert the category of your blog")]
+
     private ?string $category = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Add  a title")]
+    #[Assert\Length(min:8, minMessage: "the title should at least have 8 caracter")]
+
+
     private ?string $titre = null;
 
     #[ORM\Column(length: 500)]
+    #[Assert\NotBlank(message: "Add  a content")]
+
     private ?string $contenu_blog = null;
 
     #[ORM\Column]
@@ -35,6 +44,10 @@ class Blog
 
     #[ORM\OneToMany(mappedBy: 'blog', targetEntity: ReponseBlog::class)]
     private Collection $reponseBlogs;
+    public function __toString(): string
+    {
+        return $this->getId();
+    }
 
     public function __construct()
     {
@@ -93,6 +106,8 @@ class Blog
 
         return $this;
     }
+    
+    
 
     public function getRate(): ?int
     {

@@ -1,0 +1,39 @@
+{% extends 'HomeOn.html.twig' %}
+
+{% block body %}
+
+    <h1>ReponseBlog index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Contenu</th>
+                <th>Date</th>
+                <th>Nb_likes</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reponse_blog in reponse_blogs %}
+            <tr>
+                <td>{{ reponse_blog.id }}</td>
+                <td>{{ reponse_blog.contenu }}</td>
+                <td>{{ reponse_blog.date ? reponse_blog.date|date('Y-m-d') : '' }}</td>
+                <td>{{ reponse_blog.nbLikes }}</td>
+                <td>
+                
+<a href="{{ path('app_reponse_blog_show', {'id': reponse_blog.id}) }}" class="btn btn-primary">Show</a>
+                    <a href="{{ path('app_reponse_blog_edit', {'id': reponse_blog.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+<a href="{{ path('app_reponse_blog_new') }}" class="btn btn-primary">Create new</a>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'HomeOn.html.twig' %}
+
+{% block titre %}
+    <title>New Blog</title>
+{% endblock %}
+
+{% block body %}
+    <section class="advt-post bg-gray py-5">
+        <div class="container">
+                    <form method="post" action="{{ path('app_blog_new') }}" enctype="multipart/form-data">
+
+            
+                {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+
+                <!-- Post Your ad start -->
+                <fieldset class="border border-gary px-3 px-md-4 py-4 mb-5">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3>Post blog</h3>
+                        </div>
+                        <div class="col-lg-6">
+                            <h6 class="font-weight-bold pt-4 pb-1">Ad Details</h6>
+                            {{ form_label(form.titre) }}
+                            {{ form_widget(form.titre, {'attr': {'class': 'form-control bg-whitel', 'placeholder': 'Ad title goes here'}}) }}
+                            {{ form_errors(form.titre) }}
+
+                            {{ form_label(form.category) }}
+                            {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.category) }}
+
+                            {{ form_label(form.rate) }}
+                            {{ form_widget(form.rate, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.rate) }}
+
+                            {{ form_label(form.status) }}
+                            {{ form_widget(form.status, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.status) }}
+                        </div>
+                        <div class="col-lg-6">
+                            <h6 class="font-weight-bold pt-4 pb-1">Blog Content</h6>
+                            {{ form_label(form.contenu_blog) }}
+                            {{ form_widget(form.contenu_blog, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.contenu_blog) }}
+
+                            {# Inclure d'autres champs si nécessaire #}
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <!-- Submit buttons -->
+                {# <button type="submit" class="btn btn-primary">Save</button> #}
+{{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+
+                {{ form_end(form) }}
+            </form>
+        </div>
+    </section>
+{% endblock %}

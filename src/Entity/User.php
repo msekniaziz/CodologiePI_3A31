@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -107,6 +108,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->id;
     }
+    public function __toString(): string
+    {
+        return $this->getId(); 
+    }
+
 
     public function getNom(): ?string
     {
@@ -119,7 +125,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
+    
     public function getPrenom(): ?string
     {
         return $this->prenom;
