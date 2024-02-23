@@ -27,7 +27,9 @@ class ReponseBlog
     #[ORM\Column]
     private ?int $nb_likes = null;
 
-    #[ORM\ManyToOne(inversedBy: 'reponseBlogs')]
+    
+
+    #[ORM\ManyToOne(inversedBy: 'reponseBlogs',cascade:['remove'])]
     #[Assert\NotBlank(message:  "You should insert the content of your response")]
 
     private ?Blog $blog = null;

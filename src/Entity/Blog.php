@@ -17,19 +17,19 @@ class Blog
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "You should insert the category of your blog")]
+#[Assert\NotBlank(message: "You should insert the category of your blog")]
 
     private ?string $category = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Add  a title")]
+#[Assert\NotBlank(message: "Add  a title")]
     #[Assert\Length(min:8, minMessage: "the title should at least have 8 caracter")]
 
 
     private ?string $titre = null;
 
     #[ORM\Column(length: 500)]
-    #[Assert\NotBlank(message: "Add  a content")]
+#[Assert\NotBlank(message: "Add  a content")]
 
     private ?string $contenu_blog = null;
 
@@ -42,7 +42,7 @@ class Blog
     #[ORM\ManyToOne(inversedBy: 'blogs')]
     private ?User $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'blog', targetEntity: ReponseBlog::class)]
+    #[ORM\OneToMany(mappedBy: 'blog', targetEntity: ReponseBlog::class, orphanRemoval: true )]
     private Collection $reponseBlogs;
     public function __toString(): string
     {

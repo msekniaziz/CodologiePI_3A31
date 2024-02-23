@@ -7,7 +7,7 @@
 <body class="body-wrapper">
     <section class="advt-post bg-gray py-5">
         <div class="container">
-<form method="post" action="{{ path('app_reponse_blog_edit', {'id': blog.id}) }}" enctype="multipart/form-data">
+<form method="post" action="{{ path('app_blog_edit', {'id': blog.id}) }}" enctype="multipart/form-data">
                 {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
 
                 <!-- Post Your ad start -->
@@ -54,7 +54,7 @@
 
 
                 <!-- Submit buttons -->
-               <button type="submit" class="btn btn-primary"> save </button>
+               {# <button type="submit" class="btn btn-primary"> save </button> #}
                     </div>
             
 
