@@ -23,7 +23,7 @@
             <div class="border rounded p-4 form-container">
                 <h2>Edit collection point</h2>
                 <br>
-    <form method="post" action="{{ path('app_pt_collect_back_new') }}">
+<form method="post" action="{{ path('app_pt_collect_back_edit', {'id': pt_collect.id}) }}">
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
                     <fieldset class="p-3">      
         {{ form_row(form.Nom_pc, {'attr': {'class': 'form-control'}}) }}

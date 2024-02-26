@@ -11,10 +11,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+// use Symfony\Component\HttpFoundation\File\UploadedFile;
+// use Symfony\Component\Form\Extension\Core\DataTransformer\FileToStringTransformer;
+// use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
+// use Oneup\UploaderBundle\Uploader\OrphanageUploader;
+
+// use Symfony\Component\DependencyInjection\ContainerInterface;
+
 
 #[Route('/prod/r')]
 class ProdRController extends AbstractController
 {
+
+
     #[Route('/', name: 'app_prod_r_index', methods: ['GET'])]
     public function index(ProdRRepository $prodRRepository): Response
     {
@@ -35,6 +45,7 @@ class ProdRController extends AbstractController
             'prod_rs' => $prodRRepository->findBy(['user_id' => $user]),
         ]);
     }
+
     #[Route('/new', name: 'app_prod_r_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -44,22 +55,37 @@ class ProdRController extends AbstractController
         $user = $this->getUser();
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $prodR->setUserId($user);
+            // /** @var UploadedFile $imageFile */
+            // $imageFile = $form->get('justificatif')->getData();
 
-            // Persist et flush l'entité
+            // if ($imageFile) {
+            // $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+
+
+            // $prodR->setJustificatif($newFilename);
+
+
+
             $entityManager->persist($prodR);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_prod_r_index');
+
+
+
+
+            // return $this->redirectToRoute('app_prod_r_index');
         }
 
         return $this->renderForm('prod_r/new.html.twig', [
             'prod_r' => $prodR,
-            // 'user' => $user,
             'form' => $form,
         ]);
     }
+
+
+
 
 
     #[Route('/{id}', name: 'app_prod_r_show', methods: ['GET'])]

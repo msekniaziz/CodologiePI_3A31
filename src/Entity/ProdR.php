@@ -3,12 +3,24 @@
 namespace App\Entity;
 
 use App\Repository\ProdRRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\Integer;
+// use Vich\UploaderBundle\Mapping\Annotation as Vich;
+// use Symfony\Component\HttpFoundation\File\File;
+// use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+// use Symfony\Component\DependencyInjection\ContainerInterface;
+// use Oneup\UploaderBundle\Uploader\OrphanageUploader;
+// use Oneup\UploaderBundle\Uploader\OneUpUploaderInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: ProdRRepository::class)]
+// #[Vich\Uploadable]
 class ProdR
 {
+
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -22,6 +34,8 @@ class ProdR
 
     #[ORM\ManyToOne(inversedBy: 'prodRs')]
     #[ORM\JoinColumn(nullable: false)]
+    // #[Assert\NotBlank(message: "ptc id please")]
+
     private ?PtCollect $ptc_id = null;
 
     // #[ORM\ManyToOne(inversedBy: 'prodR_type', cascade: ["persist", "remove"])]
@@ -29,21 +43,29 @@ class ProdR
 
     #[ORM\ManyToOne(inversedBy: 'prodR_type')]
     #[ORM\JoinColumn(nullable: false)]
+    // #[Assert\NotBlank(message: "type  please")]
+
     private ?TypeDispo $typeProd_id = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $statut = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    // #[Assert\Length(min: 10, minMessage: "the description should at least have 10 caracters")]
     private ?string $description = null;
 
 
 
     #[ORM\Column(length: 255, nullable: true)]
+    // #[Assert\Length(min: 3, minMessage: "the name should at least have 3 caracters")]
     private ?string $nomP = null;
+
 
     #[ORM\Column(length: 255)]
     private ?string $justificatif = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $lastUpdate = null;
 
     public function __toString()
     {
@@ -67,16 +89,6 @@ class ProdR
 
         return $this;
     }
-    // public function setUserId(?User $user_id): static
-    // {
-    //     $this->user_id = $user_id;
-
-    //     return $this;
-    // }
-    // public function setUserId($userId)
-    // {
-    //     $this->user_id = $userId;
-    // }
 
     public function getPtcId(): ?PtCollect
     {
@@ -138,6 +150,10 @@ class ProdR
         return $this;
     }
 
+
+
+
+
     public function getJustificatif(): ?string
     {
         return $this->justificatif;
@@ -146,6 +162,18 @@ class ProdR
     public function setJustificatif(string $justificatif): static
     {
         $this->justificatif = $justificatif;
+
+        return $this;
+    }
+
+    public function getLastUpdate(): ?\DateTimeInterface
+    {
+        return $this->lastUpdate;
+    }
+
+    public function setLastUpdate(?\DateTimeInterface $lastUpdate): static
+    {
+        $this->lastUpdate = $lastUpdate;
 
         return $this;
     }

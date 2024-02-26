@@ -32,15 +32,24 @@
         
         {{ form_row(form.statut, {'attr': {'class': 'form-control'}}) }}
         {# {{ form_errors(form.statut) }} #}
+        {{ form_row(form.nomP, {'attr': {'class': 'form-control'}}) }}
+{% if form_errors(form.nomP) %}
+        <div class="alert alert-danger mt-2 mb-0" role="alert">
+          {{ form_errors(form.nomP) }}
+        </div>
+      {% endif %}
         {{ form_row(form.ptc_id, {'attr': {'class': 'form-control'}}) }}
         {{ form_errors(form.ptc_id) }}
         {{ form_row(form.typeProd_id, {'attr': {'class': 'form-control'}}) }}
         {{ form_errors(form.typeProd_id) }}
         {{ form_row(form.description, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.description) }} {# Afficher les erreurs de validation du champ description #}
-        {{ form_row(form.nomP, {'attr': {'class': 'form-control'}}) }}
-        {# {{ form_errors(form.nomP) }} Afficher les erreurs de validation du champ nomP #}
-        {{ form_row(form.save, {'attr': {'class': 'btn'}}) }}
+       
+{% if form_errors(form.description) %}
+        <div class="alert alert-danger mt-2 mb-0" role="alert">
+          {{ form_errors(form.description) }}
+        </div>
+      {% endif %}      
+              {{ form_row(form.save, {'attr': {'class': 'btn'}}) }}
         {{ form_end(form) }}
 
         <a href="{{ path('app_prod_r_back_index') }}">back to list</a>

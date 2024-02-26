@@ -55,18 +55,38 @@
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
                     <fieldset class="p-4">      
         {{ form_row(form.Nom_pc, {'attr': {'class': 'form-control'}}) }}
-        {# {{ form_errors(form.Nom_pc) }} #}
-       
+{% if form_errors(form.Nom_pc) %}
+        <div class="alert alert-danger mt-2 mb-0" role="alert">
+          {{ form_errors(form.Nom_pc) }}
+        </div>
+          <br>
+      {% endif %}        
         {{ form_row(form.adresse_pc, {'attr': {'class': 'form-control'}}) }}
-        {# {{ form_errors(form.adresse_pc) }} #}
+{% if form_errors(form.adresse_pc) %}
+        <div class="alert alert-danger mt-2 mb-0" role="alert">
+          {{ form_errors(form.adresse_pc) }}
+          
+        </div>
+                  <br>
 
+      {% endif %} 
         {{ form_row(form.latitude_pc, {'attr': {'class': 'form-control'}}) }}
-        {# {{ form_errors(form.latitude_pc) }}  #}
-        {# Afficher les erreurs de validation du champ description #}
+{% if form_errors(form.latitude_pc) %}
+        <div class="alert alert-danger mt-2 mb-0" role="alert">
+          {{ form_errors(form.latitude_pc) }}
+        </div>
+          <br>
+
+      {% endif %}         {# Afficher les erreurs de validation du champ description #}
         
         {{ form_row(form.longitude_pc, {'attr': {'class': 'form-control'}}) }}
-        {# {{ form_errors(form.longitude_pc) }} #}
-         {# Afficher les erreurs de validation du champ description #}
+{% if form_errors(form.longitude_pc) %}
+        <div class="alert alert-danger mt-2 mb-0" role="alert">
+          {{ form_errors(form.longitude_pc) }}
+        </div>
+          <br>
+
+      {% endif %}          {# Afficher les erreurs de validation du champ description #}
         
         {{ form_row(form.type, {'attr': {'class': 'form-control'}}) }}
         {# {{ form_errors(form.nomP) }} Afficher les erreurs de validation du champ nomP #}

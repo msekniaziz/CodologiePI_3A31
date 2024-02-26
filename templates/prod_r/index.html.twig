@@ -3,6 +3,10 @@
 {% block title %}ProdR index{% endblock %}
 
 {% block body %}
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+            {% endfor %}
     <section class="dashboard section">
         <div class="container">
             <div class="row">
@@ -42,6 +46,7 @@
                             <tbody>
                                 {% for prod_r in prod_rs %}
                                 <tr>
+                                       {# <img class="card-img-top img-fluid" src="{{ asset('uploads/imagestest/' ~ prod_r.justificatif) }}" alt="Card image cap"></td> #}
                                     <td class="product-details">
                                         <h3 class="title"><strong>{{ prod_r.nomP }}</strong></h3>
                                         <span class="add-id"><strong>Product ID:</strong> {{ prod_r.id }}</span>
