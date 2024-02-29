@@ -1,5 +1,35 @@
 {% extends 'front.html.twig' %}
+  {% block ngo %}
+        <li><a class="dropdown-item @@category" href="{{ path('app_association_index') }}">NGOs</a></li>  
+  {% endblock %}
 
+{% block home %}
+    <li class="nav-item @@home">
+        <a class="nav-link" href="{{ path('homeOff') }}">Home</a>
+    </li>
+{% endblock %}
+{% block Organizations %}
+             <li class="nav-item dropdown dropdown-slide @@listing">
+                                    <a class="nav-link dropdown-toggle" href="#!" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Organizations<span><i class="fa fa-angle-down"></i></span>
+                                    
+                                    <!-- Dropdown list -->
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item @@category" href="{{ path('app_association_index') }}">NGOs</a></li>
+                                        <li><a class="dropdown-item @@listView" href="ad-list-view.html">Ad-List View</a></li>
+
+                                        <li class="dropdown dropdown-submenu dropleft">
+                                            <a class="dropdown-item dropdown-toggle" href="#!" id="dropdown0201" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sub Menu</a>
+
+                                            <ul class="dropdown-menu" aria-labelledby="dropdown0201">
+                                                <li><a class="dropdown-item" href="index.html">Submenu 01</a></li>
+                                                <li><a class="dropdown-item" href="index.html">Submenu 02</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+{% endblock %}
 
 {% block login %}
     <header>

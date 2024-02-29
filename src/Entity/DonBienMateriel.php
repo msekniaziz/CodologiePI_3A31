@@ -22,7 +22,7 @@ class DonBienMateriel
     private ?string $descriptionDon = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:"Add a picture please")]
+    // #[Assert\NotBlank(message:"Add a picture please")]
     private ?string $photoDon = null;
 
     #[ORM\Column]
@@ -37,6 +37,8 @@ class DonBienMateriel
 
     #[ORM\ManyToOne(inversedBy: 'donBienMateriels')]
     private ?User $user_id = null;
+
+
 
     public function getId(): ?int
     {

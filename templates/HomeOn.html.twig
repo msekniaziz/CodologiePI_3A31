@@ -1,4 +1,9 @@
 {% extends 'front.html.twig' %}
+{% block home %}
+    <li class="nav-item @@home">
+        <a class="nav-link" href="{{ path('homeOn') }}">Home</a>
+    </li>
+{% endblock %}
 
 {% block logout %}
 
@@ -11,6 +16,10 @@
             </ul>
         </header>
 {% endblock %}
+
+    {% block ngo %}
+        <li><a class="dropdown-item @@category" href="{{ path('app_association_indexHomeOn') }}">NGOs</a></li>  
+  {% endblock %}
 
 {% block ajouterannonce %}
 
@@ -77,6 +86,7 @@
                     <a href="#">User Information</a>
                     <br>
                     <a href="#">Products</a>
+                    
                     <br>
                     <a href="#">Blogs</a>
                     <br>

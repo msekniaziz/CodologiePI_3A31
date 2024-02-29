@@ -1,7 +1,7 @@
  {% extends 'back.html.twig' %}
 
 
-{% block body %}
+{% block org %}
 <title>Association</title>
     <h1>Association</h1>
 
@@ -39,5 +39,7 @@
 
      <a href="{{ path('app_association_edit', {'id': association.id}) }}">edit</a> 
 
-    {{ include('association/_delete_form.html.twig') }} 
+    <a href="#" class="btn btn-danger" onclick="event.preventDefault(); document.getElementById('delete-form-{{ association.id }}').submit();">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </a>
  {% endblock %} 

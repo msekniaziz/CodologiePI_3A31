@@ -13,27 +13,48 @@
                 <td>{{ don_bien_materiel.id }}</td>
             </tr>
             <tr>
-                <th>DescriptionDon</th>
+                <th>Picture</th>
+                <td> <img class="card-img-top img-fluid" src="{{ asset('uploads/images/' ~ don_bien_materiel.photoDon) }}" alt="Card image cap" style="height: 100px;width: 100px";> </td>
+            </tr>
+            <tr>
+                <th>Description</th>
                 <td>{{ don_bien_materiel.descriptionDon }}</td>
             </tr>
             <tr>
-                <th>PhotoDon</th>
-                <td>{{ don_bien_materiel.photoDon }}</td>
-            </tr>
-            <tr>
-                <th>StatutDon</th>
+                <th>Status</th>
                 <td>{{ don_bien_materiel.statutDon ? 'Checked' : 'Not checked' }}</td>
             </tr>
             <tr>
-                <th>DateDonBienMateriel</th>
+                <th>Date</th>
                 <td>{{ don_bien_materiel.dateDonBienMateriel ? don_bien_materiel.dateDonBienMateriel|date('Y-m-d') : '' }}</td>
             </tr>
         </tbody>
-    </table>
-
-    <a href="{{ path('app_don_bien_materiel_index') }}">back to list</a>
-
-    <a href="{{ path('app_don_bien_materiel_edit', {'id': don_bien_materiel.id}) }}">edit</a>
-
+   </table>
+ 
+    <div>
+    <button class="btn" style="color: blue;" onclick="window.location.href='{{ path('app_don_bien_materiel_index') }}'">
+        <i class="fas fa-arrow-left"></i> Back to list
+    </button>
+                    <button class="btn" style="color: green;" onclick="window.location.href='{{ path('app_don_bien_materiel_edit', {'id': don_bien_materiel.id})}}'">
+        <i class="fa fa-edit"></i> Edit
+    </button> 
     {{ include('don_bien_materiel/_delete_form.html.twig') }}
+    </div>
+
+
+
+     
+{#    
+    <div class="button-container">
+        <a href="{{ path('app_don_bien_materiel_index') }}" class="btn btn-primary">
+            <i class="fas fa-arrow-left"></i> Back to list
+        </a>
+
+        <a href="{{ path('app_don_bien_materiel_edit', {'id': don_bien_materiel.id}) }}" class="btn btn-info">
+            <i class="fas fa-edit"></i> Edit
+        </a>
+        
+
+        {{ include('don_bien_materiel/_delete_form.html.twig') }}
+    </div> #}
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'home.html.twig' %}
+{% extends 'homeOn.html.twig' %}
 
 {% block body %}
     <title>Association</title>
@@ -94,7 +94,7 @@
                     <td>{{ association.nomAssociation }}</td>
                 </tr>
                 <tr>
-                    <th>Logo </th>
+                    <th>Logo</th>
                     <td>{{ association.logoAssociation }}</td>
                 </tr>
                 <tr>
@@ -102,7 +102,7 @@
                     <td>{{ association.descriptionAsso }}</td>
                 </tr>
                 <tr>
-                    <th>Address</th>
+                    <th>Address </th>
                     <td>{{ association.adresseAssociation }}</td>
                 </tr>
                 <tr>
@@ -113,9 +113,9 @@
         </table>
         
         <div class="button-container">
-            <a href="{{ path('app_login') }}" class="button">Donate goods</a>
+            <a href="{{ path('app_don_bien_materiel_new',{'id':association.id}) }}" class="button">Donate goods</a>
             <span class="button-text">or</span>
-           <a href="{{ path('app_login') }}" class="button">Donate money</a>
+             <a href="{{ path('app_don_argent_new',{'id':association.id}) }}" class="button">Donate money</a>
         </div>
         
        

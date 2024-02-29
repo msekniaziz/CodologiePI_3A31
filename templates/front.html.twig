@@ -57,9 +57,9 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ml-auto main-nav ">
-                                <li class="nav-item @@home">
-                                    <a class="nav-link" href="{{ path('homeOff') }}">Home</a>
-                                </li>
+                              {% block home %}
+
+                                {% endblock %}
 {% block ajouterannonce %}
 
                                 {% endblock %}
@@ -88,9 +88,12 @@
                                     
                                     <!-- Dropdown list -->
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item @@category" href="{{ path('app_association_index') }}">NGOs</a></li>
-                                        <li><a class="dropdown-item @@listView" href="ad-list-view.html">Ad-List View</a></li>
+                                    {% block ngo %}
 
+
+                                         {% endblock %}
+                                        <li><a class="dropdown-item @@listView" href="ad-list-view.html">Ad-List View</a></li>
+                                         
                                         <li class="dropdown dropdown-submenu dropleft">
                                             <a class="dropdown-item dropdown-toggle" href="#!" id="dropdown0201" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sub Menu</a>
 

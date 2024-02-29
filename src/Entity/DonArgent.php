@@ -19,9 +19,11 @@ class DonArgent
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
     private ?float $montant = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank]
     private ?\DateTimeInterface $dateDonArgent = null;
 
     #[ORM\ManyToOne(inversedBy: 'donArgents')]

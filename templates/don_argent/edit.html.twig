@@ -1,13 +1,14 @@
-<!DOCTYPE html>
+{% extends 'HomeOn.html.twig' %}
 
-<title>Edit DonArgent</title>
 
 {% block body %}
-    <h1>Edit DonArgent</h1>
+<title>Edit DonArgent</title>
+
+    {# <h1>Edit DonBienMateriel</h1> #}
 
     {{ include('don_argent/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_don_argent_index') }}">back to list</a>
+    {# <a href="{{ path('app_don_bien_materiel_index') }}">back to list</a> #}
 
-    {{ include('don_argent/_delete_form.html.twig') }}
+    {# {{ include('don_bien_materiel/_delete_form.html.twig') }} #}
 {% endblock %}

@@ -1,5 +1,11 @@
 {% extends 'front.html.twig' %}
 
+{% block home %}
+    <li class="nav-item @@home">
+        <a class="nav-link" href="{{ path('homeOff') }}">Home</a>
+    </li>
+{% endblock %}
+
 {% block body %}
     <section class="login py-5 border-top-1">
         <div class="container">
@@ -26,9 +32,13 @@
                                 </div>
                                 #}
 
-                                <button class="btn btn-primary font-weight-bold mt-3" type="submit" href="{{path('app_don_bien_materiel_new')}}">
-                                    Log in
-                                </button>
+                               {# <a class="btn btn-primary font-weight-bold mt-3" href="{{ path('app_login') }}"> #}
+                               
+    <button class="btn btn-primary font-weight-bold mt-3" type="submit">
+    Log in
+</button>
+</a>
+
                                 <br>
                                 <a class="mt-3 d-inline-block text-primary" href="{{ path('new_user') }}">Register Now</a>
                                 <br>

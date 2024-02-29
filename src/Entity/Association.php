@@ -7,8 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: AssociationRepository::class)]
+#[UniqueEntity(fields: "nomAssociation", message: "This name is already used")]
+
 class Association
 {
     #[ORM\Id]
@@ -17,17 +21,34 @@ class Association
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $nomAssociation = null;
+    #[Assert\NotBlank(message:"Add an association name")]
+     private ?string $nomAssociation = null;
+   
 
     #[ORM\Column(length: 500)]
+    #[Assert\NotBlank(message:"Add its address")]
     private ?string $adresseAssociation = null;
 
-    #[ORM\Column(type: Types::BIGINT)]
-    private ?string $RIB = null;
+    #[ORM\Column]
+    #[Assert\NotBlank(message:"RIB please")]
+    
+     #[Assert\Length(
+    min:8,
+    // max: 21,
+    exactMessage: "The RIB should contain at most 20 digits"
+     )]
+     private ?int $RIB = null;
+    //  #[Assert\Regex(
+    //      pattern: "/^\d{20}$/",
+    //     message: "Invalid RIB format it should contain 20 digits"
+    //  )]
+   
 
     #[ORM\Column(length: 255)]
+    // #[Assert\NotBlank(message:"Association logo please")]
     private ?string $logoAssociation = null;
     #[ORM\Column(length: 500)]
+    #[Assert\NotBlank(message:"Description please")]
     private ?string $descriptionAsso = null;
 
     #[ORM\OneToMany(mappedBy: 'id_association', targetEntity: DonBienMateriel::class,cascade:['remove'])]
@@ -77,12 +98,12 @@ class Association
         return $this;
     }
 
-    public function getRIB(): ?string
+    public function getRIB(): ?int
     {
         return $this->RIB;
     }
 
-    public function setRIB(string $RIB): static
+    public function setRIB(int $RIB): static
     {
         $this->RIB = $RIB;
 

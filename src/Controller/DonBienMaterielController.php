@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Controller;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
+
 use App\Entity\DonBienMateriel;
+
 use App\Form\DonBienMaterielType;
+use App\Repository\AssociationRepository;
 // use App\Form\backDonBienMaterielType;
 use App\Repository\DonBienMaterielRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,6 +13,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+
 
 #[Route('/don/bien/materiel')]
 class DonBienMaterielController extends AbstractController
@@ -18,8 +23,22 @@ class DonBienMaterielController extends AbstractController
     #[Route('/', name: 'app_don_bien_materiel_index', methods: ['GET'])]
     public function index(DonBienMaterielRepository $donBienMaterielRepository): Response
     {
+        // Récupérer l'utilisateur actuellement authentifié
+        $user = $this->getUser();
+
+
+        // Vérifier si l'utilisateur est authentifié
+        if ($user) {
+            // Récupérer les dons de l'utilisateur authentifié
+            $don_bien_materiels = $donBienMaterielRepository->findBy(['user_id' => $user]);
+        } else {
+            // Gérer le cas où aucun utilisateur n'est authentifié
+            // Par exemple, rediriger vers la page de connexion
+            return $this->redirectToRoute('app_login');
+        }
+
         return $this->render('don_bien_materiel/index.html.twig', [
-            'don_bien_materiels' => $donBienMaterielRepository->findAll(),
+            'don_bien_materiels' => $don_bien_materiels,
         ]);
     }
 
@@ -31,34 +50,51 @@ class DonBienMaterielController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_don_bien_materiel_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {   $user = $this->getUser();
-        if (!$user) {
-            // L'utilisateur n'est pas connecté, une exception se génère
-             throw new AuthenticationException('Désolé, vous devez être identifié pour accéder à cette page.');
-           
-        }
-        return $this->redirectToRoute('app_login'); // Rediriger vers la page de connexion
+    #[Route('/new/{id}', name: 'app_don_bien_materiel_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, AssociationRepository $associationsRepository): Response
+    {
+        $user = $this->getUser();
+        $associationId = $request->attributes->get('id');
+        $association = $associationsRepository->find($associationId);
+    
+        $donBienMateriel = new DonBienMateriel();
+        $donBienMateriel->setIdAssociation($association);
+    
+        $form = $this->createForm(DonBienMaterielType::class, $donBienMateriel, [
+            'edit_mode' => false,
             
-       
-            $donBienMateriel = new DonBienMateriel();
-        $form = $this->createForm(DonBienMaterielType::class, $donBienMateriel);
+        ]);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $donBienMateriel->setUserId($user);
-       
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form->get('photoDon')->getData();
+    
+            if ($imageFile) {
+                $newFilename = uniqid().'.'.$imageFile->guessExtension();
+    
+                try {
+                    $imageFile->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // Handle the exception
+                }
+    
+                $donBienMateriel->setPhotoDon($newFilename);
+            }
+    
             $entityManager->persist($donBienMateriel);
             $entityManager->flush();
-
+            // $this->addFlash('success', 'Account created ! Check Your Mail For Verification');
             return $this->redirectToRoute('app_don_bien_materiel_index', [], Response::HTTP_SEE_OTHER);
         }
-
+    
         return $this->renderForm('don_bien_materiel/new.html.twig', [
             'don_bien_materiel' => $donBienMateriel,
             'form' => $form,
-            
         ]);
     }
 
@@ -70,10 +106,20 @@ class DonBienMaterielController extends AbstractController
         ]);
     }
 
+    #[Route('/back/{id}', name: 'app_don_bien_materiel_showback', methods: ['GET'])]
+    public function showback(DonBienMateriel $donBienMateriel): Response
+    {
+        return $this->render('don_bien_materiel/showback.html.twig', [
+            'don_bien_materiel' => $donBienMateriel,
+        ]);
+    }
+
     #[Route('/{id}/edit', name: 'app_don_bien_materiel_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, DonBienMateriel $donBienMateriel, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(DonBienMaterielType::class, $donBienMateriel);
+        $form = $this->createForm(DonBienMaterielType::class, $donBienMateriel,[
+            'edit_mode' => true,
+        ]);  
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
