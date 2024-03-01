@@ -90,6 +90,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: DonArgent::class)]
     private Collection $donArgents;
 
+    #[ORM\OneToMany(mappedBy: 'receiverId', targetEntity: Message::class)]
+    private Collection $messages;
+
+    
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -101,16 +105,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->commandes = new ArrayCollection();
         $this->donBienMateriels = new ArrayCollection();
         $this->donArgents = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+
     }
     public function __toString(): string
     {
         return $this->getId(); 
     }
+   
 
 
     public function getNom(): ?string
@@ -531,6 +538,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($donArgent->getUserId() === $this) {
                 $donArgent->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Message>
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): static
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages->add($message);
+            $message->setReceiverId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): static
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getReceiverId() === $this) {
+                $message->setReceiverId(null);
             }
         }
 

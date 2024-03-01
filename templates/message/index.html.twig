@@ -1,0 +1,40 @@
+{% extends 'HomeOn.html.twig' %}
+
+{% block title %}Boite de Receptions {% endblock %}
+
+{% block body %}<br><br><br><br><br>
+    <h1>Mes Messages</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                
+                <th>Content</th>
+                <th>Timestamp</th>
+                <th>senderid</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for message in messages %}
+            <tr>
+               
+                <td>{{ message.content }}</td>
+                
+                <td>{{ message.timestamp ? message.timestamp|date('Y-m-d') : '' }}</td>
+                <td>{{ message.senderid }}</td>
+                <td>
+                    <a href="{{ path('app_message_show', {'id': message.id}) }}">show</a>
+                    <a href="{{ path('app_message_edit', {'id': message.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+   {# <a href="{{ path('app_message_new',{'id': message.id}) }}">Create new</a>  #}
+{% endblock %}

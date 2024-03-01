@@ -30,7 +30,6 @@ class ProduitTroc1Type extends AbstractType
         $builder
         ->add('nom', null, [
             'attr' => ['class' => 'form-control'],
-            'help'=>'add name please',
             'required' => false,
           
         ])

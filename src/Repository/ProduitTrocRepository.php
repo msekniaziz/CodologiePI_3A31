@@ -45,4 +45,24 @@ class ProduitTrocRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function findByCriteria($criteria1, $criteria2)
+    {
+        $qb = $this->createQueryBuilder('pt');
+
+        // Add conditions based on the provided criteria
+        if ($criteria1) {
+            $qb->andWhere('pt.nom = :criteria1')
+               ->setParameter('criteria1', $criteria1);
+        }
+
+        if ($criteria2) {
+            $qb->andWhere('pt.nom_produit_recherche = :criteria2')
+               ->setParameter('criteria2', $criteria2);
+        }
+
+        // Add more conditions for additional criteria as needed
+
+        return $qb->getQuery()->getResult();
+    }
 }
