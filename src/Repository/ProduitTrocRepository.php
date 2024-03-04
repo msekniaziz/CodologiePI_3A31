@@ -65,4 +65,13 @@ public function findByCriteria($criteria1, $criteria2)
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findAllExceptStatusZero(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.statut <> :status')
+            ->setParameter('status', 0)
+            ->getQuery()
+            ->getResult();
+    }
 }

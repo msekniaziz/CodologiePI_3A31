@@ -1,33 +1,76 @@
 {% extends 'back.html.twig' %}
 
 {% block user %}
-    <table class="w3-table w3-striped">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                            <script src="{{ asset('assets/js/jquery.js') }}"></script>
 
-        <thead class="w3-dark-grey">
-        <tr>
-            <th>ID</th>
-            <th>Name of the product</th>
-            <th>Category</th>
-            <th>description</th>
-            <th>Id prod to troc with</th>
-            <th>Image</th>
+    <section class="service-2 section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <input type="text" id="search" class="form-control" placeholder="Search by name">
+                </div>
+            </div>
+            <div class="row" id="partner-list">
+                {% for u in produit_trocs %}
+                    <div class="col-md-4 col-sm-6 partner-item">
+                        <div class="service-item">
+                            {% if u.getImage %}
+                                <img class="img-fluid" src="{{ asset('/uploads/images/' ~ u.image) }}" alt="Product Image">
+                            {% else %}
+                                <p>No image available</p>
+                            {% endif %}         
+                            <h4>{{ u.getNom() | upper }}</h4>
+                            <p>ID: {{ u.getId() }}</p>
+                            <p>Category: {{ u.getCategory() }}</p> 
+                            <p>Description: {{ u.getDescription() }}</p>
+                        </div>
+                    </div><!-- END COL -->
+                {% endfor %}
+            </div> <!-- End row -->
 
-        </tr>
-        </thead>
-        <tbody>
-        {% for u in produit_trocs %}
-            <tr>
-                <td>{{ u.getId() }}</td>
-                <td>{{ u.getNom() }}</td>
-                <td>{{ u.getCategory() }}</td>
-                <td>{{ u.getDescription() }}</td>
-                <td>{{ u.getCategory() }}</td>
-  <td>  {% if u.getImage %}
-                                                <img width="100px" height="auto" src="{{ asset('/uploads/images/' ~ u.image) }}" alt="Product Image">
-                                            {% else %}
-                                                <p>No image available</p>
-                                            {% endif %}</td>            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <!-- Pagination Container -->
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center" id="pagination-container">
+                    <!-- Pagination links will be dynamically added here -->
+                </div>
+            </div> <!-- End Pagination -->
+        </div> <!-- End container -->
+    </section> <!-- End section -->
+
+    <!-- JavaScript for Pagination and Search -->
+    <script>
+        $(document).ready(function() {
+            const itemsPerPage = 3;
+            const partners = $('.partner-item');
+            const numPages = Math.ceil(partners.length / itemsPerPage);
+
+            function paginate(page) {
+                partners.hide().slice((page - 1) * itemsPerPage, page * itemsPerPage).show();
+            }
+
+            function createPaginationLinks() {
+                const paginationContainer = $('#pagination-container');
+                for (let i = 1; i <= numPages; i++) {
+                    const link = $('<a>').attr('href', '#').text(i);
+                    link.click(function(event) {
+                        event.preventDefault();
+                        paginate(i);
+                    });
+                    paginationContainer.append(link).append(' ');
+                }
+            }
+
+            createPaginationLinks();
+            paginate(1);
+
+            $('#search').keyup(function() {
+                const value = $(this).val().toLowerCase();
+                partners.each(function() {
+                    const name = $(this).find('h4').text().toLowerCase();
+                    $(this).toggle(name.includes(value) || value === '');
+                });
+            });
+        });
+    </script>
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Controller;
 use App\Entity\ProduitTrocWith;
 use App\Form\SearchFormType;
+use Knp\Component\Pager\PaginatorInterface;
 
 use App\Entity\ProduitTroc;
 use App\Form\ProduitTroc1Type;
@@ -16,6 +17,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Filesystem\Exception\FileException;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
+use Twilio\Rest\Client;
+use App\Service\SmsSender; // Import the SmsSender service
+
 
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,9 +35,28 @@ class ProduitTrocController extends AbstractController
     public function index(ProduitTrocRepository $produitTrocRepository): Response
     {
         return $this->render('index1.html.twig', [
-            'produit_trocs' => $produitTrocRepository->findAll(),
+            'produit_trocs' => $produitTrocRepository->findAllExceptStatusZero(),
         ]);
     }
+
+    #[Route('/PRS/{id}', name: 'change_status', methods: ['GET'])]
+    public function changeStatus(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $produitTroc = $entityManager->getRepository(ProduitTroc::class)->find($id);
+
+        if (!$produitTroc) {
+            throw $this->createNotFoundException('Produit Troc not found');
+        }
+
+        // Change status from 0 to 1
+        $produitTroc->setStatut(1);
+
+        $entityManager->flush();
+
+        // Redirect back to the index page
+        return $this->redirectToRoute('app_produit_troc_index');
+    }
+
     #[Route('/m', name: 'app_produit_troc_mine', methods: ['GET'])]
     public function indexmi(ProduitTrocRepository $produitTrocRepository): Response
     { $user = $this->getUser();
@@ -99,7 +122,7 @@ public function index11(Request $request): Response
         } catch (\Exception $e) {
             // Handle API request errors
             return $this->render('chatgbt.html.twig', [
-                'answer' => 'I\'m sorry, I can only answer questions related to JardinDars products and services.',
+                'answer' => 'I\'m sorry, I can only answer questions related to JardinDars products and services Please try again.',
             ]);
         }
     }
@@ -110,13 +133,13 @@ public function index11(Request $request): Response
     ]);
 }
 
-    #[Route('/b', name: 'app_produit_troc_index_back', methods: ['GET'])]
-    public function indexback(ProduitTrocRepository $produitTrocRepository): Response
-    {
-        return $this->render('prod_troc.html.twig', [
-            'produit_trocs' => $produitTrocRepository->findAll(),
-        ]);
-    }
+    // #[Route('/b', name: 'app_produit_troc_index_back', methods: ['GET'])]
+    // public function indexback(ProduitTrocRepository $produitTrocRepository): Response
+    // {
+    //     return $this->render('prod_troc.html.twig', [
+    //         'produit_trocs' => $produitTrocRepository->findAll(),
+    //     ]);
+    // }
     #[Route('/l', name: 'app_produit_troc_indexES', methods: ['GET'])]
     public function indexEd(ProduitTrocRepository $produitTrocRepository): Response
     {
@@ -125,48 +148,90 @@ public function index11(Request $request): Response
         ]);
     }
 
-    #[Route('/new', name: 'app_produit_troc_new', methods: ['GET', 'POST'])]
-public function new(Request $request, EntityManagerInterface $entityManager): Response
-{
-    $user = $this->getUser();
-    $produitTroc = new ProduitTroc();
-    $form = $this->createForm(ProduitTroc1Type::class, $produitTroc);
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) {
-        /** @var UploadedFile $imageFile */
-        $imageFile = $form->get('image')->getData();
-
-        if ($imageFile) {
-            $newFilename = uniqid().'.'.$imageFile->guessExtension();
-
-            try {
-                $imageFile->move(
-                    $this->getParameter('images_directory'), // Destination directory, should be defined in the configuration file
-                    $newFilename
-                );
-            } catch (FileException $e) {
-                // Handle the exception, such as logging an error message or displaying a user-friendly error
-                echo 'An error occurred: ' . $e->getMessage();
-                // You might want to return an error response here
-            }
-
-            $produitTroc->setImage($newFilename);
-            $produitTroc->setStatut(0); // Use setStatut instead of getStatut
-            $produitTroc->setIdUser($user);
-        }var_dump($imageFile);
-
-        $entityManager->persist($produitTroc);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('app_produit_troc_index', [], Response::HTTP_SEE_OTHER);
+    #[Route('/b', name: 'app_produit_troc_index_back', methods: ['GET'])]
+    public function indexback(ProduitTrocRepository $produitTrocRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+        $produitTrocQuery = $produitTrocRepository->findAll(); // Fetch all records
+    
+        // Paginate the results
+        $produitTroc = $paginator->paginate(
+            $produitTrocQuery, // Doctrine Query, not results
+            $request->query->getInt('page', 1), // Current page number, defaults to 1
+            5 // Number of items per page
+        );
+    
+        return $this->render('prod_troc.html.twig', [
+            'produit_trocs' => $produitTroc,
+            'pagination' => $produitTroc // Pass the paginated results to the template
+        ]);
     }
 
-    return $this->renderForm('produit_troc/new1.html.twig', [
-        'produit_troc' => $produitTroc,
-        'form' => $form,
-    ]);
-}
+    #[Route('/new', name: 'app_produit_troc_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+
+        $produitTroc = new ProduitTroc();
+        $form = $this->createForm(ProduitTroc1Type::class, $produitTroc);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form->get('image')->getData();
+    
+            if ($imageFile) {
+                $newFilename = uniqid().'.'.$imageFile->guessExtension();
+    
+                try {
+                    $imageFile->move(
+                        $this->getParameter('images_directory'), // Destination directory, should be defined in the configuration file
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // Handle the exception, such as logging an error message or displaying a user-friendly error
+                    echo 'An error occurred: ' . $e->getMessage();
+                    // You might want to return an error response here
+                }
+    
+                $produitTroc->setImage($newFilename);
+                $produitTroc->setStatut(0); // Use setStatut instead of getStatut
+                $produitTroc->setIdUser($user);
+            }
+    
+            $entityManager->persist($produitTroc);
+            $entityManager->flush();
+    
+            // Initialize Twilio client
+        //     $sid = "ACbd337248e7718753c1a2a9b2b882db86";
+        //     $token = "42c577ae5a2444294a2d7e1d761d32ca";
+        //     $receiverPhoneNumber = $produitTroc->getIdUser()->getTel(); // Assuming you have appropriate methods in your entities
+
+        //     $res = '+216' . $receiverPhoneNumber; // Concatenate the country code with the telephone number
+        //     $twilio = new Client($sid, $token);
+        // var_dump($res);
+
+        //     // Send SMS to the user
+        //    $message = $twilio->messages
+        //         ->create(
+        //            $res, // User's phone number
+        //             [
+        //                "from" => "+14437753032", // Your Twilio phone number
+        //               "body" => "Hi  Your product  for exchange has been added successfully wait for the admin approval."
+        //            ]
+        //         );
+    
+            return $this->redirectToRoute('app_produit_troc_index', [], Response::HTTP_SEE_OTHER);
+        }
+    
+
+        return $this->renderForm('produit_troc/new1.html.twig', [
+            'produit_troc' => $produitTroc,
+            'form' => $form,
+        ]);
+    }
+    
+    
+
 
     #[Route('/{id}', name: 'app_produit_troc_show', methods: ['GET'])]
     public function show(ProduitTroc $produitTroc): Response
@@ -265,6 +330,9 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
     private function getAnswerFromAPI(string $question): string
 {
     // Your predefined answers
+   $recyclage="you can easily  recycle any product by deposing it in any dropping point you can consult the page associated the recycling ";
+   $don="you can  donate money eaisly from our site its  very easy and secure";
+   $blog="you can add a blog or collent on one leave a like and dont  forget to share it with your friends ";   
     $echange = 'Our site helps you exchange your products easily and quickly with the security of your home. You can easily add a product to get rid of.';
     $amenaAnswer = 'JardinDars is a website to help you buy, sell, and exchange products easily and safely.';
     $termsAndConditions =
@@ -304,6 +372,12 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
         return $amenaAnswer;
     } elseif (preg_match('/troc|echange|house|garden|exchange/i', $question)) {
         return $echange;
+    } elseif (preg_match('/recylage|environement|eco|green/i', $question)) {
+        return $recyclage;
+    } elseif (preg_match('/blog|commment|like|want/i', $question)) {
+        return $blog;
+    } elseif (preg_match('/don|donnation|give|charity|want/i', $question)) {
+        return $don;
     } else {
         // If the question doesn't match any predefined pattern, query the API
         $postData = [
