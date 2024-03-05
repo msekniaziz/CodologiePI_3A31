@@ -1,0 +1,60 @@
+{% extends 'homeOn.html.twig' %}
+
+{% block title %}PtCollect index{% endblock %}
+
+{% block body %}
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    
+    
+   <style>
+               #map {
+
+            height: 400px; /* Utilisez toute la hauteur de la fenêtre */
+            width: 90%; /* Définissez la largeur de la carte en calculant la largeur totale de la fenêtre moins 400px pour la partie à droite */
+          left:5%;
+        }
+    </style>
+
+<div class="text-center"> <strong> <H2> Our Collect Points</H2></strong> <div>
+<br>
+<div style="width:100%; height: 400px;">
+    <div id="map" ></div>
+</div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 5);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Parcourir les places et ajouter un marqueur pour chaque place
+        {# {% for place in pt_collects %}
+            L.marker([{{ place.getLatitudePc() }}, {{ place.getLongitudePc() }}]).addTo(map)
+                .bindPopup("{{ place.getNomPc() }}");
+        {% endfor %} #}
+
+{% for place in pt_collects %}
+    {# Générez le contenu du popup en dehors de la boucle des types disponibles #}
+    {% set popupContent = '<div class="text-center" style="font-family: Muli, sans-serif; font-weight: bold;">' ~ place.getNomPc() ~ '</div>' %}
+    {% if place.getType()|length > 0 %}
+        {# {% set popupContent = popupContent  %} #}
+        {% for typeDispo in place.getType() %}
+            {% set popupContent = popupContent ~ '<div style="font-family: Muli, sans-serif; border-radius: 30px; border: 1px solid green; padding: 10px; margin-top: 5px; ">' ~ typeDispo.getNom() | raw ~ '</div>' %}
+        {% endfor %}
+        {% set popupContent = popupContent ~ '</div>' %}
+    {% endif %}
+    {% set popupContent = popupContent ~ '<br><a href="' ~ path('app_prod_r_new', {'id': place.getId()}) ~ '">Déposer un produit à recycler ici</a>' %}
+
+    {# Ajoutez le marqueur avec le contenu du popup généré #}
+    var marker = L.marker([{{ place.getLatitudePc() }}, {{ place.getLongitudePc() }}]).addTo(map);
+    marker.bindPopup('{{ popupContent | raw }}');
+{% endfor %}
+    </script>
+<br>
+<br>
+   <div class="text-center"> <a href="{{ path('app_pt_collect_index') }}">Go to list</a></div>
+   <br>
+{% endblock %}

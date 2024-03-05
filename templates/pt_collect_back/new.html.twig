@@ -1,0 +1,104 @@
+{# {% extends 'front.html.twig' %}
+
+{% block title %}New PtCollect{% endblock %}
+
+{% block body %}
+    <h1>Create new PtCollect</h1>
+
+    {{ include('pt_collect/_form.html.twig') }}
+
+    <a href="{{ path('app_pt_collect_index') }}">back to list</a>
+{% endblock %} #}
+{# {% extends 'front.html.twig' %}
+
+{% block title %}New ProdR{% endblock %}
+
+{% block body %}
+    <h1>Create new ProdR</h1>
+
+    {{ include('prod_r/_form.html.twig') }}
+
+    <a href="{{ path('app_prod_r_index') }}">back to list</a>
+{% endblock %} #}
+{% extends 'back.html.twig' %}
+
+{% block title %}New collect point{% endblock %}
+
+{# {% block body %}
+{{ parent() }}
+{% endblock %} #}
+{% block ptCollect %}
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+    {% endfor %}
+{# {{ parent() }} #}
+
+<div class="container">
+        <div class="row ">
+            <div class="col-md-8 offset-md-2">
+            <div class="border rounded p-4 form-container">
+                <h3 class="bg-gray p-4">Create new collection point</h3>
+
+                <br> 
+               
+                {# <section class="login py-5 border-top-1">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-8 align-item-center">
+                    <div class="border border">
+                        <h3 class="bg-gray p-4">Add a material goods donation</h3> #}
+                
+    <form method="post" action="{{ path('app_pt_collect_back_new') }}">
+    {# {{ form_row(form.description, {'attr': {'class': 'form-control'}, 'help_attr': {'style': 'color: red;'}}) }} #}
+        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+                    <fieldset class="p-4">      
+        {{ form_row(form.Nom_pc, {'attr': {'class': 'form-control'}}) }}
+{% if form_errors(form.Nom_pc) %}
+        <div class="alert alert-danger mt-2 mb-0" role="alert">
+          {{ form_errors(form.Nom_pc) }}
+        </div>
+          <br>
+      {% endif %}        
+        {{ form_row(form.adresse_pc, {'attr': {'class': 'form-control'}}) }}
+{% if form_errors(form.adresse_pc) %}
+        <div class="alert alert-danger mt-2 mb-0" role="alert">
+          {{ form_errors(form.adresse_pc) }}
+          
+        </div>
+                  <br>
+
+      {% endif %} 
+        {{ form_row(form.latitude_pc, {'attr': {'class': 'form-control'}}) }}
+{% if form_errors(form.latitude_pc) %}
+        <div class="alert alert-danger mt-2 mb-0" role="alert">
+          {{ form_errors(form.latitude_pc) }}
+        </div>
+          <br>
+
+      {% endif %}         {# Afficher les erreurs de validation du champ description #}
+        
+        {{ form_row(form.longitude_pc, {'attr': {'class': 'form-control'}}) }}
+{% if form_errors(form.longitude_pc) %}
+        <div class="alert alert-danger mt-2 mb-0" role="alert">
+          {{ form_errors(form.longitude_pc) }}
+        </div>
+          <br>
+
+      {% endif %}          {# Afficher les erreurs de validation du champ description #}
+        
+        {{ form_row(form.type, {'attr': {'class': 'form-control'}}) }}
+        {# {{ form_errors(form.nomP) }} Afficher les erreurs de validation du champ nomP #}
+        {{ form_row(form.save, {'attr': {'class': 'btn'}}) }}
+        {{ form_end(form) }}
+
+        <a href="{{ path('app_pt_collect_back_index') }}">back to list</a>
+    </form>
+     </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock  %}
+

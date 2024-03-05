@@ -1,0 +1,43 @@
+{% extends 'HomeOn.html.twig' %}
+
+{% block title %}ProdR{% endblock %}
+
+{% block body %}
+    <h1>ProdR</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ prod_r.id }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{{ prod_r.statut ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ prod_r.description }}</td>
+            </tr>
+            <tr>
+                <th>NomP</th>
+                <td>{{ prod_r.nomP }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ prod_r.getTypeProdId()}}</td>
+            </tr>
+            <tr>
+                <th>Justificatif</th>
+                <td>{{ prod_r.justificatif }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <a href="{{ path('app_prod_r_index') }}">back to list</a>
+
+    <a href="{{ path('app_prod_r_edit', {'id': prod_r.id}) }}">edit</a>
+
+    {{ include('prod_r/_delete_form.html.twig') }}
+{% endblock %}

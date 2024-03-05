@@ -1,0 +1,60 @@
+{# {% extends 'front.html.twig' %}
+
+{% block title %}New ProdR{% endblock %}
+
+{% block body %}
+    <h1>Create new ProdR</h1>
+
+    {{ include('prod_r/_form.html.twig') }}
+
+    <a href="{{ path('app_prod_r_index') }}">back to list</a>
+{% endblock %} #}
+{% extends 'back.html.twig' %}
+
+{% block title %}New ProdR{% endblock %}
+
+          
+{% block recyclage %}
+    {# <h1>Create new ProdR</h1> #}
+ <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h2>Ajouter un produit à recycler</h2>
+                <br>
+    <form method="post" action="{{ path('app_prod_r_back_new') }}">
+        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+                    {# <fieldset class="p-3">  #}
+                           {# {{ form_row(form.statut, {'attr': {'class': 'form-control'}}) }} #}
+        {# {{ form_errors(form.statut) }} Afficher les erreurs de validation du champ statut #}
+    
+  {# {{ form_row(form.user_id, {'attr': {'class': 'form-control'}}) }} #}
+        {# {{ form_errors(form.user_id) }} #}
+        
+        {{ form_row(form.statut, {'attr': {'class': 'form-control'}}) }}
+        {# {{ form_errors(form.statut) }} #}
+        {{ form_row(form.nomP, {'attr': {'class': 'form-control'}}) }}
+{% if form_errors(form.nomP) %}
+        <div class="alert alert-danger mt-2 mb-0" role="alert">
+          {{ form_errors(form.nomP) }}
+        </div>
+      {% endif %}
+        {{ form_row(form.ptc_id, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.ptc_id) }}
+        {{ form_row(form.typeProd_id, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.typeProd_id) }}
+        {{ form_row(form.description, {'attr': {'class': 'form-control'}}) }}
+       
+{% if form_errors(form.description) %}
+        <div class="alert alert-danger mt-2 mb-0" role="alert">
+          {{ form_errors(form.description) }}
+        </div>
+      {% endif %}      
+              {{ form_row(form.save, {'attr': {'class': 'btn'}}) }}
+        {{ form_end(form) }}
+
+        <a href="{{ path('app_prod_r_back_index') }}">back to list</a>
+    </form>
+    </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends 'back.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+    <style>
+        .search-label {
+            /* Existing styles */
+            font-weight: bold;
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 10px;
+            /* Additional styles */
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    <script src="{{ asset('/assets/js/jquery.js') }}"></script>
+{% endblock %}
+
+ {% block notification %}
+
+     {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
+
+ {% endblock %}
+
+{% block user %}
+    <div class="search-container">
+        <input type="text" class="search-label" placeholder="Search with ID" id="search">
+    </div>
+    <br> <!-- Adding a <br> element for spacing -->
+    <table class="w3-table w3-striped" id="tableac">
+        <thead class="w3-dark-grey">
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Mail</th>
+            <th>Phone Number</th>
+            <th>Gender</th>
+            <th>Points</th>
+            <th>Age</th>
+            <th>Birthday</th>
+            <th>Status</th>
+            <th>Access</th>
+            <th>Active</th>
+            <th>Inactive</th>
+        </tr>
+        </thead>
+        <tbody id="user-table-body">
+        {% for u in users %}
+            <tr>
+                <td>{{ u.getId() }}</td>
+                <td>{{ u.getNom() }}</td>
+                <td>{{ u.getPrenom() }}</td>
+                <td>{{ u.getMail() }}</td>
+                <td>{{ u.getTel() }}</td>
+                <td>{{ u.getGender() }}</td>
+                <td>{{ u.getNbPoints() }}</td>
+                <td>{{ u.getAge() }}</td>
+                <td>{{ u.getDateBirthday()|date('Y-m-d') }}</td>
+                <td>{{ u.getStatus() }}</td>
+                <td><a href="{{ path('user_delete', {'id': app.user.getId() , 'idDelete': u.getId()}) }}"><i class="fa fa-trash"></i></a></td>
+                <td><a href="{{ path('user_active', {'id': app.user.getId() ,'idActive': u.getId()}) }}"><i class="fa">&#xf00c;</i></a></td>
+                <td><a href="{{ path('user_inactive', {'id': app.user.getId() ,'idInActive': u.getId()}) }}"><i class="fa">&#xf00d;</i></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                {% for page in range(1, totalPages) %}
+                    <li class="page-item{% if page == users.getCurrentPageNumber() %} active{% endif %}">
+                        <a class="page-link" href="{{ path('user_display_back', {'id': app.user.getId(), 'page': page}) }}">{{ page }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $('#search').keyup(function(){
+                search_table($(this).val());
+            });
+            function search_table(value){
+                $('#tableac tbody tr').each(function(){
+                    var found = false;
+                    $(this).find('td:first-child').each(function(){ // nth-child(2)
+                        if($(this).text().toLowerCase().includes(value.toLowerCase())){
+                            found = true;
+                            return false;
+                        }
+                    });
+                    if(found){
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}

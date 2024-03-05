@@ -1,0 +1,13 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}Edit PtCollect{% endblock %}
+
+{% block body %}
+    <h1>Edit PtCollect</h1>
+
+    {{ include('pt_collect/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_pt_collect_index') }}">back to list</a>
+
+    {{ include('pt_collect/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,27 @@
+<table>
+    <thead>
+        <tr>
+            <th>Nom du point de collecte</th>
+            <th>Adresse du point de collecte</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Types disponibles</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ptCollect in ptCollects %}
+        <tr>
+            <td>{{ ptCollect.getNomPc() }}</td>
+            <td>{{ ptCollect.getAdressePc() }}</td>
+            <td>{{ ptCollect.getLatitudePc() }}</td>
+            <td>{{ ptCollect.getLongitudePc() }}</td>
+            <td>
+                {% for typeDispo in ptCollect.getType() %}
+                    {{ typeDispo.getNom() }}
+                    {% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
