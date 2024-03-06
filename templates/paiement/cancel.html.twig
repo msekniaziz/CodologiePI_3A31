@@ -1,0 +1,21 @@
+{% extends 'HomeOn.html.twig' %}
+
+
+
+{% block body %}
+    <title>Donation fail</title>
+
+    {{ parent() }}
+
+    <h1>Thanks for your attempted donation!</h1>
+    <p>
+        We would appreciate your act of kindness!
+        But your payment has failed!
+        Please try again later or contact us
+        <a href="mailto:orders@example.com">orders@example.com</a>.
+    </p>
+
+    <div>
+
+    </div>
+{% endblock %}

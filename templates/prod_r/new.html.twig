@@ -1,0 +1,86 @@
+{% extends 'HomeOn.html.twig' %}
+
+
+{% block body %}
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+            {% endfor %}
+
+    <form method="post" action="{{ path('app_prod_r_new', {'idUser': app.user.getId()}) }}">
+        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+
+        <section class="advt-post bg-gray py-5">
+            <div class="container">
+                <fieldset class="border border-gary px-3 px-md-4 py-4 mb-5">
+                    <div class="row">
+                        <div class="col-lg-12">
+<div class="text-center">
+        <h3 style="font-weight: bold;"><i>Create new product for recycling</i></h3>
+                <a href="{{ path('app_prod_r_index', {'idUser': app.user.getId()}) }}" class="btn">back to list</a>
+
+    </div>                         <hr>
+                        </div>
+                        <div class="col-lg-6">
+                            <h6 class="font-weight-bold pt-4 pb-1">Product Name :</h6>
+                            {# <input type="text" name="ad_title" class="form-control bg-white" placeholder="Ad title goes here" >                             #}
+                            {{ form_widget(form.nomP, {'attr': {'class': 'form-control bg-white'}}) }}
+{% if form_errors(form.nomP) %}
+        <div class="alert alert-danger mt-2 mb-0" role="alert">
+          {{ form_errors(form.nomP) }}
+        </div>
+      {% endif %}
+                            <h6 class="font-weight-bold pt-4 pb-1">Description:</h6>
+                            {# <textarea name="ad_description" class="form-control bg-white" rows="7" placeholder="Write details about your product" required></textarea> #}
+                                    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+{% if form_errors(form.description) %}
+        <div class="alert alert-danger mt-2 mb-0" role="alert">
+          {{ form_errors(form.description) }}
+        </div>
+      {% endif %}
+                        </div>
+                        <div class="col-lg-6">
+                                                    <h6 class="font-weight-bold pt-4 pb-1">Product Type :</h6>
+
+                                       {{ form_widget(form.typeProd_id, {'attr': {'class': 'form-control'}}) }}
+                                                                   <h6 class="font-weight-bold pt-4 pb-1">Collect Point :</h6>
+
+                      {{ form_widget(form.ptc_id, {'attr': {'class': 'form-control bg-white'}}) }}
+
+                            <div>         
+
+</div>
+                        </div>
+                    </div>
+                            {# <div class="choose-file text-center my-4 py-4 rounded bg-white">
+                                <label for="file-upload">
+                                    <span class="d-block font-weight-bold text-dark">Drop files anywhere to upload for a proof </span>
+                                    <span class="d-block">or</span>
+                                    <span class="d-block btn bg-primary text-white my-3 select-files">Select files</span>
+                                    <span class="d-block">Maximum upload file size: 500 KB</span>
+                                    <input type="file" name="ad_file" class="form-control-file d-none" id="file-upload">
+                                </label>
+                            </div> #} 
+                                                        <div class="choose-file text-center my-4 py-4 rounded bg-white">
+
+                               {{ form_row(form.save, {'attr': {'class': 'd-block btn bg-primary text-white my-3 mx-auto','style': 'width: 300px;'}}) }}
+                                       {{ form_end(form) }}
+                                        </div> 
+                                        </div> 
+                            <div class="checkbox d-inline-flex">
+        <input type="checkbox" id="terms-&-condition" class="mt-1">
+        <label for="terms-&-condition" class="ml-2">By click you must agree with our
+          <span> <a class="text-success" href="terms-condition.html">Terms & Condition and Posting
+              Rules.</a></span>
+        </label>
+      </div>    
+{# {{ form_label(form.justificatif, 'Image', {'label_attr': {'class': 'btn btn-primary font-weight-bold mt-3'}}) }} #}
+ {# {{ form_widget(form.justificatif)}}  #}
+                </fieldset>
+        {# <a href="{{ path('app_prod_r_index', {'idUser': app.user.getId()}) }}" class="btn">back to list</a> #}
+            </div>
+                </form>
+
+        </section>
+    </form>
+{% endblock %}

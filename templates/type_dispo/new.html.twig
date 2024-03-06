@@ -1,0 +1,50 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}New TypeDispo{% endblock %}
+
+{# {% block body %}
+{{ parent() }}
+{% endblock %} #}
+{% block typeDispo %}
+    <h1>Create new TypeDispo</h1>
+
+    {% if error is defined and error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <form method="post" action="{{ path('app_type_dispo_new') }}">
+        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+                    <fieldset class="p-3">
+        {{ form_row(form.nom, {'attr': {'class': 'form-control', 'required': 'required'}}) }}
+        {# {{ form_row(form.ptC, {'attr': {'class': 'form-control', 'required': 'required'}}) }} #}
+        {# Ajoutez d'autres champs de formulaire comme requis si nécessaire #}
+
+        {# Afficher les erreurs de validation du formulaire #}
+        {{ form_errors(form) }}
+
+        {{ form_end(form) }}
+
+        {# <a href="{{ path('app_type_dispo_index') }}">save</a> #}
+     
+    
+<button class="btn" style="color: blue;" onclick="window.location.href='{{ path('app_type_dispo_index') }}'">
+        <i class="fa fa-list"></i> Back to list
+    </button>
+    
+    
+
+        {# <a href="{{ path('app_type_dispo_index') }}">back to list</a> #}
+    </form>
+{% endblock %}
+     {# {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+                    <fieldset class="p-4">
+                        {{ form_row(form.nom, {'attr': {'class': 'form-control mb-3'}}) }}
+                        {{ form_row(form.prenom, {'attr': {'class': 'form-control mb-3'}})}}
+                        {{ form_row(form.mail, {'attr': {'class': 'form-control mb-3'}}) }}
+                        {{ form_row(form.date_birthday)}}
+                        {{ form_row(form.tel, {'attr': {'class': 'form-control mb-3'}}) }}
+                        {{ form_row(form.gender, {'attr': {'class': 'form-control mb-3'}}) }}
+                        {{ form_row(form.password, {'attr': {'class': 'form-control mb-3'}}) }}
+                        {{ form_row(form.Confirmpassword, {'attr': {'class': 'form-control mb-3'}}) }}
+                        {{ form_row(form.age, {'attr': {'class':'form-control mb-3'}}) }}
+                    {{ form_end(form) }} #}

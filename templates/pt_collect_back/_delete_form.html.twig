@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('app_pt_collect_back_delete', {'idUser': app.user.getId(),'id': pt_collect.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ pt_collect.id) }}">
+    {# <button class="btn"><i class="fa fa-trash">Delete</button></i>                 #}
+    <button class="btn" style="color: red;" ><i class="fa fa-trash"></i>Delete</button>                
+
+</form>

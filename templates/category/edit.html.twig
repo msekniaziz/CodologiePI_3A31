@@ -1,0 +1,35 @@
+{% extends 'back.html.twig' %}
+
+{% block Category %}
+    <section class="advt-post bg-gray py-5">
+        <div class="container">
+            <!-- Post Your ad start -->
+            <fieldset class="border border-gary px-3 px-md-4 py-4 mb-5">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3>Add Category</h3>
+                    </div>
+                    <div class="col-lg-6">
+                        <h6 class="font-weight-bold pt-4 pb-1">Name Of Category:</h6>
+
+                        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+                        {{ form_row(form.name, {'label': 'Name Of Category:', 'attr': {'class': 'form-control bg-white', 'placeholder': 'Ad Name go There', 'required': true}}) }}
+
+                        <h6 class="font-weight-bold pt-4 pb-1">Key Of Category:</h6>
+                        {{ form_row(form.keyCat, {'label': 'Key Of Category:', 'attr': {'class': 'form-control bg-white', 'placeholder': 'Write Key  of category', 'rows': '7', 'required': true}}) }}
+                    </div>
+
+
+
+
+                </div>
+                {{ form_end(form) }}
+                {% if form_errors(form) %}
+                    <div class="alert alert-danger mt-3">
+                        {{ form_errors(form) }}
+                    </div>
+                {% endif %}
+            </fieldset>
+        </div>
+    </section>
+{% endblock  %}
