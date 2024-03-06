@@ -1,0 +1,89 @@
+{% extends 'HomeOn.html.twig' %}
+
+{% block body %}
+        <section class="section bg-gray">
+                <div class="container">
+                        {% if annonce is not null %}
+                                <div class="row">
+
+                                        <!-- Product Details -->
+                                        <div class="col-lg-8">
+                                                <div class="product-details">
+                                                        <h1 class="product-title">Title : {{ annonce.Title}}</h1>
+                                                        <div class="product-meta">
+                                                                <ul class="list-inline">
+                                                                        <li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category <a href="category.html">{{ annonce.idCat.name }}</a></li>
+                                                                </ul>
+                                                        </div>
+
+                                                        <!-- Product Slider -->
+                                                        <div class="product-slider">
+                                                                <div class="product-slider-item my-4" data-image="images/products/products-1.jpg">
+                                                                        <img src="{{ asset('uploads/images/' ~ annonce.image) }}" style="height: 600px;width: 600px;">
+                                                                </div>
+                                                                <!-- Ajoutez d'autres diapositives ici -->
+                                                        </div>
+                                                        <!-- End Product Slider -->
+
+                                                        <!-- Product Description -->
+                                                        <div class="tab-content" id="pills-tabContent">
+                                                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                                                        <h3 class="tab-title">Product Description</h3>
+                                                                        <p>{{ annonce.Description }}</p>
+                                                                </div>
+                                                        </div>
+                                                        <!-- End Product Description -->
+                                                </div>
+                                        </div>
+                                        <!-- End Product Details -->
+
+                                        <!-- User Profile Widget -->
+                                        <div class="col-lg-4">
+                                                <div class="sidebar">
+                                                        <div class="widget price text-center">
+                                                                <h4>Price</h4>
+                                                                <p>DT {{ annonce.Prix }}</p>
+                                                                {% if annonce.Negociable == 1 %}
+                                                                        <h4>Negotiable</h4>
+                                                                {% else %}
+                                                                        <h4>No Negotiable</h4>
+                                                                {% endif %}
+                                                        </div>
+
+                                                        <div class="widget user text-center">
+                                                                <img class="rounded-circle img-fluid mb-5 px-5" src="{{ asset('assets/images/user/user-thumb.jpg') }}" alt="">
+                                                                {% if annonce.user is not null %}
+                                                                        <h4><a href="user-profile.html">{{ annonce.user.nom }}</a></h4>
+                                                                        <p class="member-time">{{ annonce.user.mail }}</p>
+                                                                        <a href="{{ path('aff_annonces',{'id': app.user.getId()}) }}">See all ads</a>
+                                                                        <ul class="list-inline mt-20">
+                                                                                {% if annonce.Status == 1 %}
+                                                                                        <script>
+                                                                                                window.location.href = "{{ path('aff_annonces',{'id': app.user.getId()}) }}";
+                                                                                                alert("Cette annonce n'est plus disponible.");
+                                                                                        </script>
+                                                                                {% endif %}
+                                                                                <li class="list-inline-item">
+                                                                                        <a href="{{ path('newcommande', {'idUser': app.user.getId(), 'id': annonce.id}) }}" class="btn btn-contact d-inline-block btn-primary px-lg-5 my-1 px-md-3">Order Now</a>
+                                                                                </li>
+                                                                                <li class="list-inline-item"><a href="{{ path('cart_add', {'idUser': app.user.getId(), 'id': annonce.id}) }}" class="btn btn-contact d-inline-block btn-primary px-lg-5 my-1 px-md-3">Add to Panier</a></li>
+                                                                                {% if app.request.query.get('commande_success') %}
+                                                                                        <script>
+                                                                                                alert("La commande a été effectuée avec succès !");
+                                                                                        </script>
+                                                                                {% endif %}
+                                                                        </ul>
+                                                                {% else %}
+                                                                        <p>User not found</p>
+                                                                {% endif %}
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <!-- End User Profile Widget -->
+                                </div>
+                        {% else %}
+                                <p>Aucune annonce trouvée.</p>
+                        {% endif %}
+                </div>
+        </section>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}ProdR index{% endblock %}
+
+
+{% block recyclage %}    <h1>ProdR index</h1>
+            {# <script src="{{ asset('/assets/back/js/jquery.js') }}"></script> #}
+       <div class="search-container">
+<input id="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    </div>
+
+    <table class="table" id="tableac" >
+        <thead>
+                                        <tr> <!-- Ajoutez la classe ici -->
+                <th>Id</th>
+                <th>NomP</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Verified?</th>
+                <th>actions</th>
+                <th>Delete?</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for prod_r in prod_rs %}
+            <tr class="searchable-row">
+                <td>{{ prod_r.id }}</td>
+                <td>{{ prod_r.nomP }}</td>
+                <td>{{ prod_r.getTypeProdId() }}</td>
+                <td>{{ prod_r.description }}</td>
+                <td>{{ prod_r.statut ? 'Yes' : 'No' }}</td>
+                <td>
+  <a href="{{ path('app_prod_r_back_show', {'id': prod_r.id}) }}">show</a>
+  <a href="{{ path('app_prod_r_back_edit', {'id': prod_r.id}) }}">edit</a>
+                </td> 
+                <td> 
+                       {{ include('prod_r_back/_delete_form.html.twig') }}
+                </td> 
+                       
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+  <a href="{{ path('app_prod_r_back_new') }}">Create new</a>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            // Fonction pour filtrer le tableau en fonction de la valeur de recherche
+            function search_table(value){
+                $('#tableac tbody tr.searchable-row').each(function(){
+                    var found = false;
+                    $(this).find('td:first-child').each(function(){ // Modifier le sélecteur si nécessaire
+                        if($(this).text().toLowerCase().includes(value.toLowerCase())){
+                            found = true;
+                            return false;
+                        }
+                    });
+                    if(found){
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+
+            // Effectue la recherche lorsqu'une touche est relâchée dans le champ de recherche
+            $('#search').keyup(function(){
+                search_table($(this).val());
+            });
+        });
+    </script>
+{% endblock %}

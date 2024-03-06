@@ -1,0 +1,29 @@
+{% extends 'back.html.twig' %}
+
+{% block Annonce %}
+<div class="container">
+        <Br>
+        <div class="w3-table w3-striped">
+    <h1>Statistiques des annonces</h1>
+
+    <canvas id="annoncePieChart" width="400" height="400"></canvas>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('annoncePieChart').getContext('2d');
+            var annoncePieChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Annonces Actives', 'Annonces Non Actives'],
+                    datasets: [{
+                        data: [{{ annoncesActives }}, {{ annoncesNonActives }}],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.7)', 
+                            'rgba(255, 99, 132, 0.7)', 
+                        ],
+                    }]
+                },
+            });
+        });
+    </script>
+{% endblock %}
