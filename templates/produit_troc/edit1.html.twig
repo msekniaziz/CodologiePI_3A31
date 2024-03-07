@@ -6,11 +6,16 @@
 <body class="body-wrapper">
     <section class="advt-post bg-gray py-5">
         <div class="container">
-            <form method="post" action="{% if produit_troc is defined %}
-                            {{ path('app_produit_troc_edit', {'id': produit_troc.id}) }}
+            {# <form method="post" action="{% if produit_troc is defined %}
+    {{ path('app_produit_troc_edit', {'idprd': produit_troc.id}) }}
                         {% else %}
                             {{ path('/') }}
-                        {% endif %}">
+                        {% endif %}"> #}
+                        <form method="post" action="{% if produit_troc is defined %}
+{{ path('app_produit_troc_edit', {'id': produit_troc.id}) }}
+{% else %}
+    {{ path('app_produit_troc_edit', {'idprd': idprd}) }}
+{% endif %}">
 
                 {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
 
@@ -57,8 +62,7 @@
                     </div>
 
                     <!-- Submit buttons -->
-                    {{ form_row(form.save, {'label': 'Save', 'attr': {'class': 'btn btn-primary font-weight-bold mt-3', 'type': 'submit'}}) }}
-                </fieldset>
+{{ form_row(form.save, {'label': 'Update', 'attr': {'class': 'btn btn-primary font-weight-bold mt-3', 'type': 'submit'}}) }}                </fieldset>
 
                 {{ form_end(form) }}
             </form>

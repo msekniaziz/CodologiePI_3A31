@@ -1,5 +1,46 @@
 {% extends 'front.html.twig' %}
+  {% block ngo %}
+        <li><a class="dropdown-item @@category" href="{{ path('app_association_index') }}">NGOs</a></li>  
+  {% endblock %}
 
+{% block photopng %}
+    <a class="navbar-brand" href="{{ path('homeOff') }}">
+        <img src="{{ asset('assets/images/logo_site.png') }}" width="100">
+    </a>
+
+{% endblock %}
+{% block Organizations %}
+             <li class="nav-item dropdown dropdown-slide @@listing">
+                                    <a class="nav-link dropdown-toggle" href="#!" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Organizations<span><i class="fa fa-angle-down"></i></span>
+                                    
+                                    <!-- Dropdown list -->
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item @@category" href="{{ path('app_association_index') }}">NGOs</a></li>
+                                        <li><a class="dropdown-item @@listView" href="ad-list-view.html">Ad-List View</a></li>
+
+                                        <li class="dropdown dropdown-submenu dropleft">
+                                            <a class="dropdown-item dropdown-toggle" href="#!" id="dropdown0201" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sub Menu</a>
+
+                                            <ul class="dropdown-menu" aria-labelledby="dropdown0201">
+                                                <li><a class="dropdown-item" href="index.html">Submenu 01</a></li>
+                                                <li><a class="dropdown-item" href="index.html">Submenu 02</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+{% endblock %}
+{% block home %}
+    <li class="nav-item @@home">
+        <a class="nav-link" href="{{ path('homeOff') }}">Home</a>
+    </li>
+{% endblock %}
+{% block echange %}
+    <li class="nav-item @@home">
+        <a class="nav-link" href="{{ path('app_produit_troc_indexES') }}">Show all exchanges</a>
+    </li>
+{% endblock %}
 
 {% block login %}
     <header>
@@ -7,10 +48,7 @@
             <li class="nav-item">
                 <a class="nav-link login-button" href="{{ path('app_login') }}">Login</a>
             </li>
-
         </ul>
-        
-        
     </header>
 {% endblock %}
 
@@ -419,7 +457,7 @@
                         <h2>Start today to get more exposure and
                             grow your business</h2>
                         <ul class="list-inline mt-30">
-                            <li class="list-inline-item"><a class="btn btn-main"  href="{{path('app_produit_troc_indexES')}}">All the exhange available</a></li>
+                            <li class="list-inline-item"><a class="btn btn-main" href="ad-listing.html">Add Listing</a></li>
                             <li class="list-inline-item"><a class="btn btn-secondary" href="category.html">Browser Listing</a></li>
                         </ul>
                     </div>

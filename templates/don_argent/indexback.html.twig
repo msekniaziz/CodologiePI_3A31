@@ -1,0 +1,38 @@
+{% extends 'back.html.twig' %} 
+{% block dona %}
+<title>DonArgent index</title>
+    <h3>List of all donations</h3> 
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Amount</th>
+            
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for don_argent in don_argent %}
+            <tr>
+                <td>{{ don_argent.id }}</td>
+                <td>{{ don_argent.montant }}</td>
+               
+              
+                <td>{{ don_argent.dateDonArgent ? don_argent.dateDonArgent|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_don_argent_showback', {'id': don_argent.id}) }}">show</a>
+                    {# <a href="{{ path('app_don_argent_edit', {'id': don_argent.id}) }}">edit</a> #}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('app_don_argent_new') }}">Create new</a> #}
+{% endblock %}

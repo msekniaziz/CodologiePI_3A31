@@ -36,7 +36,7 @@ class ProduitTroc
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
-    
+
 
     #[ORM\ManyToOne(inversedBy: 'produitTrocs')]
 
@@ -53,7 +53,7 @@ class ProduitTroc
     }
     public function __toString(): string
     {
-        return $this->getId(); 
+        return $this->getId();
     }
 
     public function getNom(): ?string

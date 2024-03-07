@@ -1,0 +1,129 @@
+{% extends 'homeOn.html.twig' %}
+
+{% block body %}
+    <title>Association</title>
+    <style>
+        .association-details-container {
+            width: 40%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .association-details-container table {
+            display: inline-block;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 5px 10px; /* Réduire la taille des boutons */
+            margin: 0 5px; /* Réduire l'espace entre les boutons */
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .button-text {
+            margin: 0 5px; /* Réduire l'espace entre le texte et les boutons */
+            color: #333;
+        }
+
+    </style>
+       <section class="page-search">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- Advance Search -->
+				<div class="advance-search nice-select-white">
+					<form>
+						<div class="form-row align-items-center">
+							<div class="form-group col-xl-4 col-lg-3 col-md-6">
+								<input type="text" class="form-control my-2 my-lg-0" id="inputtext4" placeholder="What are you looking for">
+							</div>
+							<div class="form-group col-lg-3 col-md-6">
+								<select class="w-100 form-control my-2 my-lg-0">
+									<option>Category</option>
+									<option value="1">Top rated</option>
+									<option value="2">Lowest Price</option>
+									<option value="4">Highest Price</option>
+								</select>
+							</div>
+							<div class="form-group col-lg-3 col-md-6">
+								<input type="text" class="form-control my-2 my-lg-0" id="inputLocation4" placeholder="Location">
+							</div>
+							<div class="form-group col-xl-2 col-lg-3 col-md-6">
+
+								<button type="submit" class="btn btn-primary active w-100">Search Now</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<div>
+{# hedha zedet bih espace #}
+<h1 class="page-header"</h1> 
+</div>
+    <div class="association-details-container">
+        <h1>Association</h1>
+
+        <table class="w3-table w3-striped">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ association.id }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ association.nomAssociation }}</td>
+                </tr>
+                <tr>
+                    <th>Logo</th>
+                    <td>{{ association.logoAssociation }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ association.descriptionAsso }}</td>
+                </tr>
+                <tr>
+                    <th>Address </th>
+                    <td>{{ association.adresseAssociation }}</td>
+                </tr>
+                <tr>
+                    <th>RIB</th>
+                    <td>{{ association.RIB }}</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="button-container">
+            <a href="{{ path('app_don_bien_materiel_new',{'id':association.id}) }}" class="button">Donate goods</a>
+            <span class="button-text">or</span>
+             <a href="{{ path('app_don_argent_new',{'id':association.id}) }}" class="button">Donate money</a>
+        </div>
+        
+       
+    </div>
+     <div class="button-container">
+            <a href="{{ path('app_association_indexHomeOn') }}" class="button">Back to list</a>
+        </div>
+       <div>
+        <h1 class="page-header"</h1>
+         </div>
+{% endblock %}

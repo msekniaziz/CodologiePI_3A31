@@ -1,0 +1,91 @@
+{% extends 'back.html.twig' %}
+{% block Annonce %}
+    <div class="container">
+        <Br>
+        <div class="w3-table w3-striped">
+            <table class="table table-bordered" id="Adback">
+                <script src="{{ asset('/assets/js/jquery.min.js') }}"></script>
+                <input type="text" class="form-control" placeholder="Chercher" id="search2">
+                <br>
+                <thead class="w3-dark-grey">
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Negotiable</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Image</th>
+                    <th>Etat</th>
+                    <th>Action</th>
+                    <th>DELETE</th>
+                    <th>EDIT</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for a in annonces %}
+                    <tr>
+                        <td>{{ a.Title }}</td>
+                        <td>{{ a.Description }}</td>
+                        <td>{{ a.Prix }} DT</td>
+                        <td>{{ a.Negociable }}</td>
+                        <td>{{ a.idCat.name }}</td>
+                        <td>{{ a.status }}</td>
+                        <td><img src="{{ asset('uploads/images/' ~ a.image) }}" style="height: 100px;width: 100px;"></td>
+                        <td>{{ a.category }}</td>
+                        <td><a href="{{ path('product_active', {'id': app.user.getId() ,'idActive': a.id()}) }}"><i class="fa">&#xf00c;</i></a></td>
+                        <td>
+                            <a href="">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path('updateannonceBack', {'idUser': app.user.getId(), 'id': a.id}) }}">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+                <script>
+                    $(document).ready(function(){
+                        $('#search2').keyup(function(){
+                            search_table($(this).val());
+                        });
+                        function search_table(value){
+                            $('#Adback tbody tr').each(function(){
+                                var found = 'false';
+                                $(this).each(function(){
+                                    if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+                                    {
+                                        found = 'true';
+                                    }
+                                });
+                                if(found == 'true')
+                                {
+                                    $(this).show();
+
+                                }
+                                else
+                                {
+                                    $(this).hide();
+
+                                }
+                            });
+                        }
+                    });
+                </script>
+                </tbody>
+            </table>
+            <Br>
+            <Br>
+        </div>
+    </div>
+
+    {% block Add %}
+        <a href="{{ path('annonces_statistiques') }}" class="btn btn-primary">Statistique</a>
+
+    {% endblock %}
+
+{% endblock %}

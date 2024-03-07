@@ -1,0 +1,16 @@
+{% extends 'HomeOn.html.twig' %}
+ 
+{# {% block title %}Make a donation{% endblock %} #}
+ 
+{% block body %}
+    <title>Make a donation</title>
+    {{ parent() }}
+
+    <form action="/checkout" method="POST">
+        <button type="submit" class="btn btn-primary btn-lg">Checkout</button>
+    </form>
+
+    <div>
+
+    </div>
+{% endblock %}

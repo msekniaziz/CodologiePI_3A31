@@ -1,0 +1,41 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}New ProdR{% endblock %}
+
+{% block recyclage %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="border rounded p-4 form-container">
+                    <h2>Modifier un produit à recycler</h2>
+                    <br>
+                    <form method="post" action="{{ path('app_prod_r_back_edit','id': prod_r.id}) }}">
+                        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+                        <fieldset class="p-3">
+                            {{ form_row(form.statut, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.statut) }}
+
+                            {{ form_row(form.user_id, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.user_id) }}
+
+                            {# Uncomment the following lines if you want to include these fields in the form #}
+                            {#
+                            {{ form_row(form.typeProd_id, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.typeProd_id) }}
+                            {{ form_row(form.description, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.description) }}
+                            {{ form_row(form.nomP, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.nomP) }}
+                            #}
+
+                            {{ form_row(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+                        </fieldset>
+                        {{ form_end(form) }}
+
+                        <a href="{{ path('app_prod_r_back_index', {'idUser': app.user.getId()}) }}">back to list</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

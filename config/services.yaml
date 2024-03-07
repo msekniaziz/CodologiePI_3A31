@@ -3,24 +3,25 @@
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
-
-
-# config/services.yaml
 parameters:
+    google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
     images_directory: '%kernel.project_dir%/public/uploads/images'
 services:
+    App\Controller\PdfController:
+        class: App\Controller\PdfController
+        tags: [ 'controller.service_arguments' ]
     # default configuration for services in *this* file
+    App\Repository\PtCollectRepository:
+        public: true
+    App\Controller\PtCollectController:
+            arguments:
+                $ptCollectRepository: '@App\Repository\PtCollectRepository'
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-    
- 
-
-    App\Service\SmsSender:
-        arguments:
-            $accountSid: '%env(SSID)%'
-            $authToken: '%env(TOKEN)%'
-
+        bind:
+            $stripeSK: "%env(STRIPE_SK)%"
+            $stripeSKL: "%env(STRIPE_SKL)%"
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -31,6 +32,12 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Entity\Annonces:
+    App\Entity\PtCollect:
+    App\Entity\ProdR:
+    App\Entity\ProduitTroc: ~
+    App\Entity\ProduitTrocWith: ~
+
+    # Configuration supplémentaire si nécessaire

@@ -7,6 +7,8 @@
     <section class="advt-post bg-gray py-5">
         <div class="container">
             <form method="post" action="{{ path('app_produit_troc_new') }}" enctype="multipart/form-data">
+                <form method="post" action="{{ path('app_produit_troc_new', {'idUser': app.user.getId()}) }}" enctype="multipart/form-data">
+
                 {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
 
                 <!-- Post Your ad start -->

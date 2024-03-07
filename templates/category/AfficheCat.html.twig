@@ -1,0 +1,77 @@
+{% extends 'back.html.twig' %}
+{% block Category %}
+    <div class="container">
+        <Br>
+        <div class="w3-table w3-striped">
+            <table class="table table-bordered" id="tableback">
+                <script src="{{ asset('/assets/js/jquery.min.js') }}"></script>
+                <input type="text" class="form-control" placeholder="Chercher" id="search1">
+                <br>
+                <thead class="w3-dark-grey">
+                <tr>
+                    <th>Name</th>
+                    <th>KEY</th>
+                    <th>NUMBER</th>
+                    <th>DELETE</th>
+                    <th>EDIT</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for a in category %}
+                    <tr>
+                        <td>{{ a.name }}</td>
+                        <td>{{ a.keyCat }}</td>
+                        <td>{{ a.nbrAnnonce }}</td>
+                        <td>
+                            <a href="{{ path('deletecategory', {'idUser': app.user.getId(), 'id': a.id}) }}">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path('updatecategory', {'idUser': app.user.getId(), 'id': a.id}) }}">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </td>
+
+                    </tr>
+                {% endfor %}
+                <script>
+                    $(document).ready(function(){
+                        $('#search1').keyup(function(){
+                            search_table($(this).val());
+                        });
+                        function search_table(value){
+                            $('#tableback tbody tr').each(function(){
+                                var found = 'false';
+                                $(this).each(function(){
+                                    if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+                                    {
+                                        found = 'true';
+                                    }
+                                });
+                                if(found == 'true')
+                                {
+                                    $(this).show();
+
+                                }
+                                else
+                                {
+                                    $(this).hide();
+
+                                }
+                            });
+                        }
+                    });
+                </script>
+                </tbody>
+            </table>
+            <Br>
+            <Br>
+        </div>
+    </div>
+   
+    {% block Add %}
+        <a href="{{ path('new_category', {'id': app.user.getId()} ) }}" class="btn btn-primary">Add Listing</a>
+
+    {% endblock %}
+{% endblock %}

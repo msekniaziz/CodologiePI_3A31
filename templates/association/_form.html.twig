@@ -1,0 +1,114 @@
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    
+    <section class="login py-5 border-top-1">
+        <div class="container">
+            <div class="row ">
+                <div class="col-md-8 offset-md-2">
+                    <div class="border rounded p-4 form-container"> 
+                        <h3 class="bg-gray p-4 mb-4">Add an organization</h3>
+                    <!-- Ajouter la classe form-container -->
+                        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+                        <div class="form-group">
+                            {{ form_row(form.nomAssociation, {'attr': {'class': 'form-control', 'placeholder': 'Name '}}) }}
+                            {% if form_errors(form.nomAssociation) %}
+        <div class="alert alert-danger mt-2 mb-0" role="alert">
+          {{ form_errors(form.nomAssociation) }}
+        </div>
+      {% endif %}
+                        </div>  
+                        {# <div class="form-group">
+                            {{ form_row(form.logoAssociation, {'attr': {'class': 'form-control', 'placeholder': 'Logo '}}) }}
+                            {% if form_errors(form.logoAssociation) %}
+                                <div class="text-danger">{{ form_errors(form.logoAssociation) }}</div>
+                            {% endif %}
+                        </div> #}
+                        {# <div class="form-group">
+                            {{ form_row(form.logoAssociation, {'attr': {'class': 'form-control', 'placeholder': 'Logo '}}) }}
+                        </div> #}
+                        <div class="form-group">
+                            {{ form_row(form.descriptionAsso, {'attr': {'class': 'form-control','placeholder': 'Description'}}) }}
+                            {% if form_errors(form.descriptionAsso) %}
+        <div class="alert alert-danger mt-2 mb-0" role="alert">
+          {{ form_errors(form.descriptionAsso) }}
+        </div>
+      {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(form.adresseAssociation, {'attr': {'class': 'form-control', 'placeholder': 'Address'}}) }}
+                            {% if form_errors(form.adresseAssociation) %}
+        <div class="alert alert-danger mt-2 mb-0" role="alert">
+          {{ form_errors(form.adresseAssociation) }}
+        </div>
+      {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(form.RIB, {'attr': {'class': 'form-control','placeholder': 'RIB'}}) }}
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+
+
+{# {% block body %}
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+    {%endfor %}
+    <section class="login py-5 border-top-1">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-8 align-item-center">
+                    <div class="border border">
+                        <h3 class="bg-gray p-4">Add a material goods donation</h3>
+                    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+                    <fieldset class="p-4">
+                        {{ form_row(form.photoDon, {'attr': {'class': 'form-control mb-3'}}) }}
+                        {{ form_row(form.descriptionDon, {'attr': {'class': 'form-control mb-3'}})}}
+                        {{ form_row(form.statutDon, {'attr': {'class': 'form-control mb-3'}}) }}
+                        {{ form_row(form.dateDonBienMateriel)}}
+                        {{ form_row(form.id_association, {'attr': {'class': 'form-control mb-3'}}) }}
+                        {# {{ form_row(form.user_id, {'attr': {'class': 'form-control mb-3'}}) }} #}
+                        {# {{ form_row(form.password, {'attr': {'class': 'form-control mb-3'}}) }}
+                        {{ form_row(form.Confirmpassword, {'attr': {'class': 'form-control mb-3'}}) }}
+                        {{ form_row(form.age, {'attr': {'class':'form-control mb-3'}}) }} #}
+                    {# {{ form_end(form) }} #}
+                        {# <div class="loggedin-forgot d-inline-flex my-3">
+                            <input type="checkbox" id="registering" class="mt-1">
+                            {# <label for="registering" class="px-2">By registering, you accept our <a class="text-primary font-weight-bold" href="terms-condition.html">Terms & Conditions</a></label> #}
+                        {# </div> #} 
+                    {# </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> #}
+
+{# {% endblock %}  #}
+
+{# {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }} #}
+
+
+
+
+
+
+
+
+{# {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }} #}

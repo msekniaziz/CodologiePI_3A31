@@ -31,6 +31,10 @@ class ProduitTrocWithController extends AbstractController
     #[Route('/s', name: 'app_produit_troc_with_index', methods: ['GET'])]
     public function index(ProduitTrocWithRepository $produitTrocWithRepository): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
         return $this->render('produit_troc_with/index1.html.twig', [
             'produit_troc_withs' => $produitTrocWithRepository->findAll(),
         ]);
@@ -38,12 +42,20 @@ class ProduitTrocWithController extends AbstractController
     #[Route('/si', name: 'app_produit_troc_with_404', methods: ['GET'])]
     public function index404(ProduitTrocWithRepository $produitTrocWithRepository): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
         return $this->render('produit_troc_with/404Exg.html.twig');
     }
 
     #[Route('/ba', name: 'app_produit_troc_with_index_back', methods: ['GET'])]
     public function indexback(ProduitTrocWithRepository $produitTrocWithRepository): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
         return $this->render('prod_troc_w.html.twig', [
             'produit_trocs' => $produitTrocWithRepository->findAll(),
         ]);
@@ -51,8 +63,11 @@ class ProduitTrocWithController extends AbstractController
     #[Route('/new/{id}', name: 'app_produit_troc_with_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, ProduitTrocRepository $produitTrocRepository): Response
     {
+
         $user = $this->getUser();
-        
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
         // Retrieve the ID of the produit troc from the request
         $produitTrocId = $request->attributes->get('id');
     
@@ -94,7 +109,7 @@ class ProduitTrocWithController extends AbstractController
     
                 // Redirect after successful submission
                 return $this->redirectToRoute('app_produit_troc_with_show', [
-                    'id' => $produitTrocWith->getId(),
+                    'idprd' => $produitTrocWith->getId(),
                 ]);
             } catch (\Exception $e) {
                 // An error occurred during database operation
@@ -116,6 +131,10 @@ class ProduitTrocWithController extends AbstractController
     #[Route('/{id}/edit', name: 'app_produit_troc_with_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ProduitTrocWith $produitTrocWith, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
         $form = $this->createForm(ProduitTrocWithType::class, $produitTrocWith);
         $form->handleRequest($request);
     
@@ -143,7 +162,7 @@ class ProduitTrocWithController extends AbstractController
     
             // Redirect after successful submission
             return $this->redirectToRoute('app_produit_troc_with_show', [
-                'id' => $produitTrocWith->getId(),
+                'idprd' => $produitTrocWith->getId(),
             ]);        }
     
         // Render the form
@@ -154,16 +173,25 @@ class ProduitTrocWithController extends AbstractController
     }
         
 
-#[Route('/{id}', name: 'app_produit_troc_with_show', methods: ['GET'])]
-public function show(ProduitTrocWith $produitTrocWith): Response
+#[Route('/{idprd}', name: 'app_produit_troc_with_show', methods: ['GET'])]
+public function show(ProduitTrocWithRepository $repository,$idprd): Response
 {
+    $produitTrocWith = $repository->find($idprd);
+    $user = $this->getUser();
+    if (!$user) {
+        throw $this->createNotFoundException('User not found');
+    }
     return $this->render('produit_troc_with/show.html.twig', [
-        'produit_troc_with' => $produitTrocWith,
+        'produitTrocWith' => $produitTrocWith,
     ]);
 }
     #[Route('/{id}', name: 'app_produit_troc_with_delete', methods: ['POST'])]
     public function delete(Request $request, ProduitTrocWith $produitTrocWith, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
         if ($this->isCsrfTokenValid('delete'.$produitTrocWith->getId(), $request->request->get('_token'))) {
             $entityManager->remove($produitTrocWith);
             $entityManager->flush();

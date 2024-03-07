@@ -2,10 +2,8 @@
 
 namespace App\Controller;
 use App\Entity\ProduitTrocWith;
-use App\Form\SearchFormType;
 use Knp\Component\Pager\PaginatorInterface;
-
-use App\Entity\ProduitTroc;
+use App\Entity\ProduitTroc ;
 use App\Form\ProduitTroc1Type;
 use App\Repository\ProduitTrocRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,12 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Filesystem\Exception\FileException;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Twilio\Rest\Client;
-use App\Service\SmsSender; // Import the SmsSender service
-
 
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -42,6 +37,11 @@ class ProduitTrocController extends AbstractController
     #[Route('/PRS/{id}', name: 'change_status', methods: ['GET'])]
     public function changeStatus(int $id, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
+
         $produitTroc = $entityManager->getRepository(ProduitTroc::class)->find($id);
 
         if (!$produitTroc) {
@@ -52,16 +52,16 @@ class ProduitTrocController extends AbstractController
         $produitTroc->setStatut(1);
 
         $entityManager->flush();
+        $this->addFlash('success', 'the product is verified ');
 
         // Redirect back to the index page
-        return $this->redirectToRoute('app_produit_troc_index');
+        return $this->redirectToRoute('app_produit_troc_index_back');
     }
 
     #[Route('/m', name: 'app_produit_troc_mine', methods: ['GET'])]
     public function indexmi(ProduitTrocRepository $produitTrocRepository): Response
-    { $user = $this->getUser();
-
-
+    {
+        $user = $this->getUser();
         // Vérifier si l'utilisateur est authentifié
         if ($user) {
             // Récupérer les dons de l'utilisateur authentifié
@@ -80,36 +80,17 @@ class ProduitTrocController extends AbstractController
     #[Route('/search', name: 'app_produit_troc_search', methods: ['POST'])]
 
 // Inside your controller action method
-public function search(Request $request, ProduitTrocRepository $produitTrocRepository): Response
-{
-    $form = $this->createForm(SearchFormType::class);
-    $form->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {
-        // Get the search criteria from the form
-        $nom = $form->get('nom')->getData();
-        $prenom = $form->get('nom_produit_recherche')->getData();
-
-        // Perform the search using your repository's custom method
-        $results = $produitTrocRepository->findByNomAndPrenom($nom, $prenom);
-        // Replace 'findByNomAndPrenom' with the actual method in your repository
-
-        // Pass the results to your template
-        return $this->render('index1.html.twig', [
-            'results' => $results,
-        ]);
-    }
-
-    return $this->render('index1.html.twig', [
-        'form' => $form->createView(),
-    ]);
-}
 
 
 
 #[Route('/chat', name: 'app_chat_index')]
 public function index11(Request $request): Response
 {
+    $user = $this->getUser();
+    if (!$user) {
+        throw $this->createNotFoundException('User not found');
+    }
     $question = $request->query->get('question');
 
     if ($question) {
@@ -151,6 +132,10 @@ public function index11(Request $request): Response
     #[Route('/b', name: 'app_produit_troc_index_back', methods: ['GET'])]
     public function indexback(ProduitTrocRepository $produitTrocRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
         $produitTrocQuery = $produitTrocRepository->findAll(); // Fetch all records
     
         // Paginate the results
@@ -169,8 +154,11 @@ public function index11(Request $request): Response
     #[Route('/new', name: 'app_produit_troc_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $user = $this->getUser();
 
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
         $produitTroc = new ProduitTroc();
         $form = $this->createForm(ProduitTroc1Type::class, $produitTroc);
         $form->handleRequest($request);
@@ -202,23 +190,23 @@ public function index11(Request $request): Response
             $entityManager->flush();
     
             // Initialize Twilio client
-        //     $sid = "ACbd337248e7718753c1a2a9b2b882db86";
-        //     $token = "42c577ae5a2444294a2d7e1d761d32ca";
-        //     $receiverPhoneNumber = $produitTroc->getIdUser()->getTel(); // Assuming you have appropriate methods in your entities
+             $sid = "ACbd337248e7718753c1a2a9b2b882db86";
+             $token = "42c577ae5a2444294a2d7e1d761d32ca";
+             $receiverPhoneNumber = $produitTroc->getIdUser()->getTel(); // Assuming you have appropriate methods in your entities
 
-        //     $res = '+216' . $receiverPhoneNumber; // Concatenate the country code with the telephone number
-        //     $twilio = new Client($sid, $token);
-        // var_dump($res);
+             $res = '+21650852180' ; // Concatenate the country code with the telephone number
+             $twilio = new Client($sid, $token);
+         var_dump($res);
 
-        //     // Send SMS to the user
-        //    $message = $twilio->messages
-        //         ->create(
-        //            $res, // User's phone number
-        //             [
-        //                "from" => "+14437753032", // Your Twilio phone number
-        //               "body" => "Hi  Your product  for exchange has been added successfully wait for the admin approval."
-        //            ]
-        //         );
+             // Send SMS to the user
+        $message = $twilio->messages
+                 ->create(
+                   $res, // User's phone number
+                    [
+                       "from" => "+14437753032", // Your Twilio phone number
+                      "body" => "Hi  Your product  for exchange has been added successfully wait for the admin approval."
+                    ]
+                );
     
             return $this->redirectToRoute('app_produit_troc_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -233,18 +221,25 @@ public function index11(Request $request): Response
     
 
 
-    #[Route('/{id}', name: 'app_produit_troc_show', methods: ['GET'])]
-    public function show(ProduitTroc $produitTroc): Response
+    #[Route('/{idprd}', name: 'app_produit_troc_show', methods: ['GET'])]
+    public function show_troc($idprd,ProduitTrocRepository $repository): Response
     {
-        return $this->render('produit_troc/show.html.twig', [
+            $produitTroc = $repository->find($idprd);
+            return $this->render('produit_troc/show.html.twig', [
             'produit_troc' => $produitTroc,
         ]);
     }
 
-    
-    #[Route('/{id}/edit', name: 'app_produit_troc_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, ProduitTroc $produitTroc, EntityManagerInterface $entityManager): Response
+
+    #[Route('/edit/{id}', name: 'app_produit_troc_edit', methods: ['GET', 'POST'])]
+    public function edit($id, ?int $idUser = null, Request $request, ProduitTroc $produitTroc, EntityManagerInterface $entityManager, ProduitTrocRepository $repository): Response
     {
+        // Fetch the ProduitTroc entity by its ID
+        $produitTroc = $repository->find($id);
+        if (!$produitTroc) {
+            throw $this->createNotFoundException('ProduitTroc not found');
+        }
+    
         $form = $this->createForm(ProduitTroc1Type::class, $produitTroc);
         $form->handleRequest($request);
     
@@ -270,7 +265,7 @@ public function index11(Request $request): Response
                     // and return a response indicating failure
                     // For example:
                     $this->addFlash('error', 'Failed to upload image.');
-                    return $this->redirectToRoute('app_produit_troc_edit', ['id' => $produitTroc->getId()]);
+                    return $this->redirectToRoute('app_produit_troc_edit', ['id' => $produitTroc->getId(), 'idUser' => $idUser]);
                 }
     
                 // Remove the old image file if it exists
@@ -287,7 +282,7 @@ public function index11(Request $request): Response
             $entityManager->flush();
     
             // Redirect to the index page after successful edit
-            return $this->redirectToRoute('app_produit_troc_index');
+            return $this->redirectToRoute('app_produit_troc_index', ['idUser' => $idUser]);
         }
     
         // Render the edit form
@@ -300,6 +295,7 @@ public function index11(Request $request): Response
     #[Route('/{id}', name: 'app_produit_troc_delete', methods: ['POST'])]
     public function delete(Request $request, ProduitTroc $produitTroc, EntityManagerInterface $entityManager): Response
     {
+      
         if ($this->isCsrfTokenValid('delete'.$produitTroc->getId(), $request->request->get('_token'))) {
             $entityManager->remove($produitTroc);
             $entityManager->flush();
@@ -311,6 +307,10 @@ public function index11(Request $request): Response
     #[Route('/1/{id}', name: 'app_produit_troc_deleteback', methods: ['POST'])]
     public function deleteback(Request $request, ProduitTroc $produitTroc, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
         if ($this->isCsrfTokenValid('delete'.$produitTroc->getId(), $request->request->get('_token'))) {
             $entityManager->remove($produitTroc);
             $entityManager->flush();

@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controller;
-use App\Repository\ProduitTrocRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,24 +17,24 @@ class HomeController extends AbstractController
     #[Route('/', name: 'homeOn')]
     public function homeOn(): Response
     {
-        // session : getuser thezlk
         $user = $this->getUser();
         if (!$user)
         {
-            // kif yo9res logout traj3k homeOff
-            return $this->redirectToRoute('homeOff');
+            return $this->redirectToRoute('app_login');
         }
+        else
+        {
+            if($user->getStatus() == "inactive")
+            {
+                $this->addFlash('failed','User Account not already activated');
+                return $this->redirectToRoute('app_login');
+            }
+        }
+        if($user->getRole()=="ADMIN")
+        {
+            return $this->render('back.html.twig');
 
+        }
         return $this->render('homeOn.html.twig');
-
-        /*return $this->render('homeOn.html.twig');*/
     }
-    #[Route('/l', name: 'app_produit_troc_indexES', methods: ['GET'])]
-    public function indexEd(ProduitTrocRepository $produitTrocRepository): Response
-    {
-        return $this->render('indexES.html.twig', [
-            'produit_trocs' => $produitTrocRepository->findAll(),
-        ]);
-    }
-
 }

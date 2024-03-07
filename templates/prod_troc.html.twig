@@ -1,9 +1,19 @@
 {% extends 'back.html.twig' %}
 
+
 {% block user %}
+{% for message in app.flashes('success') %}
+
+<div class="alert alert-success">
+    {{ message }}
+</div>
+
+{% endfor %}
     <table class="w3-table w3-striped">
         <thead class="w3-dark-grey">
             <tr>
+
+
                 <th>ID</th>
                 <th>Name of the product</th>
                 <th>Category</th>

@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType; // Import DateType from Symfony form component
@@ -12,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
+use VictorPrdh\RecaptchaBundle\Form\ReCaptchaType;
 
 class UserAddType extends AbstractType
 {
@@ -21,22 +23,8 @@ class UserAddType extends AbstractType
             ->add('nom', TextType::class)
             ->add('prenom', TextType::class)
             ->add('mail', TextType::class)
-            ->add('date_birthday', DateType::class) // Use DateType from Symfony form component
-            ->add('tel', TextType::class, [
-                'constraints' => [
-                    new Assert\Length([
-                        'min' => 8,
-                        'max' => 8,
-                        'exactMessage' => 'The telephone number must consist of exactly 8 characters.',
-                    ]),
-                    new Assert\Regex([
-                        'pattern' => '/^\d{8}$/',
-                        'message' => 'The telephone number must consist of 8 numeric characters.',
-                    ]),
-                ],
-            ])
-
-
+            ->add('date_birthday', DateType::class)
+            ->add('tel', TextType::class)
             ->add('gender', ChoiceType::class, [
                 'choices' => [
                     'Man' => 'Man',
@@ -46,6 +34,7 @@ class UserAddType extends AbstractType
             ->add('password', PasswordType::class)
             ->add('Confirmpassword', PasswordType::class)
             ->add('age', TextType::class)
+          //  ->add('recaptcha',RecaptchaType::class)
             ->add('Register', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary font-weight-bold mt-3',

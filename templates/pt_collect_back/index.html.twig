@@ -1,0 +1,63 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}PtCollect index{% endblock %}
+
+{# 
+{% block body %}
+{{ parent() }}
+{% endblock %} #}
+
+{% block ptCollect %}  
+  <h1>PtCollect index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom_pc</th>
+                <th>Adresse_pc</th>
+                <th>Latitude_pc</th>
+                <th>Longitude_pc</th>
+                <th> Actions </th>
+                 <th>Delete</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for pt_collect in pt_collects %}
+            <tr>
+                <td>{{ pt_collect.id }}</td>
+                <td>{{ pt_collect.NomPc }}</td>
+                <td>{{ pt_collect.adressePc }}</td>
+                <td>{{ pt_collect.latitudePc }}</td>
+                <td>{{ pt_collect.longitudePc }}</td>
+               <td>
+<button class="btn" style="color: blue;" onclick="window.location.href='{{ path('app_pt_collect_back_show', {'idUser': app.user.getId(),'id': pt_collect.id}) }}'">
+        <i class="fa fa-eye"></i> show
+    </button>
+   
+    
+<button class="btn" style="color: green;" onclick="window.location.href='{{ path('app_pt_collect_back_edit', {'idUser': app.user.getId(),'id': pt_collect.id}) }}'">
+        <i class="fa fa-edit"></i> Edit
+    </button>
+
+     </td>
+ {# 
+                <td>
+                    <a href="{{ path('app_pt_collect_back_show', {'id': pt_collect.id}) }}">show</a>
+                    <a href="{{ path('app_pt_collect_back_edit', {'id': pt_collect.id}) }}">edit</a>
+<td>  #}
+                <td>       {{ include('pt_collect_back/_delete_form.html.twig') }} </td>
+                </td> 
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_pt_collect_back_new', {'idUser': app.user.getId()}) }}">Create new</a>
+{% endblock %}

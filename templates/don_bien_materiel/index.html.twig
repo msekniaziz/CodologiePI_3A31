@@ -1,0 +1,221 @@
+{% extends 'HomeOn.html.twig' %}
+{% block body %}
+<style>
+.dashboard-container {
+  margin-left: auto;
+  margin-right: auto;
+}
+ .page-search {
+    background-color: black; /* Couleur de fond */
+}
+
+.page-search .advance-search .form-control {
+    background-color: 058C4B; /* Couleur de fond des champs de saisie */
+    color: white; /* Couleur du texte */
+    border-color: #058C4B; /* Couleur de la bordure */
+            width: 1000px; /* Largeur à 100% */
+}
+
+.page-search .advance-search select.form-control {
+    background-color: 058C4B; /* Couleur de fond du menu déroulant */
+    color: white; /* Couleur du texte du menu déroulant */
+    border-color: darkgreen; /* Couleur de la bordure du menu déroulant */
+    margin-right: 0; /* Déplacer le bloc à droite en utilisant la marge automatique à gauche */
+
+
+}
+ button.btn-primary {
+    background-color: darkgreen; /* Couleur de fond du bouton de recherche */
+    border-color: darkgreen; /* Couleur de la bordure du bouton de recherche */
+    color: white; /* Couleur du texte du bouton de recherche */
+}
+ button.btn-primary:hover {
+    background-color: green; /* Couleur de fond du bouton de recherche au survol */
+    border-color: green; /* Couleur de la bordure du bouton de recherche au survol */
+}
+
+</style>
+<title>DonBienMateriel index</title>
+
+ 
+    <section class="page-search">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">              
+              <div class="advance-search nice-select-white">
+					<form>
+						<div class="form-row align-items-center">
+							<div class="form-group col-xl-4 col-lg-3 col-md-6"  >
+								<input type="search" class="form-control my-2 my-lg-0" id="search" placeholder="What are you looking for">
+							</div>
+						
+						
+						
+						</div>
+					</form>
+				</div>
+                </section>
+                <section class="section-sm">
+	<div class="container">
+		<div class="row">
+                    <!-- Recently Favorited -->
+                    <div class="widget dashboard-container my-adslist">
+                     {# <a class="edit" data-toggle="tooltip" data-placement="top" title="Edit" href="{{ path('app_don_bien_materiel_new' ) }}">
+                                                        <i class="fa fa-add"></i>
+                                                    </a> #}
+
+                     <div >   <h3 class="widget-header">My donations</h3></div>
+                        <!-- Bouton pour ajouter un nouveau don -->
+                                                        {# {% if don_bien_materiel in don_bien_materiels %} #}
+
+                                {# {% endfor %} #}
+
+                        <table id="tableac" class="table table-responsive product-dashboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Picture</th>
+                                    <th></th>
+                                    <th>Description</th>
+                                    <th class="text-center">Organization</th>
+                                    <th class="text-center">Actions</th>
+                                    <th class="text-center">Delete?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for don_bien_materiel in don_bien_materiels %}
+                                <tr class="searchable-row">
+                                     <td class="product-thumb">
+                                       <img class="card-img-top img-fluid" src="{{ asset('uploads/images/' ~ don_bien_materiel.photoDon) }}" alt="Card image cap"></td> 
+                                       <TD></td>
+                                    <td class="product-details">
+                                        <h3 class="title">{{ don_bien_materiel.descriptionDon }}</h3>
+                                        <span class="add-id"><strong>Don ID:</strong> {{ don_bien_materiel.id }}</span>
+                                        <span><strong>Posted: </strong><time>{{ don_bien_materiel.dateDonBienMateriel ? don_bien_materiel.dateDonBienMateriel|date('Y-m-d') : '' }}</time> </span> 
+                                        {# <span class="status active"><strong>Status</strong>Active</span> #}
+    {% if don_bien_materiel.statutDon %}
+        <span class="status active"><strong>Status</strong>Checked</span>
+    {% else %}
+        <span class="status inactive" style="color: red;" ><strong>Status</strong>Restraint</span>
+    {% endif %}
+                                        {# <!-- <span class="location"><strong>Location</strong>{{ prod_r.getPtcId() }}</span> --> #}
+                                    </td>
+                                    <td class="product-category"><span class="categories">{{ don_bien_materiel.getIdAssociation() }}</span></td>
+                                    <td class="action" data-title="Action">
+                                        <div class="">
+                                            <ul class="list-inline justify-content-center">
+                                                <li class="list-inline-item">
+                                             {# <a href="{{ path('app_don_bien_materiel_new', {'id': don_bien_materiel.getIdAssociation()}) }}" class="btn btn-primary mb-3">Ajouter un don</a> #}
+                                                    <a data-toggle="tooltip" data-placement="top" title="view" class="view" href="{{ path('app_don_bien_materiel_new', {'id': don_bien_materiel.getIdAssociation()}) }}">
+                                                        <i class="fa fa-plus"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <a class="edit" data-toggle="tooltip" data-placement="top" title="Edit" href="{{ path('app_don_bien_materiel_edit', {'id': don_bien_materiel.id})  }}">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <a data-toggle="tooltip" data-placement="top" title="view" class="view" href="{{ path('app_don_bien_materiel_show', {'id': don_bien_materiel.id}) }}">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                 <td>
+                                                    <form method="post" action="{{ path('app_don_bien_materiel_delete', {'id': don_bien_materiel.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ don_bien_materiel.id) }}">
+    <button class="btn" style="color: red;" ><i class="fa fa-trash">Delete</i></button>                
+</form></td>
+                                                    </a>
+                                                     
+                
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                 
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="6">no records found</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Pagination -->
+                    {# <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">Previous</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </nav> #}
+                </div>
+            </div>
+            <!-- Row End -->
+        </div>
+        </div>
+		</div>
+		</div>
+	</div>
+        <!-- Container End -->
+    </section>
+    <!--==================================
+    =            User Profile            =
+    ===================================-->
+
+<script>
+        $(document).ready(function() {
+            // Fonction pour filtrer le tableau en fonction de la valeur de recherche
+            function search_table(value){
+                $('#tableac tbody tr.searchable-row').each(function(){
+                    var found = false;
+                    $(this).find('td:eq(2)').each(function(){ // Modifier le sélecteur si nécessaire
+                        if($(this).text().toLowerCase().includes(value.toLowerCase())){
+                            found = true;
+                            return false;
+                        }
+                    });
+                    if(found){
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+
+            // Effectue la recherche lorsqu'une touche est relâchée dans le champ de recherche
+            $('#search').keyup(function(){
+                search_table($(this).val());
+            });
+              $('#typeFilter').change(function() {
+                var typeId = $(this).val();
+                if (typeId !== '') {
+                    $('#tableac tbody tr.searchable-row').hide().filter(function() {
+                        return $(this).find('td:eq(3)').text() === typeId;
+                    }).show();
+                } else {
+                    $('#tableac tbody tr').show();
+                }
+            });
+        });
+                   // Filtrer le tableau en fonction de la catégorie sélectionnée
+           $('#typeFilter').change(function() {
+        var typeId = $(this).val();
+        if (typeId !== '') {
+            $('#tableac tbody tr').hide().filter(function() {
+                return $(this).find('td:nth-child(3)').text().trim() === typeId.trim();
+            }).show();
+        } else {
+            $('#tableac tbody tr').show();
+        }
+            });
+
+    </script>
+{% endblock %}

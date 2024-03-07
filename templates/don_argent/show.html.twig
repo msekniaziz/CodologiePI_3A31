@@ -1,0 +1,54 @@
+
+{% extends 'HomeOn.html.twig' %}
+
+
+{% block body %}
+<title>DonBienMateriel</title>
+    <h1>DonBienMateriel</h1>
+
+    <table class="table">
+        <tbody>
+          <tr>
+                <th>Id</th>
+                <td>{{ don_argent.id }}</td>
+            </tr>
+           
+            <tr>
+                <th>Amount</th>
+                <td>{{ don_argent.montant }}</td>
+            </tr>
+            
+            <tr>
+                <th>Date</th>
+                <td>{{ don_argent.dateDonArgent ? don_argent.dateDonArgent|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+   </table>
+ 
+    <div>
+    <button class="btn" style="color: blue;" onclick="window.location.href='{{ path('app_don_argent_index') }}'">
+        <i class="fas fa-arrow-left"></i> Back to list
+    </button>
+                    <button class="btn" style="color: green;" onclick="window.location.href='{{ path('app_don_argent_edit', {'id': don_argent.id})}}'">
+        <i class="fa fa-edit"></i> Edit
+    </button> 
+    {{ include('don_argent/_delete_form.html.twig') }}
+    </div>
+
+
+
+     
+{#    
+    <div class="button-container">
+        <a href="{{ path('app_don_argent_index') }}" class="btn btn-primary">
+            <i class="fas fa-arrow-left"></i> Back to list
+        </a>
+
+        <a href="{{ path('app_don_argent_edit', {'id': don_argent.id}) }}" class="btn btn-info">
+            <i class="fas fa-edit"></i> Edit
+        </a>
+        
+
+        {{ include('don_argent/_delete_form.html.twig') }}
+    </div> #}
+{% endblock %}

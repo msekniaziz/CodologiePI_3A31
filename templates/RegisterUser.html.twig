@@ -1,11 +1,22 @@
-{% extends 'front.html.twig' %}
+{% extends 'Home.html.twig' %}
 
 {% block body %}
+
 {% for message in app.flashes('success') %}
-    <div class="alert alert-success">
-        {{ message }}
-    </div>
-    {%endfor %}
+
+<div class="alert alert-success">
+    {{ message }}
+</div>
+
+{% endfor %}
+    {% for message in app.flashes('error') %}
+
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+
+    {% endfor %}
+
     <section class="login py-5 border-top-1">
         <div class="container">
             <div class="row justify-content-center">
@@ -23,7 +34,9 @@
                         {{ form_row(form.password, {'attr': {'class': 'form-control mb-3'}}) }}
                         {{ form_row(form.Confirmpassword, {'attr': {'class': 'form-control mb-3'}}) }}
                         {{ form_row(form.age, {'attr': {'class':'form-control mb-3'}}) }}
-                    {{ form_end(form) }}
+                     {# {{ form_row(form.recaptcha)}} #}  
+                       {# {{ form_errors(form.recaptcha)}} #}
+                        {{ form_end(form) }}
                         <div class="loggedin-forgot d-inline-flex my-3">
                             <input type="checkbox" id="registering" class="mt-1">
                             <label for="registering" class="px-2">By registering, you accept our <a class="text-primary font-weight-bold" href="terms-condition.html">Terms & Conditions</a></label>

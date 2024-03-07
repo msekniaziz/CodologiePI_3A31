@@ -8,7 +8,7 @@
     <section class="dashboard section">
         <div class="container">
             <div class="row">
-                <div class="col-lg-17"> <!-- Increased column width to 10 -->
+                <div class="col-lg-20"> <!-- Increased column width to 10 -->
                     <div class="widget dashboard-container my-adslist">
                         <h3 class="widget-header">All the products available for exchange</h3>
                         <table class="table table-responsive product-dashboard-table">
@@ -35,11 +35,11 @@
                                         </td>
                                         <td class="action" data-title="Action">
                                             <div class="d-flex justify-content-center">
-                                                <a data-toggle="tooltip" data-placement="top" title="View" class="view mx-2" href="{{ path('app_produit_troc_show', {'id': produit_troc.id}) }}">
+                                                <a data-toggle="tooltip" data-placement="top" title="View" class="view mx-2" href="{{ path('app_produit_troc_show', {'idprd': produit_troc.id}) }}">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
-                                                <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit mx-2" href="{{ path('app_produit_troc_edit', {'id': produit_troc.id}) }}">
-                                                    <i rel="stylesheet"class="fa fa-edit""></i>
+<a data-toggle="tooltip" data-placement="top" title="Edit" class="edit mx-2" href="{{ path('app_produit_troc_edit', {'id': produit_troc.id}) }}">
+
                                                 </a>
                                               <a data-toggle="tooltip" data-placement="top" title="Exchange"  class="delete mx-2"  href="{{ path('app_produit_troc_with_new', {'id': produit_troc.id}) }}"> 
                                               <i class="fas fa-exchange-alt" ></i> 
@@ -47,12 +47,25 @@
 
                                             </div>
                                         </td>
-                                        <td class="product-details">
-                                            <h3 class="title">Description</h3>
-                                            <span class="add-id"><strong>Category:</strong> {{ produit_troc.category }}</span>
-                                            <span class="add-id"><strong>Nom:</strong> {{ produit_troc.nom }}</span>
-                                            <span class="add-id"><strong>Description:</strong> {{ produit_troc.description }}</span>
-                                        </td>
+<td class="product-details">
+    <div class="description">
+        <h3 class="title">Product Details</h3>
+        <ul class="details-list">
+            <li>
+                <span class="detail-label">Category:</span>
+                <span class="detail-value">{{ produit_troc.category }}</span>
+            </li>
+            <li>
+                <span class="detail-label">Name:</span>
+                <span class="detail-value">{{ produit_troc.nom }}</span>
+            </li>
+            <li>
+                <span class="detail-label">Description:</span>
+                <span class="detail-value">{{ produit_troc.description }}</span>
+            </li>
+        </ul>
+    </div>
+</td>
                                     </tr>
                                 {% else %}
                                     <tr>

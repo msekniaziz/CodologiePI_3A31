@@ -1,0 +1,52 @@
+{% extends 'HomeOn.html.twig' %}
+
+{% block body %}
+    <main class="container">
+        <section class="row">
+            <div class="col-12">
+                <h1>Panier</h1>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Produit</th>
+                        <th>Prix</th>
+                        <th>Quantité</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for element in data %}
+                        <tr>
+                            <td>{{ element.product.Title }}</td>
+                            <td>{{ element.product.prix  }} DT</td>
+                            <td>{{ element.quantity }}</td>
+                            <td>{{ element.quantity * element.product.prix  }} DT</td>
+                            <td>
+                                <a href="{{ path('cart_add', {'idUser': app.user.getId(), 'id': element.product.id}) }}" class="btn btn-success">+</a>
+                                <a href="{{ path('cart_remove', {'idUser': app.user.getId(),'id': element.product.id}) }}" class="btn btn-warning">-</a>
+                                <a href="{{ path('cart_delete', {'idUser': app.user.getId(),'id': element.product.id}) }}" class="btn btn-danger">DELETE</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">Votre panier est vide</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="3">Total</td>
+                        <td>{{ total }} DT</td>
+                        <td>
+                            <a href="{{ path('cart_empty', {'idUser': app.user.getId()}) }}" class="btn btn-danger">Vider</a>
+                        </td>
+
+                    </tr>
+                    </tfoot>
+                </table>
+                <a href="{{ path('addOrderToCart') }}" class="btn btn-primary">Valider le panier</a>
+            </div>
+        </section>
+    </main>
+{% endblock %}

@@ -16,38 +16,26 @@ class Commandes
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $etat = null;
-
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\OneToMany(mappedBy: 'commandes', targetEntity: Annonces::class)]
-    private Collection $id_annonce;
+    #[ORM\Column]
+    private ?bool $etat = null;
 
-    #[ORM\ManyToOne(inversedBy: 'commandes')]
-    private ?User $id_user = null;
+    #[ORM\OneToMany(mappedBy: 'idAnnonce', targetEntity: Annonces::class)]
+    private Collection $idAnnonces;
+
+    #[ORM\ManyToOne(inversedBy: 'idCommande')]
+    private ?User $idUserC = null;
 
     public function __construct()
     {
-        $this->id_annonce = new ArrayCollection();
+        $this->idAnnonces = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getEtat(): ?int
-    {
-        return $this->etat;
-    }
-
-    public function setEtat(int $etat): static
-    {
-        $this->etat = $etat;
-
-        return $this;
     }
 
     public function getDate(): ?\DateTimeInterface
@@ -62,19 +50,31 @@ class Commandes
         return $this;
     }
 
+    public function isEtat(): ?bool
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(bool $etat): static
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Annonces>
      */
-    public function getIdAnnonce(): Collection
+    public function getIdAnnonces(): Collection
     {
-        return $this->id_annonce;
+        return $this->idAnnonces;
     }
 
     public function addIdAnnonce(Annonces $idAnnonce): static
     {
-        if (!$this->id_annonce->contains($idAnnonce)) {
-            $this->id_annonce->add($idAnnonce);
-            $idAnnonce->setCommandes($this);
+        if (!$this->idAnnonces->contains($idAnnonce)) {
+            $this->idAnnonces->add($idAnnonce);
+            $idAnnonce->setIdClient($this);
         }
 
         return $this;
@@ -82,24 +82,24 @@ class Commandes
 
     public function removeIdAnnonce(Annonces $idAnnonce): static
     {
-        if ($this->id_annonce->removeElement($idAnnonce)) {
+        if ($this->idAnnonces->removeElement($idAnnonce)) {
             // set the owning side to null (unless already changed)
-            if ($idAnnonce->getCommandes() === $this) {
-                $idAnnonce->setCommandes(null);
+            if ($idAnnonce->getIdClient() === $this) {
+                $idAnnonce->setIdClient(null);
             }
         }
 
         return $this;
     }
 
-    public function getIdUser(): ?User
+    public function getIdUserC(): ?User
     {
-        return $this->id_user;
+        return $this->idUserC;
     }
 
-    public function setIdUser(?User $id_user): static
+    public function setIdUserC(?User $idUserC): static
     {
-        $this->id_user = $id_user;
+        $this->idUserC = $idUserC;
 
         return $this;
     }

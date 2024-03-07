@@ -45,4 +45,15 @@ class DonBienMaterielRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function findByTerm(string $term): array
+    {
+        return $this->createQueryBuilder('d')
+            ->andWhere('d.descriptionDon LIKE :term')
+            ->setParameter('term', '%'.$term.'%')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
 }

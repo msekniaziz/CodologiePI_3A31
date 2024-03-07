@@ -1,0 +1,30 @@
+
+{% extends 'back.html.twig' %}
+
+
+{# 
+{% block body %}
+{{parent()}}
+{% endblock %} #}
+
+{# {% block body %}
+{{parent()}}
+{% endblock %} #}
+
+
+{% block org %}
+ <div class="container">
+            <div class="row ">
+                {# <div class="col-md-8 offset-md-2"> #}
+                     </div>
+                    <div class="border rounded p-4 form-container"> 
+<a href="{{ path('app_association_indexback') }}">See list of NGOs</a>
+                            </div>
+                        {# </div> #}
+<title>New Association</title>
+    {# <h1>Create new Association</h1> #}
+
+    {{ include('association/_form.html.twig') }}
+
+    {# <a href="{{ path('app_association_indexback') }}">back to list</a> #}
+{% endblock %}

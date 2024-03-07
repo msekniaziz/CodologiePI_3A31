@@ -39,7 +39,7 @@
 {% endif %}</td>
                 <td>{{ produit_troc.nomProduitRecherche }}</td>
                 <td>
-                    <a href="{{ path('app_produit_troc_show', {'id': produit_troc.id}) }}">show</a>
+                    <a href="{{ path('app_produit_troc_show', {'idprd': produit_troc.getId()}) }}">show</a>
                     <a href="{{ path('app_produit_troc_edit', {'id': produit_troc.id}) }}">edit</a>
 
                 </td>

@@ -2,3 +2,11 @@
 controllers:
   resource: ../src/Controller/
   type: annotation
+pdf_generate:
+  path: /pdf-generate
+  controller: App\Controller\PdfController::generatePdf
+  
+checkout:
+  path: /checkout
+  controller: App\Controller\PaymentController::checkout
+  methods: ['GET']

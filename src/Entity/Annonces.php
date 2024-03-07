@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\AnnoncesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: AnnoncesRepository::class)]
 class Annonces
@@ -14,31 +16,43 @@ class Annonces
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "The title cannot be empty.")]
     private ?string $title = null;
 
-    #[ORM\Column(length: 500)]
-    private ?string $description_annonces = null;
-
-    #[ORM\Column]
-    private ?bool $negotiable = null;
-
-    #[ORM\Column]
-    private ?float $price = null;
-
     #[ORM\Column(length: 255)]
-    private ?string $category = null;
+    private ?string $category = "inactive";
+
+    #[ORM\Column(length: 500)]
+    #[Assert\NotBlank(message: "The description cannot be empty.")]
+    #[Assert\Length(min: 5, minMessage: "La description doit contenir au moins 5 caractères.")]
+    private ?string $description = null;
 
     #[ORM\Column]
+
+    private ?bool $negociable = null;
+
+    #[ORM\Column(length: 500)]
+    #[Assert\NotBlank(message: "The price cannot be empty.")]
+    private ?float $prix = null;
+
+    #[ORM\Column(nullable: true)]
     private ?int $status = null;
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
     #[ORM\ManyToOne(inversedBy: 'annonces')]
-    private ?User $id_user = null;
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
-    #[ORM\ManyToOne(inversedBy: 'id_annonce')]
-    private ?Commandes $commandes = null;
+    #[ORM\ManyToOne(inversedBy: 'idAnnonces')]
+    private ?Commandes $idClient = null;
+
+    #[ORM\ManyToOne(inversedBy: 'ancat')]
+    #[ORM\JoinColumn(name: 'id_cat_id', referencedColumnName: 'id')]
+    #[Assert\NotBlank(message: "The category cannot be empty.")]
+    private ?Category $idCat ;
+
 
     public function getId(): ?int
     {
@@ -57,42 +71,6 @@ class Annonces
         return $this;
     }
 
-    public function getDescriptionAnnonces(): ?string
-    {
-        return $this->description_annonces;
-    }
-
-    public function setDescriptionAnnonces(string $description_annonces): static
-    {
-        $this->description_annonces = $description_annonces;
-
-        return $this;
-    }
-
-    public function isNegotiable(): ?bool
-    {
-        return $this->negotiable;
-    }
-
-    public function setNegotiable(bool $negotiable): static
-    {
-        $this->negotiable = $negotiable;
-
-        return $this;
-    }
-
-    public function getPrice(): ?float
-    {
-        return $this->price;
-    }
-
-    public function setPrice(float $price): static
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
     public function getCategory(): ?string
     {
         return $this->category;
@@ -105,12 +83,48 @@ class Annonces
         return $this;
     }
 
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function isNegociable(): ?bool
+    {
+        return $this->negociable;
+    }
+
+    public function setNegociable(bool $negociable): static
+    {
+        $this->negociable = $negociable;
+
+        return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(float $prix): static
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
     public function getStatus(): ?int
     {
         return $this->status;
     }
 
-    public function setStatus(int $status): static
+    public function setStatus(?int $status): static
     {
         $this->status = $status;
 
@@ -129,27 +143,47 @@ class Annonces
         return $this;
     }
 
-    public function getIdUser(): ?User
+    public function getUser(): ?User
     {
-        return $this->id_user;
+        return $this->user;
     }
 
-    public function setIdUser(?User $id_user): static
+    public function setUser(?User $user): static
     {
-        $this->id_user = $id_user;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getCommandes(): ?Commandes
+    public function getIdClient(): ?Commandes
     {
-        return $this->commandes;
+        return $this->idClient;
     }
 
-    public function setCommandes(?Commandes $commandes): static
+    public function setIdClient(?Commandes $idClient): static
     {
-        $this->commandes = $commandes;
+        $this->idClient = $idClient;
 
         return $this;
     }
+
+
+    public function getIdCat(): ?Category
+    {
+        return $this->idCat;
+    }
+
+    public function setIdCat(?Category $idCat): static
+    {
+        $this->idCat = $idCat;
+
+        return $this;
+    }
+
+    public function getStatusText(): string
+    {
+        return $this->status === 0 ? 'Active' : 'Non active';
+    }
+
+
 }
