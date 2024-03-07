@@ -6,6 +6,8 @@
 <title>DonBienMateriel</title>
     <h3>Material goods donation</h3>
 
+    
+
     <table class="table">
         <tbody>
             <tr>
@@ -35,7 +37,7 @@
 <button class="btn" style="color: blue;" onclick="window.location.href='{{ path('app_don_bien_materiel_indexback') }}'">
         <i class="fa fa-list"></i> Back to list
     </button>
-                    <button class="btn" style="color: green;" onclick="window.location.href='{{ path('app_don_bien_materiel_edit', {'id': don_bien_materiel.id})}}'">
+                    <button class="btn" style="color: green;" onclick="window.location.href='{{ path('app_don_bien_materiel_edit_back', {'id': don_bien_materiel.id})}}'">
         <i class="fa fa-edit"></i> Edit
     </button> 
     {# <a href="{{ path('app_don_bien_materiel_indexback') }}" class="button">back to list</a>

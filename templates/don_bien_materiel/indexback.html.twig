@@ -1,7 +1,107 @@
 {% extends 'back.html.twig' %} 
 {% block donbien %}
-<title>DonBienMateriel index</title>
+    <title>DonBienMateriel index</title>
     <h3>List of all donations</h3> 
+
+    <div class="form-group">
+        <input type="text" class="form-control" id="search" placeholder="Search by description">
+    </div>
+
+    <table id="tableac" class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User ID</th>
+                <th>Description</th>
+                <th>Picture</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for don_bien_materiel in don_bien_materiels %}
+            <tr  class="searchable-row">
+                <td>{{ don_bien_materiel.id }}</td>
+                <td>{{ don_bien_materiel.getUserId() }}</td>
+
+                <td>{{ don_bien_materiel.descriptionDon }}</td>
+                <td><img class="card-img-top img-fluid" src="{{ asset('uploads/images/' ~ don_bien_materiel.photoDon) }}" alt="Card image cap" style="height: 100px;width: 100px;"></td>
+                <td>{{ don_bien_materiel.statutDon ? 'Checked' : 'Not checked' }}</td>
+                <td>{{ don_bien_materiel.dateDonBienMateriel ? don_bien_materiel.dateDonBienMateriel|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_don_bien_materiel_showback', {'id': don_bien_materiel.id}) }}">show</a>
+                    <a href="{{ path('app_don_bien_materiel_edit_back', {'id': don_bien_materiel.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<script>
+        $(document).ready(function() {
+            // Fonction pour filtrer le tableau en fonction de la valeur de recherche
+            function search_table(value){
+                $('#tableac tbody tr.searchable-row').each(function(){
+                    var found = false;
+                    $(this).find('td:first-child').each(function(){ // Modifier le sélecteur si nécessaire
+                        if($(this).text().toLowerCase().includes(value.toLowerCase())){
+                            found = true;
+                            return false;
+                        }
+                    });
+                    if(found){
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+
+            // Effectue la recherche lorsqu'une touche est relâchée dans le champ de recherche
+            $('#search').keyup(function(){
+                search_table($(this).val());
+            });
+              $('#typeFilter').change(function() {
+                var typeId = $(this).val();
+                if (typeId !== '') {
+                    $('#tableac tbody tr.searchable-row').hide().filter(function() {
+                        return $(this).find('td:eq(2)').text() === typeId;
+                    }).show();
+                } else {
+                    $('#tableac tbody tr').show();
+                }
+            });
+        });
+                   // Filtrer le tableau en fonction de la catégorie sélectionnée
+           $('#typeFilter').change(function() {
+        var typeId = $(this).val();
+        if (typeId !== '') {
+            $('#tableac tbody tr').hide().filter(function() {
+                return $(this).find('td:nth-child(2)').text().trim() === typeId.trim();
+            }).show();
+        } else {
+            $('#tableac tbody tr').show();
+        }
+            });
+
+    </script>
+{% endblock %}
+
+
+
+{# {% extends 'back.html.twig' %} 
+{% block donbien %}
+<title>DonBienMateriel index</title>
+
+
+
+    <h3>List of all donations</h3> 
+    
+
 
     <table class="table">
         <thead>
@@ -36,4 +136,4 @@
     </table>
 
     {# <a href="{{ path('app_don_bien_materiel_new') }}">Create new</a> #}
-{% endblock %}
+{# {% endblock %}  #}

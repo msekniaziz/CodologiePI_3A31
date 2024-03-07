@@ -42,9 +42,7 @@
                 
                         
                     {{ form_end(form) }}
-                        <button class="btn" style="color: blue;" onclick="window.location.href='{{ path('app_don_argent_index') }}'">
-        <i class="fas fa-arrow-left"></i> Back to list
-    </button>
+                       <i class="fas fa-arrow-left"></i><a href="{{ path('app_don_argent_index') }}">back to list</a>
                         {# <div class="loggedin-forgot d-inline-flex my-3">
                             <input type="checkbox" id="registering" class="mt-1">
                             {# <label for="registering" class="px-2">By registering, you accept our <a class="text-primary font-weight-bold" href="terms-condition.html">Terms & Conditions</a></label> #}

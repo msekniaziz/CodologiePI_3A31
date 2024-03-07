@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\DonBienMateriel;
+use DateTime;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType; // Import DateType from Symfony form component
@@ -17,22 +18,18 @@ class backDonBienMaterielType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('photoDon')
-        
-
-            ->add('descriptionDon',null,[
-            'required' => false,
-            'help' => 'you should put name of the product youre searching for',
-        ])
-        ->add('statutDon', null, [
-            'required' => false,
-            'attr' => [
-                'style' => 'display: none;'
-            ]
-        ])
-            ->add('dateDonBienMateriel')
-            ->add('id_association')
-            // ->add('user_id')
+      
+        ->add('statutDon')
+            ->add('dateDonBienMateriel', DateType::class, [
+                'disabled' => true,
+            ])
+            ->add('id_association', TextType::class, [
+                'disabled' => true,
+            ])
+            ->add('user_id', TextType::class, [
+                'disabled' => true,
+            ])
+            
             ->add('Register', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary font-weight-bold mt-3',

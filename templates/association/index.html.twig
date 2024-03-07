@@ -2,7 +2,41 @@
 
 {% block body %}
     <title>Association index</title>
-    
+      <style>
+    .dashboard-container {
+  margin-left: auto;
+  margin-right: auto;
+}
+ .page-search {
+    background-color: black; /* Couleur de fond */
+}
+
+.page-search .advance-search .form-control {
+    background-color: 058C4B; /* Couleur de fond des champs de saisie */
+    color: white; /* Couleur du texte */
+    border-color: #058C4B; /* Couleur de la bordure */
+            width: 1000px; /* Largeur à 100% */
+}
+
+.page-search .advance-search select.form-control {
+    background-color: 058C4B; /* Couleur de fond du menu déroulant */
+    color: white; /* Couleur du texte du menu déroulant */
+    border-color: darkgreen; /* Couleur de la bordure du menu déroulant */
+    margin-right: 0; /* Déplacer le bloc à droite en utilisant la marge automatique à gauche */
+
+
+}
+ button.btn-primary {
+    background-color: darkgreen; /* Couleur de fond du bouton de recherche */
+    border-color: darkgreen; /* Couleur de la bordure du bouton de recherche */
+    color: white; /* Couleur du texte du bouton de recherche */
+}
+ button.btn-primary:hover {
+    background-color: green; /* Couleur de fond du bouton de recherche au survol */
+    border-color: green; /* Couleur de la bordure du bouton de recherche au survol */
+}
+
+</style>
     {# <h1>Associations index</h1> #}
     <section class="page-search">
 	<div class="container">
@@ -15,21 +49,21 @@
 							<div class="form-group col-xl-4 col-lg-3 col-md-6">
 								<input type="text" class="form-control my-2 my-lg-0" id="inputtext4" placeholder="What are you looking for">
 							</div>
-							<div class="form-group col-lg-3 col-md-6">
+							{# <div class="form-group col-lg-3 col-md-6">
 								<select class="w-100 form-control my-2 my-lg-0">
 									<option>Category</option>
 									<option value="1">Top rated</option>
 									<option value="2">Lowest Price</option>
 									<option value="4">Highest Price</option>
 								</select>
-							</div>
-							<div class="form-group col-lg-3 col-md-6">
+							</div> #}
+							{# <div class="form-group col-lg-3 col-md-6">
 								<input type="text" class="form-control my-2 my-lg-0" id="inputLocation4" placeholder="Location">
-							</div>
-							<div class="form-group col-xl-2 col-lg-3 col-md-6">
+							</div> #}
+							{# <div class="form-group col-xl-2 col-lg-3 col-md-6">
 
 								<button type="submit" class="btn btn-primary active w-100">Search Now</button>
-							</div>
+							</div> #}
 						</div>
 					</form>
 				</div>

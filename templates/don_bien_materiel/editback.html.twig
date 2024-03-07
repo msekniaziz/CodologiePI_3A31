@@ -1,0 +1,30 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Modifier un produit à recycler{% endblock %}
+
+{% block org %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="border rounded p-4 form-container">
+                    <h2>Check the donation</h2>
+                    <br>
+                    <form method="post" action="{{ path('app_don_bien_materiel_edit_back', {'id': don_bien_materiel.id}) }}">
+                        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+                        <fieldset class="p-3">        
+                            {{ form_row(form.statutDon, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_row(form.dateDonBienMateriel, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_row(form.id_association, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_row(form.user_id, {'attr': {'class': 'form-control'}}) }}
+
+                           
+                        </fieldset>
+                        {{ form_end(form) }}
+
+                        <a href="{{ path('app_don_bien_materiel_indexback') }}">Back to list</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

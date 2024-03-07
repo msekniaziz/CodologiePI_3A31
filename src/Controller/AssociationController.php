@@ -18,19 +18,29 @@ class AssociationController extends AbstractController
 { #[Route('/testback', name: 'appback', methods: ['GET'])]
     public function indextestback(): Response
     {
+        $user = $this->getUser();
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
         return $this->render('back.html.twig');
     }
 
     #[Route('/', name: 'app_association_index', methods: ['GET'])]
     public function index(AssociationRepository $associationRepository): Response
     {
+        
         return $this->render('association/index.html.twig', [
             'associations' => $associationRepository->findAll(),
         ]);
     }
     #[Route('/test', name: 'app_association_indexHomeOn', methods: ['GET'])]
     public function indexHomeOn(AssociationRepository $associationRepository): Response
-    {
+    { $user = $this->getUser();
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
         return $this->render('association/indexHomeOn.html.twig', [
             'associations' => $associationRepository->findAll(),
         ]);
@@ -39,45 +49,23 @@ class AssociationController extends AbstractController
 
     #[Route('/back', name: 'app_association_indexback', methods: ['GET'])]
     public function indexback(AssociationRepository $associationRepository): Response
-    {
+    { $user = $this->getUser();
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
         return $this->render('association/indexback.html.twig', [
             'associations' => $associationRepository->findAll(),
         ]);
     }
-
-   
-    // if ($form->isSubmitted() && $form->isValid()) {
- 
-    //     $prodR->setUserId($user);
-
-    //     // Persist et flush l'entité
-    //     /** @var UploadedFile $imageFile */
-    //     $imageFile = $form->get('justificatif')->getData();
-    //     $entityManager->persist($prodR);
-    //     $entityManager->flush();
-
-    //     if ($imageFile) {
-    //         $newFilename = uniqid() . '.' . $imageFile->guessExtension();
-
-    //         try {
-    //             $imageFile->move(
-    //                 $this->getParameter('images_directory'),
-    //                 $newFilename
-    //             );
-    //         } catch (FileException $e) {
-    //             // Gérer l'exception
-    //         }
-    //         $prodR->setJustificatif($newFilename);
-
-    //         // Flush again to save changes related to the image file
-    //         $entityManager->flush();
-    //     }
-
-    //     return $this->redirectToRoute('app_prod_r_index');
-    // }
+    
     #[Route('/new', name: 'app_association_new', methods: ['GET', 'POST'])]
      public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    { $user = $this->getUser();
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
         $association = new Association();
         $form = $this->createForm(AssociationType::class, $association,[
             'edit_mode' => false,
@@ -117,60 +105,12 @@ class AssociationController extends AbstractController
             'form' => $form,
         ]);
     }
-  
-    // public function new(Request $request, EntityManagerInterface $entityManager): Response
-    // {
-    //     $association = new Association();
-    //     $form = $this->createForm(AssociationType::class, $association);
-    //     $form->handleRequest($request);
-    
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         // Récupérez le fichier téléchargé
-    //         $logoFile = $form->get('logoAssociation')->getData();
-    
-    //         // Vérifiez si un fichier a été téléchargé
-    //         if ($logoFile) {
-    //             $originalFilename = pathinfo($logoFile->getClientOriginalName(), PATHINFO_FILENAME);
-    //             // Cela garantit que le nom du fichier est unique même si l'utilisateur télécharge plusieurs fois le même fichier
-    //             $newFilename = $originalFilename.'-'.uniqid().'.'.$logoFile->guessExtension();
-    
-    //             // Déplacez le fichier dans le répertoire où vous souhaitez stocker les images
-    //             try {
-    //                 $logoFile->move(
-    //                     $this->getParameter('images_directory'), // Répertoire de destination configuré dans config/services.yaml
-    //                     $newFilename
-    //                 );
-    //             } catch (FileException $e) {
-    //                 // Gérer l'exception si le téléchargement échoue
-    //                 // Par exemple, afficher un message d'erreur ou enregistrer le message d'erreur dans les journaux
-    //                 $this->addFlash('error', 'Une erreur est survenue lors du téléchargement du fichier.');
-    //                 // Rediriger l'utilisateur vers une page appropriée
-    //                 return $this->redirectToRoute('app_association_new'); // Par exemple, rediriger vers la page de création de l'association
-    //             }
-                
-    
-    //             // Mettez à jour le chemin de l'image dans l'entité
-    //             $association->setLogoAssociation($newFilename);
-    //         }
-    
-    //         // Enregistrez l'entité dans la base de données
-    //         $entityManager->persist($association);
-    //         $entityManager->flush();
-    //         $this->addFlash('success','Added succesfully');
-    
-    //         return $this->redirectToRoute('app_association_indexback', [], Response::HTTP_SEE_OTHER);
-    //     }
-    
-    //     return $this->renderForm('association/new.html.twig', [
-    //         'association' => $association,
-    //         'form' => $form,
-    //     ]);
-    // }
-   
 
     #[Route('/showoff/{id}', name: 'app_association_show', methods: ['GET'])]
     public function show(Association $association): Response
-    {
+    { 
+
+       
         return $this->render('association/show.html.twig', [
             'association' => $association,
         ]);
@@ -178,6 +118,12 @@ class AssociationController extends AbstractController
     #[Route('/{id}', name: 'app_association_show_On', methods: ['GET'])]
     public function showOn(Association $association): Response
     {
+        $user = $this->getUser();
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
+
         return $this->render('association/showOn.html.twig', [
             'association' => $association,
         ]);
@@ -194,6 +140,12 @@ class AssociationController extends AbstractController
     #[Route('/{id}/edit', name: 'app_association_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Association $association, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
+
         $form = $this->createForm(AssociationType::class, $association, [
             'edit_mode' => true,
         ]);
@@ -213,7 +165,11 @@ class AssociationController extends AbstractController
 
     #[Route('/{id}', name: 'app_association_delete', methods: ['POST'])]
     public function delete(Request $request, Association $association, EntityManagerInterface $entityManager): Response
-    {
+    { $user = $this->getUser();
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
         if ($this->isCsrfTokenValid('delete'.$association->getId(), $request->request->get('_token'))) {
             $entityManager->remove($association);
             $entityManager->flush();

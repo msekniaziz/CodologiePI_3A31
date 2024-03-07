@@ -46,6 +46,12 @@ class DonArgentController extends AbstractController
     #[Route('/back', name: 'app_don_argent_indexback', methods: ['GET'])]
     public function indexback(donArgentRepository $donArgentRepository): Response
     {
+        $user = $this->getUser();
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
+
         return $this->render('don_argent/indexback.html.twig', [
             'don_argent' => $donArgentRepository->findAll(),
         ]);
@@ -54,8 +60,11 @@ class DonArgentController extends AbstractController
     #[Route('/new/{id}', name: 'app_don_argent_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, AssociationRepository $associationsRepository,UrlGeneratorInterface $urlGenerator): Response
     {
-        $user = $this->getUser();
-        $associationId = $request->attributes->get('id');
+ $user = $this->getUser();
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }        $associationId = $request->attributes->get('id');
         $association = $associationsRepository->find($associationId);
     
         $donArgent = new donArgent();
@@ -90,7 +99,11 @@ class DonArgentController extends AbstractController
 
     #[Route('/{id}', name: 'app_don_argent_show', methods: ['GET'])]
     public function show(donArgent $donArgent): Response
-    {
+    { $user = $this->getUser();
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
         return $this->render('don_argent/show.html.twig', [
             'don_argent' => $donArgent,
         ]);
@@ -98,7 +111,11 @@ class DonArgentController extends AbstractController
 
     #[Route('/back/{id}', name: 'app_don_argent_showback', methods: ['GET'])]
     public function showback(donArgent $donArgent): Response
-    {
+    { $user = $this->getUser();
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
         return $this->render('don_argent/showback.html.twig', [
             'don_argent' => $donArgent,
         ]);
@@ -106,7 +123,11 @@ class DonArgentController extends AbstractController
 
     #[Route('/{id}/edit', name: 'app_don_argent_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, donArgent $donArgent, EntityManagerInterface $entityManager): Response
-    {
+    { $user = $this->getUser();
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
         $form = $this->createForm(donArgentType::class, $donArgent);  
         $form->handleRequest($request);
 
@@ -125,6 +146,12 @@ class DonArgentController extends AbstractController
     #[Route('/{id}', name: 'app_don_argent_delete', methods: ['POST'])]
     public function delete(Request $request, donArgent $donArgent, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$donArgent->getId(), $request->request->get('_token'))) {
             $entityManager->remove($donArgent);
             $entityManager->flush();
