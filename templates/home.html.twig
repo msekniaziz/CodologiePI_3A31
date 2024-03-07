@@ -11,6 +11,11 @@
         <a class="nav-link" href="{{ path('homeOff') }}">Home</a>
     </li>
 {% endblock %}
+{% block echange %}
+    <li class="nav-item @@home">
+        <a class="nav-link" href="{{ path('app_produit_troc_indexES') }}">Show all exchanges</a>
+    </li>
+{% endblock %}
 
 {% block login %}
     <header>

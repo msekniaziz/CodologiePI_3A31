@@ -18,6 +18,20 @@
         <a class="nav-link text-white add-button" href="{{ path('new_annonces', {'idUser':app.user.getId()}) }}"><i class="fa fa-plus-circle"></i> Add Listing</a>
     </li>
 {% endblock %}
+ {% block echangeOn %}
+     <li class="nav-item dropdown">
+         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+             Exchanges
+         </a>
+         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+             <li><a class="dropdown-item @@category" href="{{ path('app_produit_troc_mine') }}">All my products of exchanges</a></li>
+             <li><a class="dropdown-item @@category" href="{{ path('app_produit_troc_index') }}">Show all exchanges</a></li>
+             <li><a class="dropdown-item @@category" href="{{ path('app_produit_troc_new') }}">Add a product you want to get rid of</a></li>
+             <li><a class="dropdown-item @@category" href="{{ path('app_chat_index') }}">Our chatbot to help you</a></li>
+         </ul>
+     </li>
+ {% endblock %}
+
 {% block logout %}
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">

@@ -1,0 +1,62 @@
+{% extends 'HomeOn.html.twig' %}
+
+{% block titreprod %}<title>Edit ProduitTroc</title>{% endblock %}
+
+{% block body %}
+<body class="body-wrapper">
+    <section class="advt-post bg-gray py-5">
+        <div class="container">
+            <form method="post" action="{% if produit_troc_with is defined %}
+                            {{ path('app_produit_troc_with_edit', {'id': produit_troc_with.id}) }}
+                        {% else %}
+                            {{ path('/') }}
+                        {% endif %}">
+
+                {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+
+                <!-- Post Your ad start -->
+                <fieldset class="border border-gary px-3 px-md-4 py-4 mb-5">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3>Edit Your Product</h3>
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_row(form.nom, {'attr': {'class': 'form-control'}, 'help_attr': {'style': 'color: red;'}}) }}
+
+                            {{ form_row(form.description, {'attr': {'class': 'form-control'}, 'help_attr': {'style': 'color: red;'}}) }}
+                            {{ form_errors(form.description) }}
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_row(form.category, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.category) }}
+
+                            <div class="choose-file text-center my-4 py-4 rounded bg-white">
+                                <label for="file-upload">
+                                    <span class="d-block font-weight-bold text-dark">Drop files anywhere to upload</span>
+                                    <span class="d-block">or</span>
+                                    <span class="d-block btn bg-primary text-white my-3 select-files">Select files</span>
+                                    <span class="d-block">Maximum upload file size: 500 KB</span>
+                                    {{ form_row(form.image, {'attr': {'class': 'form-control-file d-none'}, 'help_attr': {'style': 'color: red;'}, 'label_attr': {'class': 'd-none'}, 'id': 'file-upload'}) }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Checkbox for terms and conditions -->
+                    <div class="checkbox d-inline-flex">
+                        <input type="checkbox" id="terms-and-conditions" name="terms_and_conditions" class="mt-1" required>
+                        <label for="terms-and-conditions" class="ml-2">By clicking, you must agree with our
+                            <span><a class="text-success" href="terms-condition.html">Terms & Condition and Posting Rules.</a></span>
+                        </label>
+                    </div>
+
+                    <!-- Submit buttons -->
+                    {{ form_row(form.save, {'label': 'Save', 'attr': {'class': 'btn btn-primary font-weight-bold mt-3', 'type': 'submit'}}) }}
+                </fieldset>
+
+                {{ form_end(form) }}
+            </form>
+        </div>
+    </section>
+</body>
+{% endblock %}

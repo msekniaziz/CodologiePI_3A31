@@ -35,4 +35,7 @@ services:
     App\Entity\Annonces:
     App\Entity\PtCollect:
     App\Entity\ProdR:
+    App\Entity\ProduitTroc: ~
+    App\Entity\ProduitTrocWith: ~
+
     # Configuration supplémentaire si nécessaire

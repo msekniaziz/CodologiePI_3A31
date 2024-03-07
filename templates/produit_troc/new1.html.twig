@@ -1,0 +1,77 @@
+{% extends 'HomeOn.html.twig' %}
+
+{% block titreprod %}<title>New ProduitTroc</title>{% endblock %}
+
+{% block body %}
+<body class="body-wrapper">
+    <section class="advt-post bg-gray py-5">
+        <div class="container">
+            <form method="post" action="{{ path('app_produit_troc_new') }}" enctype="multipart/form-data">
+                <form method="post" action="{{ path('app_produit_troc_new', {'idUser': app.user.getId()}) }}" enctype="multipart/form-data">
+
+                {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+
+                <!-- Post Your ad start -->
+                <fieldset class="border border-gary px-3 px-md-4 py-4 mb-5">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3>Post Your Echange</h3>
+                        </div>
+                        <div class="col-lg-6">
+                              <h6 class="font-weight-bold pt-4 pb-1">{{ form_label(form.nom) }}
+</h6>
+{{ form_widget(form.nom, {'attr': {'class': 'form-control'}, 'help_attr': {'style': 'color: red;'}}) }}
+                    {{ form_errors(form.nom) }}
+
+                            <h6 class="font-weight-bold pt-4 pb-1">{{ form_label(form.description) }}
+</h6>
+{{ form_widget(form.description, {'attr': {'class': 'form-control'}, }) }}
+                    {{ form_errors(form.description) }}
+
+                        </div>
+                        <div>
+
+                         {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.category) }}
+                            <h6 class="font-weight-bold pt-4 pb-1">{{ form_label(form.nom_produit_recherche) }}
+</h6>
+{{ form_widget(form.nom_produit_recherche, {'attr': {'class': 'form-control'} }) }}
+                    {{ form_errors(form.nom_produit_recherche) }}
+
+                        </div>
+                        </div>
+                        {{ form_row(form.statut, {'attr': {'style': 'display: none;'}}) }}
+
+                              <div class="choose-file text-center my-4 py-4 rounded bg-white">
+    <label for="file-upload">
+        <span class="d-block font-weight-bold text-dark">Drop files anywhere to upload</span>
+        <span class="d-block">or</span>
+        <span class="d-block btn bg-primary text-white my-3 select-files">Select files</span>
+        <span class="d-block">Maximum upload file size: 500 KB</span>
+        {{ form_row(form.image, {'attr': {'class': 'form-control-file d-none'},  'label_attr': {'class': 'd-none'}, 'id': 'file-upload'}) }}
+    </label>
+</div>
+ <!-- Post Your ad end -->
+
+                <!-- Checkbox for terms and conditions -->
+                <div class="checkbox d-inline-flex">
+                    <input type="checkbox" id="terms-&-condition" class="mt-1">
+                    <label for="terms-&-condition" class="ml-2">By clicking, you must agree with our
+                        <span><a class="text-success" href="terms-condition.html">Terms & Condition and Posting Rules.</a></span>
+                    </label>
+                </div>
+
+                <!-- Submit buttons -->
+                {{ form_row(form.save, {'label': 'Save', 'attr': {'class': 'btn btn-primary font-weight-bold mt-3', 'type': 'submit'}}) }}
+                    </div>
+            
+
+                </fieldset>
+               
+                
+                {{ form_end(form) }}
+            </form>
+        </div>
+    </section>
+</body>
+{% endblock %}

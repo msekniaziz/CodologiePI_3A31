@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ProduitTrocWithRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProduitTrocWithRepository::class)]
 class ProduitTrocWith
@@ -14,22 +15,29 @@ class ProduitTrocWith
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "You should insert the name of your product ")]
+
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "You should insert the category of your product")]
+
     private ?string $category = null;
 
     #[ORM\Column(length: 1000)]
+    #[Assert\NotBlank(message: "You should insert the description of your product")]
+
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+
     private ?string $image = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?ProduitTroc $prod_idTroc = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?User $user_id_Tchange = null;
+    // #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    //private ?User $user_id_Tchange = null;
 
     public function getId(): ?int
     {
@@ -96,15 +104,5 @@ class ProduitTrocWith
         return $this;
     }
 
-    public function getUserIdTchange(): ?User
-    {
-        return $this->user_id_Tchange;
-    }
 
-    public function setUserIdTchange(?User $user_id_Tchange): static
-    {
-        $this->user_id_Tchange = $user_id_Tchange;
-
-        return $this;
-    }
 }

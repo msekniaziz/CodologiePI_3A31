@@ -1,0 +1,95 @@
+{% extends 'HomeOn.html.twig' %}
+
+{% block titreprod %}
+    <title>Produit Troc with </title>
+{% endblock %}
+
+{% block body %}
+    <!--==================================
+    =            User Profile            =
+    ===================================-->
+    <section class="dashboard section">
+        <!-- Container Start -->
+        <div class="container">
+            <!-- Row Start -->
+            <div class="row">
+              
+                <div class="col-lg-8">
+                    <!-- Recently Favorited -->
+                    <div class="widget dashboard-container my-adslist">
+                        <h3 class="widget-header">All the product available for exchange  </h3>
+                        <table class="table table-responsive product-dashboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Product Title</th>
+                                    <th class="text-center">Actions</th>
+                            <th class="text-center">description</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Loop through your product_trocs here -->
+                                {% for   produit_troc in produit_troc_withs %}
+                                    <tr>
+                                        <!-- Include the content for each product_troc here -->
+                                        <td>
+                                            {% if produit_troc.image %}
+                                                <img width="80px" height="auto" src="{{ asset('/uploads/images/' ~ produit_troc.image) }}" alt="Product Image">
+                                            {% else %}
+                                                <p>No image available</p>
+                                            {% endif %}
+                                        </td>
+                                       
+                                        <td class="product-category"><span class="categories">{{ produit_troc.nom }}</span></td>
+                                        <td class="action" data-title="Action">
+                                            <div class="">
+                                                <ul class="list-inline justify-content-center">
+                                                    <li class="list-inline-item">
+                                                        <a data-toggle="tooltip" data-placement="top" title="View" class="view" href="{{ path('app_produit_troc_with_show', {'id': produit_troc.id}) }}">
+                                                            <i class="fa fa-eye"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li class="list-inline-item">
+                                                        <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit" href="{{ path('app_produit_troc_with_edit', {'id': produit_troc.id}) }}">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </a>
+                                                 
+        <div class="logo-container">
+            <i class="fa fa-pencil overlay-icon"></i>
+        </div>
+    </a>
+</li>
+
+                                                    <!-- Add delete functionality if needed -->
+                                                </ul>
+                                            </div>
+                                        </td>
+                                        	<td class="product-details">
+									<h3 class="title">Description</h3>
+									<span class="add-id"><strong>Category:</strong>{{ produit_troc.category }}</span>
+                                    <span class="add-id"><strong>nom:</strong>{{ produit_troc.nom }}</span>
+							<span class="add-id"><strong>Description:</strong>{{ produit_troc.description }}</span>
+
+                                   
+								</td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="8">no records found</td>
+                                    </tr>
+                                {% endfor %}
+                                <!-- End of loop -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- pagination -->
+                    <!-- Include pagination if needed -->
+                    <!-- pagination -->
+                </div>
+            </div>
+            <!-- Row End -->
+        </div>
+        <!-- Container End -->
+    </section>
+{% endblock %}

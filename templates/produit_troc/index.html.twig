@@ -1,0 +1,57 @@
+{% extends 'HomeOn.html.twig' %}
+
+{% block titreprod %}<title>ProduitTroc index</title>{% endblock %}
+
+{% block body %}
+    <h1>ProduitTroc index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Statut</th>
+                <th>Image</th>
+                <th>Nom_produit_recherche</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for produit_troc in produit_trocs %}
+            <tr>
+                <td>{{ produit_troc.id }}</td>
+                <td>{{ produit_troc.nom }}</td>
+                <td>{{ produit_troc.category }}</td>
+                <td>{{ produit_troc.description }}</td>
+<td>
+    {% if produit_troc.statut == 0 %}
+        Not Checked
+    {% else %}
+        Checked
+    {% endif %}
+</td>         <td>     {% if produit_troc.image %}
+    <img src="{{ asset('/uploads/images/' ~ produit_troc.image) }}" alt="Product Image">
+{% else %}
+
+    <p>No image available</p>
+{% endif %}</td>
+                <td>{{ produit_troc.nomProduitRecherche }}</td>
+                <td>
+                    <a href="{{ path('app_produit_troc_show', {'idprd': produit_troc.getId()}) }}">show</a>
+                    <a href="{{ path('app_produit_troc_edit', {'id': produit_troc.id}) }}">edit</a>
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+<a href="{{ path('app_produit_troc_new') }}" class="btn btn-primary">Create New</a>
+
+{% endblock %}

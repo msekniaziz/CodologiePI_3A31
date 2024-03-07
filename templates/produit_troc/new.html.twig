@@ -1,0 +1,52 @@
+{% extends 'HomeOn.html.twig' %}
+
+
+
+{% block titreprod %}<title>New ProduitTroc</title> {% endblock %}
+
+{% block body %}
+<section class="login py-5 border-top-1">
+        <div class="container">
+        <div class="border border">
+    <h1 class="bg-gray p-4">Submit your exchange</h1>
+   
+          <form method="post" action="{{ path('app_produit_troc_new') }}" enctype="multipart/form-data">
+    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+ 
+   {{ form_row(form.nom, {'attr': {'class': 'form-control'}, 'help_attr': {'style': 'color: red;'}}) }}
+          {{ form_errors(form.nom) }}
+
+
+
+        {{ form_row(form.description, {'attr': {'class': 'form-control'}, 'help_attr': {'style': 'color: red;'}}) }}
+        {{ form_errors(form.description) }}
+
+        {{ form_row(form.category, {'attr': {'class': 'form-control'}, 'help_attr': {'style': 'color: red;'}}) }}
+        {{ form_errors(form.category) }}
+<br>
+        {{ form_row(form.nom_produit_recherche, {'attr': {'class': 'form-control'}, 'help_attr': {'style': 'color: red;'}}) }}
+        {{ form_errors(form.nom_produit_recherche) }}
+
+        {{ form_row(form.image, {'attr': {'class': 'form-control'}, 'help_attr': {'style': 'color: red;'}})}}
+        {{ form_errors(form.image) }}
+          
+ {# {{ form_row(form.id_user, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.id_user) }} #}
+      
+       {{ form_row(form.save, {
+    'label': 'Save',
+    'attr': {
+        'class': 'btn btn-primary font-weight-bold mt-3',
+        'type': 'submit'
+    }
+}) }}
+
+    </fieldset>
+    {{ form_end(form) }}
+
+</form>
+</div>
+      </div>
+      </section>  
+
+{% endblock %}

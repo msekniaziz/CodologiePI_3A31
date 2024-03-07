@@ -1,0 +1,52 @@
+{% extends 'home.html.twig' %}
+
+{% block titreprod %}
+    <title>ProduitTroc index</title>
+{% endblock %}
+
+{% block body %}
+    <section class="dashboard section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="widget dashboard-container my-adslist">
+                        <h3 class="widget-header">All the products available for exchange</h3>
+                        <table class="table table-responsive product-dashboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Product Title</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if produit_trocs is empty %}
+                                    <tr>
+                                        <td colspan="3" class="text-center">No products available for exchange</td>
+                                    </tr>
+                                {% else %}
+                                    {% for produit_troc in produit_trocs %}
+                                        <tr>
+                                            <td>
+                                                {% if produit_troc.image %}
+                                                    <img width="80px" height="auto" src="{{ asset('/uploads/images/' ~ produit_troc.image) }}" alt="Product Image">
+                                                {% else %}
+                                                    <p>No image available</p>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ produit_troc.nom }}</td>
+                                            <td>
+                                                <p><strong>Category:</strong> {{ produit_troc.category }}</p>
+                                                <p><strong>Description:</strong> {{ produit_troc.description }}</p>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
