@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\ProdR;
+use App\Entity\PtCollect;
 use App\Entity\User;
 use App\Form\ProdRType;
 use App\Repository\ProdRRepository;
+use App\Repository\PtCollectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +20,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 // use Oneup\UploaderBundle\Uploader\OrphanageUploader;
 
 // use Symfony\Component\DependencyInjection\ContainerInterface;
+use App\Repository\TypeDispoRepository;
 
 
 #[Route('/prod/r')]
@@ -26,9 +29,10 @@ class ProdRController extends AbstractController
 
 
     #[Route('/', name: 'app_prod_r_index', methods: ['GET'])]
-    public function index(ProdRRepository $prodRRepository): Response
+    public function index(TypeDispoRepository $typeDispoRepository, ProdRRepository $prodRRepository): Response
     {
         $user = $this->getUser();
+        $typeDispos = $typeDispoRepository->findAll();
 
         // Vérifier si l'utilisateur est authentifié
         if ($user) {
@@ -43,6 +47,8 @@ class ProdRController extends AbstractController
 
         return $this->render('prod_r/index.html.twig', [
             'prod_rs' => $prodRRepository->findBy(['user_id' => $user]),
+            'typeDispos' => $typeDispos,
+
         ]);
     }
 
@@ -112,6 +118,17 @@ class ProdRController extends AbstractController
             'prod_r' => $prodR,
             'form' => $form,
         ]);
+    }
+    #[Route('/search', name: 'app_prod_r_search', methods: ['GET'])]
+    public function search(Request $request, ProdRRepository $prodRRepository): Response
+    {
+        $query = $request->query->get('query');
+
+        // Utiliser la méthode du repository pour rechercher
+        $results = $prodRRepository->searchByName($query);
+
+        // Renvoyer les résultats en JSON
+        return $this->json($results);
     }
 
     #[Route('/{id}', name: 'app_prod_r_delete', methods: ['POST'])]

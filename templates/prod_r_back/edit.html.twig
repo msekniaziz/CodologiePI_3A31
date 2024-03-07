@@ -32,16 +32,15 @@
                     <fieldset class="p-3">        
                     {{ form_row(form.statut, {'attr': {'class': 'form-control'}}) }}
         {{ form_errors(form.statut) }} 
-        {# Afficher les erreurs de validation du champ statut #}
   
-        {{ form_row(form.ptc_id, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.ptc_id) }}
-        {{ form_row(form.typeProd_id, {'attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.user_id, {'attr': {'class': 'form-control'}}) }}²
+        {{ form_errors(form.user_id) }}
+        {# {{ form_row(form.typeProd_id, {'attr': {'class': 'form-control'}}) }}
         {{ form_errors(form.typeProd_id) }}
         {{ form_row(form.description, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.description) }} {# Afficher les erreurs de validation du champ description #}
-        {{ form_row(form.nomP, {'attr': {'class': 'form-control'}}) }}
-        {# {{ form_errors(form.nomP) }}  #}
+        {{ form_errors(form.description) }} 
+        {{ form_row(form.nomP, {'attr': {'class': 'form-control'}}) }} 
+        #}
         {{ form_row(form.save, {'attr': {'class': 'btn'}}) }}
         {{ form_end(form) }}
 

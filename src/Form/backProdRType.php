@@ -20,38 +20,40 @@ class backProdRType extends AbstractType
     {
         $builder
             ->add('statut')
-            ->add('description', null, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'La description ne peut pas être vide',
-                    ]),
-                ],
+            ->add('user_id', TextType::class, [
+                'disabled' => true,
             ])
-            ->add('nomP', null, [
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'Le champ nomP ne doit pas être vide.']),
-                    new Assert\Regex([
-                        'pattern' => '/^\D+$/',
-                        'message' => 'Le champ nomP ne doit pas contenir de chiffres.',
-                    ]),
-                ],
-            ])
-            // ->add('user_id')
-            ->add('ptc_id')
-            ->add('typeProd_id', null, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'La description ne peut pas être vide',
-                    ]),
-                ],
-            ])
+
             ->add('save', SubmitType::class, [
                 'label' => 'Save',
                 'attr' => ['class' => 'btn  btn-primary mt-3']
-            ]);
-            // Ajoutez d'autres champs avec des contraintes de validation si nécessaire
-        ;
+            ]);;
     }
+
+    // ->add('ptc_id')
+    // ->add('description', null, [
+    //     'constraints' => [
+    //         new NotBlank([
+    //             'message' => 'La description ne peut pas être vide',
+    //         ]),
+    //     ],
+    // ])
+    // ->add('nomP', null, [
+    //     'constraints' => [
+    //         new Assert\NotBlank(['message' => 'Le champ nomP ne doit pas être vide.']),
+    //         new Assert\Regex([
+    //             'pattern' => '/^\D+$/',
+    //             'message' => 'Le champ nomP ne doit pas contenir de chiffres.',
+    //         ]),
+    //     ],
+    // ])
+    // ->add('typeProd_id', null, [
+    //     'constraints' => [
+    //         new NotBlank([
+    //             'message' => 'La description ne peut pas être vide',
+    //         ]),
+    //     ],
+    // ])
 
     public function configureOptions(OptionsResolver $resolver): void
     {

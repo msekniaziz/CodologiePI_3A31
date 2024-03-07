@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\UserRepository;
 
 #[Route('/ptc')]
 class backPtCollectController extends AbstractController
@@ -22,9 +23,33 @@ class backPtCollectController extends AbstractController
         ]);
     }
 
-    #[Route('/back/new', name: 'app_pt_collect_back_new', methods: ['GET', 'POST'])]
-    public function new1(Request $request, EntityManagerInterface $entityManager): Response
+    // #[Route('/back/new', name: 'app_pt_collect_back_new', methods: ['GET', 'POST'])]
+    // public function new1(Request $request, EntityManagerInterface $entityManager): Response
+    // {
+    //     $ptCollect = new PtCollect();
+    //     $form = $this->createForm(PtCollectType::class, $ptCollect);
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager->persist($ptCollect);
+    //         $entityManager->flush();
+
+    //         return $this->redirectToRoute('app_pt_collect_back_index', [], Response::HTTP_SEE_OTHER);
+    //     }
+
+    //     return $this->renderForm('pt_collect_back/new.html.twig', [
+    //         'pt_collect' => $ptCollect,
+    //         'form' => $form,
+    //     ]);
+    // }
+
+    #[Route('/back/new/{idUser}', name: 'app_pt_collect_back_new', methods: ['GET', 'POST'])]
+    public function new1(Request $request, EntityManagerInterface $entityManager, UserRepository $repository, $idUser): Response
     {
+        $user_verif = $repository->find($idUser);
+        if (!$user_verif) {
+            throw $this->createNotFoundException('User not found');
+        }
         $ptCollect = new PtCollect();
         $form = $this->createForm(PtCollectType::class, $ptCollect);
         $form->handleRequest($request);
@@ -33,7 +58,7 @@ class backPtCollectController extends AbstractController
             $entityManager->persist($ptCollect);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_pt_collect_back_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_pt_collect_back_index', ['id' => $user_verif->getId()], [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('pt_collect_back/new.html.twig', [
@@ -41,7 +66,6 @@ class backPtCollectController extends AbstractController
             'form' => $form,
         ]);
     }
-
     #[Route('/back/{id}', name: 'app_pt_collect_back_show', methods: ['GET'])]
     public function show1(PtCollect $ptCollect): Response
     {

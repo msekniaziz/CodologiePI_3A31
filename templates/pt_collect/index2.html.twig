@@ -18,13 +18,14 @@
         }
     </style>
 
-    <h1>Nos points de collecte</h1>
+<div class="text-center"> <strong> <H2> Our Collect Points</H2></strong> <div>
+<br>
 <div style="width:100%; height: 400px;">
     <div id="map" ></div>
 </div>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script>
-        var map = L.map('map').setView([51.505, -0.09], 13);
+        var map = L.map('map').setView([33.9184, 8.1339], 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
@@ -35,12 +36,25 @@
                 .bindPopup("{{ place.getNomPc() }}");
         {% endfor %} #}
 
-        {% for place in pt_collects %}
+{% for place in pt_collects %}
+    {# Générez le contenu du popup en dehors de la boucle des types disponibles #}
+    {% set popupContent = '<div class="text-center" style="font-family: Muli, sans-serif; font-weight: bold;">' ~ place.getNomPc() ~ '</div>' %}
+    {% if place.getType()|length > 0 %}
+        {# {% set popupContent = popupContent  %} #}
+        {% for typeDispo in place.getType() %}
+            {% set popupContent = popupContent ~ '<div style="font-family: Muli, sans-serif; border-radius: 30px; border: 1px solid green; padding: 10px; margin-top: 5px; ">' ~ typeDispo.getNom() | raw ~ '</div>' %}
+        {% endfor %}
+        {% set popupContent = popupContent ~ '</div>' %}
+    {% endif %}
+    {% set popupContent = popupContent ~ '<br><a href="' ~ path('app_prod_r_new', {'id': place.getId()}) ~ '">Déposer un produit à recycler ici</a>' %}
+
+    {# Ajoutez le marqueur avec le contenu du popup généré #}
     var marker = L.marker([{{ place.getLatitudePc() }}, {{ place.getLongitudePc() }}]).addTo(map);
-    var popupContent = "{{ place.getNomPc() }}" + '<br><a href="{{ path('app_prod_r_new', {'id': place.getId()}) }}">Déposer un produit à recycler ici </a>';
-    marker.bindPopup(popupContent);
+    marker.bindPopup('{{ popupContent | raw }}');
 {% endfor %}
     </script>
-
-    <a href="{{ path('app_pt_collect_new') }}">Create new</a>
+<br>
+<br>
+   <div class="text-center"> <a href="{{ path('app_pt_collect_index') }}">Go to list</a></div>
+   <br>
 {% endblock %}

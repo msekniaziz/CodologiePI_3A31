@@ -2,16 +2,23 @@
 
 namespace App\Controller;
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 use App\Entity\ProdR;
 use App\Entity\User;
 // use App\Form\ProdRType;
 use App\Form\backProdRType;
+use App\Form\addbackProdRType;
 use App\Repository\ProdRRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
 #[Route('/prodb')]
 class backProdRController extends AbstractController
@@ -28,7 +35,7 @@ class backProdRController extends AbstractController
     public function new1(Request $request, EntityManagerInterface $entityManager): Response
     {
         $prodR = new ProdR();
-        $form = $this->createForm(backProdRType::class, $prodR);
+        $form = $this->createForm(addbackProdRType::class, $prodR);
         $form->handleRequest($request);
         $user = $this->getUser();
 
@@ -62,12 +69,69 @@ class backProdRController extends AbstractController
     #[Route('/back/{id}/edit', name: 'app_prod_r_back_edit', methods: ['GET', 'POST'])]
     public function edit1(Request $request, ProdR $prodR, EntityManagerInterface $entityManager): Response
     {
+        // $prodR = new ProdR();
+
         $form = $this->createForm(backProdRType::class, $prodR);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+        // $id = $prodR->getUserId();
+        // $User->set($nbUp);
+        // $nbUp = $User->getNbPoints() + 1;
 
+        // $prodR->setUserId($User->getId());
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $User = $this->getUser();
+            $userId = $prodR->getUserId();
+
+            $User = $entityManager->getRepository(User::class)->find($userId);
+            if ($User instanceof User) {
+
+                if ($prodR->isStatut() == true) {
+
+
+                    $nbUp = $User->getNbPoints() + 1;
+
+                    $mail = new PHPMailer(true);
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.office365.com';
+                    $mail->SMTPAuth = true;
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                    $mail->Port = 587;
+
+                    $mail->Username = 'mohamedaziz.msekni@esprit.tn'; // Votre adresse Gmail
+                    $mail->Password = 'csslaprima*F03'; // Votre mot de passe Gmail
+
+                    // Sender and recipient settings
+                    $mail->setFrom('mohamedaziz.msekni@esprit.tn', 'JARDIN DART');
+                    $nomUser = $User->getPrenom();
+
+                    $emailUser = $User->getMail();
+                    $mail->addAddress($emailUser);
+                    $mail->isHTML(true);
+                    $mail->Subject = 'PRODUCT VERIFIED !';
+                    $mail->Body = "Dear $nomUser , <br>
+
+We would like to inform you that your recycling product has been successfully verified. <br>
+
+If you did not make these changes, please contact us immediately at [Wellness.help@gmail.com] to report any suspicious activity on your account.
+
+<br> Thank you for your trust. <br>
+
+The Codologie Team";
+                    $mail->AltBody = "hi";
+
+                    $mail->send();
+                } else {
+
+                    $nbUp = $User->getNbPoints() - 1;
+                }
+                $User->setNbPoints($nbUp);
+                $entityManager->persist($User);
+                $entityManager->flush();
+            }
+
+            $entityManager->flush();
             return $this->redirectToRoute('app_prod_r_back_index', [], Response::HTTP_SEE_OTHER);
         }
 

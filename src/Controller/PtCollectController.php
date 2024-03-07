@@ -36,6 +36,17 @@ class PtCollectController extends AbstractController
             ]);
         }
     }
+    #[Route('/map', name: 'app_pt_collect_indexMap', methods: ['GET'])]
+    public function indexMap(TypeDispoRepository $typeDispoRepository, PtCollectRepository $ptCollectRepository): Response
+    {
+        $typeDispos = $typeDispoRepository->findAll();
+
+        return $this->render('pt_collect/index2.html.twig', [
+            'pt_collects' => $ptCollectRepository->findAll(),
+            'typeDispos' => $typeDispos,
+
+        ]);
+    }
     #[Route('/x', name: 'example_indexx')]
     public function indexx(TypeDispoRepository $typeDispoRepository, PtCollectRepository $ptCollectRepository): Response
     {
@@ -49,25 +60,25 @@ class PtCollectController extends AbstractController
             'ptCollects' => $ptCollects,
         ]);
     }
-    #[Route('/new', name: 'app_pt_collect_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $ptCollect = new PtCollect();
-        $form = $this->createForm(PtCollectType::class, $ptCollect);
-        $form->handleRequest($request);
+    // #[Route('/new', name: 'app_pt_collect_new', methods: ['GET', 'POST'])]
+    // public function new(Request $request, EntityManagerInterface $entityManager): Response
+    // {
+    //     $ptCollect = new PtCollect();
+    //     $form = $this->createForm(PtCollectType::class, $ptCollect);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($ptCollect);
-            $entityManager->flush();
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager->persist($ptCollect);
+    //         $entityManager->flush();
 
-            return $this->redirectToRoute('app_pt_collect_index', [], Response::HTTP_SEE_OTHER);
-        }
+    //         return $this->redirectToRoute('app_pt_collect_index', [], Response::HTTP_SEE_OTHER);
+    //     }
 
-        return $this->renderForm('pt_collect/new.html.twig', [
-            'pt_collect' => $ptCollect,
-            'form' => $form,
-        ]);
-    }
+    //     return $this->renderForm('pt_collect/new.html.twig', [
+    //         'pt_collect' => $ptCollect,
+    //         'form' => $form,
+    //     ]);
+    // }
 
     #[Route('/{id}', name: 'app_pt_collect_show', methods: ['GET'])]
     public function show(PtCollect $ptCollect): Response
